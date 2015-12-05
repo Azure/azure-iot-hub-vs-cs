@@ -127,9 +127,15 @@
     <value>Communicate between your devices and Azure IoT Hub.</value>
   </data>
   <data name="NoServiceInstancesText" xml:space="preserve">
-    <value>No storage accounts were found.  Choose another user or create a new storage No accounts were found.  Choose another user or create a new account to continue.</value>
+    <value>No accounts were found.  Choose another user or create a new account to continue.</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
   </data>
   <data name="ServiceInstanceNameLabelText" xml:space="preserve">
-    <value>blah_ServiceInstanceNameLabelText</value>
+    <value>Service Name</value>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>Subscription</value>
   </data>
 </root>

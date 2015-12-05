@@ -34,8 +34,6 @@ namespace AzureIoTHubConnectedService
         }
         public override Task<ConnectedServiceConfigurator> CreateConfiguratorAsync(ConnectedServiceProviderContext context)
         {
-            //ConnectedServiceConfigurator configurator = new ViewModels.SinglePageViewModel();
-            //ConnectedServiceConfigurator configurator = new AzureIoTHubAccountProviderGrid(this.StorageAccountManager, this.ServiceProvider);
             ConnectedServiceConfigurator configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
             return Task.FromResult(configurator);
 

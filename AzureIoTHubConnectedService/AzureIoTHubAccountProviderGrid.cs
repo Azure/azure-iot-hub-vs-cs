@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using AzureIoTHubConnectedService;
 using Microsoft.VisualStudio.ConnectedServices;
 
@@ -42,14 +43,28 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        public override IEnumerable<Tuple<string, string>> ColumnMetadata
+        {
+            get
+            {
+                return new[]
+                {
+                    Tuple.Create("SubscriptionName", Resource.Subscription),
+                    Tuple.Create("StorageAccountRegion", Resource.Region),
+                };
+            }
+        }
+
+        public override Task<ConnectedServiceAuthenticator> CreateAuthenticatorAsync()
+        {
+            return Task.FromResult<ConnectedServiceAuthenticator>(this.Authenticator);
+        }
+
         public override async Task<IEnumerable<ConnectedServiceInstance>> EnumerateServiceInstancesAsync(CancellationToken ct)
         {
-            //IEnumerable<IAzureStorageAccount> storageAccounts = await this.Authenticator.GetStorageAccounts(this.storageAccountManager, ct).ConfigureAwait(false);
-            IEnumerable<IAzureStorageAccount> storageAccounts = await this.Authenticator.GetStorageAccounts(this.storageAccountManager, ct);
+            IEnumerable<IAzureStorageAccount> storageAccounts = await this.Authenticator.GetStorageAccounts(this.storageAccountManager, ct).ConfigureAwait(false);
             ct.ThrowIfCancellationRequested();
             return storageAccounts.Select(p => AzureIoTHubAccountProviderGrid.CreateServiceInstance(p)).ToList();
-
-            // throw new NotImplementedException();
         }
 
         private static ConnectedServiceInstance CreateServiceInstance(IAzureStorageAccount storageAccount)
@@ -57,14 +72,14 @@ namespace AzureIoTHubConnectedService
             ConnectedServiceInstance instance = new ConnectedServiceInstance();
 
             instance.InstanceId = storageAccount.Id;
-            instance.Name = storageAccount.Properties["StorageAccount"];
+            instance.Name = storageAccount.Properties["StorageAccountName"];
 
             foreach (var property in storageAccount.Properties)
             {
                 instance.Metadata.Add(property.Key, property.Value);
             }
 
-            instance.Metadata.Add("StorageAccountName", storageAccount);
+            //instance.Metadata.Add("StorageAccountName", storageAccount);
 
             return instance;
         }
@@ -115,14 +130,14 @@ namespace AzureIoTHubConnectedService
 
         private async void CalculateCanCreateServiceInstance()
         {
-            string noServicesText = "Resource1.StorageNoServiceInstancesText";
+            string noServicesText = Resource.NoServiceInstancesText;
             this.CanCreateServiceInstance = this.Authenticator.IsAuthenticated;
             if (this.CanCreateServiceInstance)
             {
                 this.CanCreateServiceInstance = (await this.Authenticator.SelectedAccountHasSubscriptions());
                 if (!this.CanCreateServiceInstance)
                 {
-                    noServicesText = "Resource1.StorageNoSubscriptionsText";
+                    noServicesText = Resource.NoServiceInstancesText;
                 }
             }
             this.NoServiceInstancesText = noServicesText;

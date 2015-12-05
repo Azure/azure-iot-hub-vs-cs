@@ -88,7 +88,7 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No storage accounts were found.  Choose another user or create a new storage No accounts were found.  Choose another user or create a new account to continue..
+        ///   Looks up a localized string similar to No accounts were found.  Choose another user or create a new account to continue..
         /// </summary>
         internal static string NoServiceInstancesText {
             get {
@@ -97,11 +97,29 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to blah_ServiceInstanceNameLabelText.
+        ///   Looks up a localized string similar to Region.
+        /// </summary>
+        internal static string Region {
+            get {
+                return ResourceManager.GetString("Region", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Name.
         /// </summary>
         internal static string ServiceInstanceNameLabelText {
             get {
                 return ResourceManager.GetString("ServiceInstanceNameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscription.
+        /// </summary>
+        internal static string Subscription {
+            get {
+                return ResourceManager.GetString("Subscription", resourceCulture);
             }
         }
     }

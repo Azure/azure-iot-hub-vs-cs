@@ -14,15 +14,15 @@ namespace AzureIoTHubConnectedService
         IReadOnlyDictionary<string, string> Properties { get; }
     }
 
-    public interface IAzureStorageAccount : IAzureResource
+    public interface IAzureIoTHub : IAzureResource
     {
         Task<string> GetPrimaryKeyAsync(CancellationToken cancellationToken);
     }
 
     public interface IAzureIoTHubAccountManager
     {
-        Task<IEnumerable<IAzureStorageAccount>> EnumerateIoTHubAccountsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken);
+        Task<IEnumerable<IAzureIoTHub>> EnumerateIoTHubAccountsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken);
 
-        Task<IAzureStorageAccount> CreateStorageAccountAsync(IServiceProvider serviceProvider, Account userAccount, CancellationToken cancellationToken);
+        Task<IAzureIoTHub> CreateStorageAccountAsync(IServiceProvider serviceProvider, Account userAccount, CancellationToken cancellationToken);
     }
 }

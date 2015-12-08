@@ -4,9 +4,9 @@ using System.Runtime.Serialization;
 namespace AzureIoTHubConnectedService
 {
     [DataContract]
-    internal class StorageAccountListResponse
+    internal class IoTHubListResponse
     {
         [DataMember(Name = "value")]
-        public IList<StorageAccount> Accounts { get; set; }
+        public IList<IoTHub> Accounts { get; set; }
     }
 }

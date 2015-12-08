@@ -6,22 +6,24 @@ using System.Threading.Tasks;
 
 namespace AzureIoTHubConnectedService
 {
-    internal sealed class AzureStorageAccount : AzureResource, IAzureStorageAccount
+    internal sealed class IoTHubResource : AzureResource, IAzureIoTHub
     {
         private readonly IAzureRMSubscription _subscription;
-        private readonly StorageAccount _storageAccount;
+        private readonly IoTHub _storageAccount;
         private readonly IReadOnlyDictionary<string, string> _properties;
 
-        public AzureStorageAccount(IAzureRMSubscription subscription, StorageAccount storageAccount)
+        public IoTHubResource(IAzureRMSubscription subscription, IoTHub storageAccount)
         {
             _subscription = Arguments.ValidateNotNull(subscription, nameof(subscription));
             _storageAccount = Arguments.ValidateNotNull(storageAccount, nameof(storageAccount));
 
             _properties = new Dictionary<string, string>()
             {
-                { "StorageAccountName", storageAccount.Name },
-                { "StorageAccountRegion", storageAccount.GetRegion() },
+                { "IoTHubName", storageAccount.Name },
+                { "Region", storageAccount.Location },
                 { "SubscriptionName", subscription.SubscriptionName },
+                { "ResourceGroup", storageAccount.ResourceGroup },
+                { "Tier", storageAccount.Tier() },
             };
         }
 
@@ -40,7 +42,7 @@ namespace AzureIoTHubConnectedService
             var builder = new ServiceManagementHttpClientBuilder(_subscription);
             var client = await builder.CreateAsync().ConfigureAwait(false);
 
-            StorageAccount detailedAccount = await client.GetStorageAccountDetailsAsync(_storageAccount, cancellationToken);
+            var detailedAccount = await client.GetStorageAccountDetailsAsync(_storageAccount, cancellationToken);
             return detailedAccount.GetPrimaryKey();
         }
     }

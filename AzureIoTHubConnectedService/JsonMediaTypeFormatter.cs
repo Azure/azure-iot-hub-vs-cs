@@ -48,7 +48,8 @@ namespace AzureIoTHubConnectedService
 
             using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(value)))
             {
-                return (T)DataContractSerializer<T>.Serializer.ReadObject(stream);
+                T val = (T)DataContractSerializer<T>.Serializer.ReadObject(stream);
+                return val;
             }
         }
 

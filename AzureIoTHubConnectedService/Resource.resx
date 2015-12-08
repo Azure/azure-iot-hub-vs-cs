@@ -118,13 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CreateServiceInstanceText" xml:space="preserve">
-    <value>Create New Account</value>
+    <value>Create New IoT Hub</value>
   </data>
   <data name="GridHeaderText" xml:space="preserve">
-    <value>Select an existing account or create a new one by clicking the link below.</value>
+    <value>Select an existing IoT Hub or create a new one by clicking the link below.</value>
   </data>
   <data name="IoTHubProvdierDescription" xml:space="preserve">
     <value>Communicate between your devices and Azure IoT Hub.</value>
+  </data>
+  <data name="NeedToAuthenticateText" xml:space="preserve">
+    <value>To view your IoT Hubs, add a user account or reenter your credentials.</value>
   </data>
   <data name="NoServiceInstancesText" xml:space="preserve">
     <value>No accounts were found.  Choose another user or create a new account to continue.</value>
@@ -132,10 +135,16 @@
   <data name="Region" xml:space="preserve">
     <value>Region</value>
   </data>
+  <data name="ResourceGroup" xml:space="preserve">
+    <value>Resource Group</value>
+  </data>
   <data name="ServiceInstanceNameLabelText" xml:space="preserve">
     <value>Service Name</value>
   </data>
   <data name="Subscription" xml:space="preserve">
     <value>Subscription</value>
+  </data>
+  <data name="Tier" xml:space="preserve">
+    <value>Tier</value>
   </data>
 </root>

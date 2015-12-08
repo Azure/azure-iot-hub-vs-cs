@@ -61,7 +61,7 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New Account.
+        ///   Looks up a localized string similar to Create New IoT Hub.
         /// </summary>
         internal static string CreateServiceInstanceText {
             get {
@@ -70,7 +70,7 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select an existing account or create a new one by clicking the link below..
+        ///   Looks up a localized string similar to Select an existing IoT Hub or create a new one by clicking the link below..
         /// </summary>
         internal static string GridHeaderText {
             get {
@@ -84,6 +84,15 @@ namespace AzureIoTHubConnectedService {
         internal static string IoTHubProvdierDescription {
             get {
                 return ResourceManager.GetString("IoTHubProvdierDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To view your IoT Hubs, add a user account or reenter your credentials..
+        /// </summary>
+        internal static string NeedToAuthenticateText {
+            get {
+                return ResourceManager.GetString("NeedToAuthenticateText", resourceCulture);
             }
         }
         
@@ -106,6 +115,15 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resource Group.
+        /// </summary>
+        internal static string ResourceGroup {
+            get {
+                return ResourceManager.GetString("ResourceGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Service Name.
         /// </summary>
         internal static string ServiceInstanceNameLabelText {
@@ -120,6 +138,15 @@ namespace AzureIoTHubConnectedService {
         internal static string Subscription {
             get {
                 return ResourceManager.GetString("Subscription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tier.
+        /// </summary>
+        internal static string Tier {
+            get {
+                return ResourceManager.GetString("Tier", resourceCulture);
             }
         }
     }

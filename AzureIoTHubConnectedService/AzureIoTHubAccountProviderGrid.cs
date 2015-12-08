@@ -50,7 +50,9 @@ namespace AzureIoTHubConnectedService
                 return new[]
                 {
                     Tuple.Create("SubscriptionName", Resource.Subscription),
-                    Tuple.Create("StorageAccountRegion", Resource.Region),
+                    Tuple.Create("Region", Resource.Region),
+                    Tuple.Create("ResourceGroup", Resource.ResourceGroup),
+                    Tuple.Create("Tier", Resource.Tier),
                 };
             }
         }
@@ -62,17 +64,17 @@ namespace AzureIoTHubConnectedService
 
         public override async Task<IEnumerable<ConnectedServiceInstance>> EnumerateServiceInstancesAsync(CancellationToken ct)
         {
-            IEnumerable<IAzureStorageAccount> storageAccounts = await this.Authenticator.GetStorageAccounts(this.storageAccountManager, ct).ConfigureAwait(false);
+            IEnumerable<IAzureIoTHub> storageAccounts = await this.Authenticator.GetStorageAccounts(this.storageAccountManager, ct).ConfigureAwait(false);
             ct.ThrowIfCancellationRequested();
             return storageAccounts.Select(p => AzureIoTHubAccountProviderGrid.CreateServiceInstance(p)).ToList();
         }
 
-        private static ConnectedServiceInstance CreateServiceInstance(IAzureStorageAccount storageAccount)
+        private static ConnectedServiceInstance CreateServiceInstance(IAzureIoTHub storageAccount)
         {
             ConnectedServiceInstance instance = new ConnectedServiceInstance();
 
             instance.InstanceId = storageAccount.Id;
-            instance.Name = storageAccount.Properties["StorageAccountName"];
+            instance.Name = storageAccount.Properties["IoTHubName"];
 
             foreach (var property in storageAccount.Properties)
             {
@@ -87,7 +89,7 @@ namespace AzureIoTHubConnectedService
         public override async Task<ConnectedServiceInstance> CreateServiceInstanceAsync(CancellationToken ct)
         {
             ConnectedServiceInstance result = null;
-            IAzureStorageAccount createdAccount = await this.Authenticator.CreateStorageAccount(this.storageAccountManager, ct).ConfigureAwait(false);
+            IAzureIoTHub createdAccount = await this.Authenticator.CreateStorageAccount(this.storageAccountManager, ct).ConfigureAwait(false);
             if (createdAccount != null)
             {
                 result = AzureIoTHubAccountProviderGrid.CreateServiceInstance(createdAccount);

@@ -116,7 +116,7 @@ namespace AzureIoTHubConnectedService
             this.serviceProvider = serviceProvider;
             this.tenantService = (IAzureRMTenantService)serviceProvider.GetService(typeof(IAzureRMTenantService));
             // TODO: resource
-            this.NeedToAuthenticateText = "To view your storage accounts, add a user account or reenter your credentials.";
+            this.NeedToAuthenticateText = Resource.Tier;
         }
 
         public override async Task<bool> SelectedAccountHasSubscriptions()
@@ -143,20 +143,20 @@ namespace AzureIoTHubConnectedService
             return subscriptions;
         }
 
-        public async Task<IEnumerable<IAzureStorageAccount>> GetStorageAccounts(IAzureIoTHubAccountManager accountManager, CancellationToken cancellationToken)
+        public async Task<IEnumerable<IAzureIoTHub>> GetStorageAccounts(IAzureIoTHubAccountManager accountManager, CancellationToken cancellationToken)
         {
             IEnumerable<IAzureRMSubscription> subscriptions = await this.GetAzureRMSubscriptions().ConfigureAwait(false);
-            List<IAzureStorageAccount> storageAccounts = new List<IAzureStorageAccount>();
+            List<IAzureIoTHub> storageAccounts = new List<IAzureIoTHub>();
             foreach (IAzureRMSubscription subscription in subscriptions)
             {
-                IEnumerable<IAzureStorageAccount> subscriptionAccounts = await accountManager.EnumerateIoTHubAccountsAsync(subscription, cancellationToken).ConfigureAwait(false);
+                IEnumerable<IAzureIoTHub> subscriptionAccounts = await accountManager.EnumerateIoTHubAccountsAsync(subscription, cancellationToken).ConfigureAwait(false);
                 storageAccounts.AddRange(subscriptionAccounts);
             }
 
             return storageAccounts;
         }
 
-        public async Task<IAzureStorageAccount> CreateStorageAccount(
+        public async Task<IAzureIoTHub> CreateStorageAccount(
             IAzureIoTHubAccountManager accountManager, CancellationToken cancellationToken)
         {
             Account account = await this.GetAccountAsync();

@@ -95,6 +95,7 @@ namespace AzureIoTHubConnectedService
 
         private const string V1ApiVersion = "2014-06-01";
         private const string V2ApiVersion = "2015-05-01-preview";
+        private const string IoTHubPreviewApiVersion = "2015-08-15-preview";
 
         private const string Api_2015_01_01 = "2015-01-01";
 
@@ -203,17 +204,30 @@ namespace AzureIoTHubConnectedService
             return resourceTypeInfo?.Locations;
         }
 
-        public static Task<StorageAccountListResponse> GetV1StorageAccountsAsync(this ServiceManagementHttpClient client, CancellationToken cancellationToken)
+        public static Task<IoTHubListResponse> GetIoTHubsAsync(this ServiceManagementHttpClient client, CancellationToken cancellationToken)
+        {
+            Arguments.ValidateNotNull(client, nameof(client));
+
+            string relativeUrl = string.Format(CultureInfo.InvariantCulture,
+                                               "subscriptions/{0}/providers/Microsoft.Devices/IoTHubs?api-version={1}",
+                                               client.SubscriptionId,
+                                               IoTHubPreviewApiVersion);
+
+            return client.GetAsync<IoTHubListResponse>(relativeUrl, cancellationToken);
+        }
+
+
+        public static Task<IoTHubListResponse> GetV1StorageAccountsAsync(this ServiceManagementHttpClient client, CancellationToken cancellationToken)
         {
             return client.GetStorageAccountsAsync("Microsoft.ClassicStorage", V1ApiVersion, cancellationToken);
         }
 
-        public static Task<StorageAccountListResponse> GetV2StorageAccountsAsync(this ServiceManagementHttpClient client, CancellationToken cancellationToken)
+        public static Task<IoTHubListResponse> GetV2StorageAccountsAsync(this ServiceManagementHttpClient client, CancellationToken cancellationToken)
         {
             return client.GetStorageAccountsAsync("Microsoft.Storage", V2ApiVersion, cancellationToken);
         }
 
-        private static Task<StorageAccountListResponse> GetStorageAccountsAsync(this ServiceManagementHttpClient client, string resourceProvider, string apiVersion, CancellationToken cancellationToken)
+        private static Task<IoTHubListResponse> GetStorageAccountsAsync(this ServiceManagementHttpClient client, string resourceProvider, string apiVersion, CancellationToken cancellationToken)
         {
             Arguments.ValidateNotNull(client, nameof(client));
 
@@ -223,10 +237,10 @@ namespace AzureIoTHubConnectedService
                                                resourceProvider,
                                                apiVersion);
 
-            return client.GetAsync<StorageAccountListResponse>(relativeUrl, cancellationToken);
+            return client.GetAsync<IoTHubListResponse>(relativeUrl, cancellationToken);
         }
 
-        public static async Task<StorageAccount> GetStorageAccountDetailsAsync(this ServiceManagementHttpClient client, StorageAccount storageAccount, CancellationToken cancellationToken)
+        public static async Task<IoTHub> GetStorageAccountDetailsAsync(this ServiceManagementHttpClient client, IoTHub storageAccount, CancellationToken cancellationToken)
         {
             Arguments.ValidateNotNull(client, nameof(client));
 
@@ -235,7 +249,8 @@ namespace AzureIoTHubConnectedService
                 return null;
             }
 
-            string apiVersion = storageAccount.IsClassicStorage ? V1ApiVersion : V2ApiVersion;
+            //string apiVersion = storageAccount.IsClassicStorage ? V1ApiVersion : V2ApiVersion;
+            string apiVersion = V2ApiVersion;
 
             string relativeUrl = string.Format(CultureInfo.InvariantCulture,
                                    "{0}/listKeys?api-version={1}",
@@ -247,7 +262,7 @@ namespace AzureIoTHubConnectedService
             return storageAccount;
         }
 
-        public static async Task<StorageAccount> CreateStorageAccountAsync(this ServiceManagementHttpClient client, CreateStorageAccountInput input, CancellationToken cancellationToken)
+        public static async Task<IoTHub> CreateStorageAccountAsync(this ServiceManagementHttpClient client, CreateStorageAccountInput input, CancellationToken cancellationToken)
         {
             Arguments.ValidateNotNull(client, nameof(client));
             Arguments.ValidateNotNull(input, nameof(input));
@@ -276,7 +291,7 @@ namespace AzureIoTHubConnectedService
                 }
             }
 
-            return await client.GetAsync<StorageAccount>(storageAccountUrl, cancellationToken).ConfigureAwait(false);
+            return await client.GetAsync<IoTHub>(storageAccountUrl, cancellationToken).ConfigureAwait(false);
         }
 
         private static async Task<HttpResponseMessage> CreateStorageAccountAsync(this ServiceManagementHttpClient client, string storageAccountUrl, CreateStorageAccountInput input, CancellationToken cancellationToken, int retryCount = 0)

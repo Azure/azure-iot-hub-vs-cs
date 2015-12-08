@@ -4,8 +4,8 @@
         <Identity Id="AzureIoTHubConnectedService.MSFT.5750a17f-a0c1-455d-ab31-82004e56e0b0" Version="1.0" Language="en-US" Publisher="Microsoft" />
         <DisplayName>Azure IoT Hub Connected Service</DisplayName>
         <Description xml:space="preserve">Allows developers to create and connect to Azure IoT Hub accounts easily and with step-by-step guidance.</Description>
-        <Icon>AzureIoTHubProviderIcon.png</Icon>
-        <PreviewImage>AzureIoTHubProviderIcon.png</PreviewImage>
+        <Icon>AzureIoTHubProviderIconSmall.png</Icon>
+        <PreviewImage>AzureIoTHubProviderIconPreview.png</PreviewImage>
         <Tags>IoT; ConnectedServices; Cloud; Azure; Services; Tools</Tags>
     </Metadata>
     <Installation>

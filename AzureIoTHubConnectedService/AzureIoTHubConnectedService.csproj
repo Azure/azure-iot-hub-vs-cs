@@ -106,6 +106,7 @@
     </Content>
     <Content Include="AzureIoTHubProviderIconSmall.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="index.html" />
     <Content Include="stylesheet.css" />

@@ -111,12 +111,11 @@ namespace AzureIoTHubConnectedService
         private readonly IAzureRMTenantService tenantService;
 
         public Authenticator(IServiceProvider serviceProvider)
-            : base(serviceProvider, "Microsoft.Azure.Storage")
+            : base(serviceProvider, "Microsoft.Azure.IoTHub")
         {
             this.serviceProvider = serviceProvider;
             this.tenantService = (IAzureRMTenantService)serviceProvider.GetService(typeof(IAzureRMTenantService));
-            // TODO: resource
-            this.NeedToAuthenticateText = Resource.Tier;
+            this.NeedToAuthenticateText = Resource.NeedToAuthenticateText;
         }
 
         public override async Task<bool> SelectedAccountHasSubscriptions()

@@ -88,6 +88,51 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Installing NuGet package &apos;{0}&apos; version {1}..
+        /// </summary>
+        internal static string LogMessage_AddingNuGetPackage {
+            get {
+                return ResourceManager.GetString("LogMessage_AddingNuGetPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The code being added depends on NuGet package ‘{0}’ version {1}.  A newer version ({2}) is already installed.  This may cause compatibility issues..
+        /// </summary>
+        internal static string LogMessage_NewerMajorVersionNuGetPackageExists {
+            get {
+                return ResourceManager.GetString("LogMessage_NewerMajorVersionNuGetPackageExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upgrading NuGet package &apos;{0}&apos; from version {1} to {2}.  A major version upgrade may introduce compatibility issues with existing code..
+        /// </summary>
+        internal static string LogMessage_OlderMajorVersionNuGetPackageExists {
+            get {
+                return ResourceManager.GetString("LogMessage_OlderMajorVersionNuGetPackageExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uninstalling NuGet package &apos;{0}&apos; version {1}..
+        /// </summary>
+        internal static string LogMessage_RemovingNuGetPackage {
+            get {
+                return ResourceManager.GetString("LogMessage_RemovingNuGetPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upgrading NuGet package &apos;{0}&apos; from version {1} to {2}..
+        /// </summary>
+        internal static string LogMessage_UpgradingNuGetPackage {
+            get {
+                return ResourceManager.GetString("LogMessage_UpgradingNuGetPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To view your IoT Hubs, add a user account or reenter your credentials..
         /// </summary>
         internal static string NeedToAuthenticateText {

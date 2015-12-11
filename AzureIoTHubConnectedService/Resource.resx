@@ -126,6 +126,21 @@
   <data name="IoTHubProvdierDescription" xml:space="preserve">
     <value>Communicate between your devices and Azure IoT Hub.</value>
   </data>
+  <data name="LogMessage_AddingNuGetPackage" xml:space="preserve">
+    <value>Installing NuGet package '{0}' version {1}.</value>
+  </data>
+  <data name="LogMessage_NewerMajorVersionNuGetPackageExists" xml:space="preserve">
+    <value>The code being added depends on NuGet package ‘{0}’ version {1}.  A newer version ({2}) is already installed.  This may cause compatibility issues.</value>
+  </data>
+  <data name="LogMessage_OlderMajorVersionNuGetPackageExists" xml:space="preserve">
+    <value>Upgrading NuGet package '{0}' from version {1} to {2}.  A major version upgrade may introduce compatibility issues with existing code.</value>
+  </data>
+  <data name="LogMessage_RemovingNuGetPackage" xml:space="preserve">
+    <value>Uninstalling NuGet package '{0}' version {1}.</value>
+  </data>
+  <data name="LogMessage_UpgradingNuGetPackage" xml:space="preserve">
+    <value>Upgrading NuGet package '{0}' from version {1} to {2}.</value>
+  </data>
   <data name="NeedToAuthenticateText" xml:space="preserve">
     <value>To view your IoT Hubs, add a user account or reenter your credentials.</value>
   </data>

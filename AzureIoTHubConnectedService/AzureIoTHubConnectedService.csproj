@@ -87,6 +87,7 @@
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="ResourceProvider.cs" />
     <Compile Include="ResourceTypeInfo.cs" />
+    <Resource Include="Resources\CSharp\SendDataToAzureIoTHub.cs" />
     <Compile Include="ServiceManagementHttpClient.cs" />
     <Compile Include="ServiceManagementHttpClientBuilder.cs" />
     <Compile Include="ServiceManagementHttpClientExtensions.cs" />

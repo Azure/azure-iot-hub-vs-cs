@@ -80,9 +80,11 @@ namespace AzureIoTHubConnectedService
             {
                 instance.Metadata.Add(property.Key, property.Value);
             }
-
-            //instance.Metadata.Add("StorageAccountName", storageAccount);
-
+/*
+            instance.Metadata.Add("iotHubUri", "val");
+            instance.Metadata.Add("deviceId",  "val");
+            instance.Metadata.Add("deviceKey", "val");
+*/
             return instance;
         }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="AzureIoTHubConnectedService.MSFT.5750a17f-a0c1-455d-ab31-82004e56e0b0" Version="1.2" Language="en-US" Publisher="Microsoft" />
+        <Identity Id="AzureIoTHubConnectedService.MSFT.5750a17f-a0c1-455d-ab31-82004e56e0b0" Version="1.3" Language="en-US" Publisher="Microsoft" />
         <DisplayName>Azure IoT Hub Connected Service</DisplayName>
         <Description xml:space="preserve">Allows developers to create and connect to Azure IoT Hub accounts easily and with step-by-step guidance.</Description>
         <Icon>AzureIoTHubProviderIconSmall.png</Icon>

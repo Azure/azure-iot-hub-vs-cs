@@ -36,8 +36,6 @@ namespace AzureIoTHubConnectedService
         {
             ConnectedServiceConfigurator configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
             return Task.FromResult(configurator);
-
-            //throw new NotImplementedException();
         }
     }
 }

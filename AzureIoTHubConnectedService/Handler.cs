@@ -7,6 +7,9 @@ using System.ComponentModel.Composition;
 using NuGet.VisualStudio;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.Reflection;
+using System.Windows;
 
 namespace AzureIoTHubConnectedService
 {
@@ -23,23 +26,98 @@ namespace AzureIoTHubConnectedService
 
         public override async Task<AddServiceInstanceResult> AddServiceInstanceAsync(ConnectedServiceHandlerContext context, CancellationToken ct)
         {
-            // As part of adding a reference, the handler performs the following actions:
-            //    - Add an SDK Reference
-            //    - Add a script file that contains code to generate the proxy.
-            //    - Add a reference to the newly added script from the start page.
-
-            // We first ensure that we can find a valid SDK version.
             HandlerManifest configuration = await this.BuildHandlerManifest(context);
 
             await this.AddSdkReferenceAsync(context, configuration, ct);
 
-            // string addedFile = await context.HandlerHelper.AddFileAsync(this.CopyResourceToTemporaryPath(fileToAdd.Path), targetPath);
+            var tokenDict = new Dictionary<string, string>();
+            tokenDict.Add("iotHubUri", context.ServiceInstance.Metadata["iotHubUri"] as string);
+
+            foreach (var fileToAdd in configuration.Files)
+            {
+                var file = this.CopyResourceToTemporaryPath(fileToAdd.Path, context.HandlerHelper, tokenDict);
+                string targetPath = Path.GetFileName(fileToAdd.Path); // Use the same name
+                string addedFile = await context.HandlerHelper.AddFileAsync(file, targetPath);
+            }
 
             AddServiceInstanceResult result = new AddServiceInstanceResult(
                 "Sample",
                 new Uri("https://github.com/Microsoft/ConnectedServicesSdkSamples"));
 
             return result;
+        }
+
+        protected string UriPrefix
+        {
+            get {
+                return "pack://application:,,/" + Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
+            }
+        }
+
+        string CopyResourceToTemporaryPath(string resource, ConnectedServiceHandlerHelper helper, Dictionary<string, string> tokenDict)
+        {
+#if false
+            int k = 0;
+            try {
+                var uriPrefix = "pack://application:,,/" + Assembly.GetAssembly(this.GetType()).ToString();
+                var uri = new Uri(uriPrefix + ";component/Resources/CSharp/SendDataToAzureIoTHub.cs");
+                new StreamReader(Application.GetResourceStream(uri).Stream);
+            }
+            catch(Exception ex)
+            {
+                ex = ex;
+            }
+
+            try
+            {
+                var uriPrefix = "pack://application:,,/" + Assembly.GetAssembly(this.GetType()).ToString();
+                var uri = new Uri(uriPrefix + ";component/SendDataToAzureIoTHub.cs");
+                var reader = new StreamReader(Application.GetResourceStream(uri).Stream);
+                var path = Path.GetTempFileName();
+                File.WriteAllText(path, reader.ReadToEnd());
+            }
+            catch (Exception ex)
+            {
+                ex = ex;
+            }
+
+            try
+            {
+                var uriPrefix = "pack://application:,,/" + Assembly.GetAssembly(this.GetType()).ToString();
+                var uri = new Uri(uriPrefix + ";component/CSharp/SendDataToAzureIoTHub.cs");
+                var reader = new StreamReader(Application.GetResourceStream(uri).Stream);
+                var path = Path.GetTempFileName();
+                File.WriteAllText(path, reader.ReadToEnd());
+            }
+            catch (Exception ex)
+            {
+                ex = ex;
+            }
+
+            try
+            {
+                var uriPrefix = "";
+                var uri = new Uri("/Resources/CSharp/SendDataToAzureIoTHub.cs", UriKind.Relative);
+                var reader = new StreamReader(Application.GetResourceStream(uri).Stream);
+                var path = Path.GetTempFileName();
+                File.WriteAllText(path, reader.ReadToEnd());
+            }
+            catch (Exception ex)
+            {
+                ex = ex;
+            }
+#endif
+            using (var reader = new StreamReader(Application.GetResourceStream(new Uri(this.UriPrefix + resource)).Stream))
+            {
+                var path = Path.GetTempFileName();
+                var text = reader.ReadToEnd();
+
+                var replaced = helper.PerformTokenReplacement(text, tokenDict);
+
+                File.WriteAllText(path, replaced);
+
+                return path;
+            }
         }
 
         protected virtual Task<HandlerManifest> BuildHandlerManifest(ConnectedServiceHandlerContext context)
@@ -50,7 +128,7 @@ namespace AzureIoTHubConnectedService
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Amqp", "1.0.0-preview-003"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.0-preview-007"));
 
-            // manifest.Files.Add(new FileToAdd("Javascript/service.js", @"services\mobileServices\settings\$MakeSafeFileName(ServiceInstance.Name)$.js"));
+            manifest.Files.Add(new FileToAdd("CSharp/SendDataToAzureIoTHub.cs", @"path\path"));
 
             return Task.FromResult(manifest);
 

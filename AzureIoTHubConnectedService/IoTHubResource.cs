@@ -24,6 +24,7 @@ namespace AzureIoTHubConnectedService
                 { "SubscriptionName", subscription.SubscriptionName },
                 { "ResourceGroup", storageAccount.ResourceGroup },
                 { "Tier", storageAccount.Tier() },
+                { "iotHubUri", storageAccount.Properties.HostName },
             };
         }
 

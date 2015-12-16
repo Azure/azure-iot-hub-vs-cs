@@ -70,6 +70,15 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to create device &apos;{0}&apos;. IoT Hub returned error &apos;{1}&apos;.
+        /// </summary>
+        internal static string DeviceCreationFailure {
+            get {
+                return ResourceManager.GetString("DeviceCreationFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select an existing IoT Hub or create a new one by clicking the link below..
         /// </summary>
         internal static string GridHeaderText {

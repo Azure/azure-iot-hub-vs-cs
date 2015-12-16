@@ -10,9 +10,17 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using Microsoft.Azure.Devices;
+using System.Globalization;
 
 namespace AzureIoTHubConnectedService
 {
+    class SelectedDevice
+    {
+        public string Id;
+        public string Key;
+    }
+
     [ConnectedServiceHandlerExport("Microsoft.AzureIoTHubService",
     AppliesTo = "CSharp")]
     internal class Handler : ConnectedServiceHandler
@@ -29,9 +37,24 @@ namespace AzureIoTHubConnectedService
             HandlerManifest configuration = await this.BuildHandlerManifest(context);
 
             await this.AddSdkReferenceAsync(context, configuration, ct);
-
             var tokenDict = new Dictionary<string, string>();
-            tokenDict.Add("iotHubUri", context.ServiceInstance.Metadata["iotHubUri"] as string);
+
+            IAzureIoTHub iotHubAccount = context.ServiceInstance.Metadata["IoTHubAccount"] as IAzureIoTHub;
+            var primaryKey = await iotHubAccount.GetPrimaryKeyAsync(ct);
+            var ioTHubUri = context.ServiceInstance.Metadata["iotHubUri"] as string;
+            tokenDict.Add("iotHubUri", ioTHubUri);
+            var device = await GetSelectedDevice(context, ioTHubUri, primaryKey);
+            if (device == null)
+            {
+                // Use empty device ID that the user will later fill in with real data
+                tokenDict.Add("deviceId",  "<replace with real device ID>");
+                tokenDict.Add("deviceKey", "<replace with real device Key>");
+            }
+            else
+            {
+                tokenDict.Add("deviceId", device.Id);
+                tokenDict.Add("deviceKey", device.Key);
+            }
 
             foreach (var fileToAdd in configuration.Files)
             {
@@ -41,81 +64,59 @@ namespace AzureIoTHubConnectedService
             }
 
             AddServiceInstanceResult result = new AddServiceInstanceResult(
-                "Sample",
-                new Uri("https://github.com/Microsoft/ConnectedServicesSdkSamples"));
+                context.ServiceInstance.Name,
+                new Uri("https://azure.microsoft.com/en-us/documentation/articles/iot-hub-csharp-csharp-getstarted/"));
 
             return result;
         }
 
-        protected string UriPrefix
+        private async Task CreateNewDevice(ConnectedServiceHandlerContext context, RegistryManager registryManager, string deviceId)
         {
-            get {
-                return "pack://application:,,/" + Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
+            try
+            {
+                var device = await registryManager.AddDeviceAsync(new Device(deviceId));
             }
+            catch (Exception ex)
+            {
+                await context.Logger.WriteMessageAsync(LoggerMessageCategory.Error, Resource.DeviceCreationFailure, deviceId, ex.ToString());
+            }
+        }
+
+        private async Task<SelectedDevice> GetSelectedDevice(ConnectedServiceHandlerContext context, string ioTHubUri, string primaryKey)
+        {
+            var connectionString = string.Format(CultureInfo.InvariantCulture,
+                "HostName={0};SharedAccessKeyName=iothubowner;SharedAccessKey={1}",
+                ioTHubUri, primaryKey);
+
+            var registryManager = RegistryManager.CreateFromConnectionString(connectionString);
+            var devicesTask = registryManager.GetDevicesAsync(1000);
+
+            SelectedDevice deviceId = null;
+
+            Func<string, Task> newDeviceCreator = (string deviceId2) => CreateNewDevice(context, registryManager, deviceId2);
+
+            using (var dlg = new DeviceSelectionDialog(devicesTask, newDeviceCreator))
+            {
+                var dlgResult = dlg.ShowDialog();
+                if (dlgResult.HasValue && dlgResult.Value)
+                {
+                    var id = dlg.SelectedDevice;
+                    var key = (await devicesTask).First(_ => _.Id == id).Authentication.SymmetricKey;
+                    deviceId = new SelectedDevice { Id = id, Key = key.PrimaryKey };
+                }
+            }
+            return deviceId;
         }
 
         string CopyResourceToTemporaryPath(string resource, ConnectedServiceHandlerHelper helper, Dictionary<string, string> tokenDict)
         {
-#if false
-            int k = 0;
-            try {
-                var uriPrefix = "pack://application:,,/" + Assembly.GetAssembly(this.GetType()).ToString();
-                var uri = new Uri(uriPrefix + ";component/Resources/CSharp/SendDataToAzureIoTHub.cs");
-                new StreamReader(Application.GetResourceStream(uri).Stream);
-            }
-            catch(Exception ex)
-            {
-                ex = ex;
-            }
-
-            try
-            {
-                var uriPrefix = "pack://application:,,/" + Assembly.GetAssembly(this.GetType()).ToString();
-                var uri = new Uri(uriPrefix + ";component/SendDataToAzureIoTHub.cs");
-                var reader = new StreamReader(Application.GetResourceStream(uri).Stream);
-                var path = Path.GetTempFileName();
-                File.WriteAllText(path, reader.ReadToEnd());
-            }
-            catch (Exception ex)
-            {
-                ex = ex;
-            }
-
-            try
-            {
-                var uriPrefix = "pack://application:,,/" + Assembly.GetAssembly(this.GetType()).ToString();
-                var uri = new Uri(uriPrefix + ";component/CSharp/SendDataToAzureIoTHub.cs");
-                var reader = new StreamReader(Application.GetResourceStream(uri).Stream);
-                var path = Path.GetTempFileName();
-                File.WriteAllText(path, reader.ReadToEnd());
-            }
-            catch (Exception ex)
-            {
-                ex = ex;
-            }
-
-            try
-            {
-                var uriPrefix = "";
-                var uri = new Uri("/Resources/CSharp/SendDataToAzureIoTHub.cs", UriKind.Relative);
-                var reader = new StreamReader(Application.GetResourceStream(uri).Stream);
-                var path = Path.GetTempFileName();
-                File.WriteAllText(path, reader.ReadToEnd());
-            }
-            catch (Exception ex)
-            {
-                ex = ex;
-            }
-#endif
-            using (var reader = new StreamReader(Application.GetResourceStream(new Uri(this.UriPrefix + resource)).Stream))
+            var uriPrefix = "pack://application:,,/" + Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
+            using (var reader = new StreamReader(Application.GetResourceStream(new Uri(uriPrefix + resource)).Stream))
             {
                 var path = Path.GetTempFileName();
                 var text = reader.ReadToEnd();
-
                 var replaced = helper.PerformTokenReplacement(text, tokenDict);
-
                 File.WriteAllText(path, replaced);
-
                 return path;
             }
         }
@@ -131,7 +132,6 @@ namespace AzureIoTHubConnectedService
             manifest.Files.Add(new FileToAdd("CSharp/SendDataToAzureIoTHub.cs", @"path\path"));
 
             return Task.FromResult(manifest);
-
         }
 
         private async Task AddSdkReferenceAsync(ConnectedServiceHandlerContext context, HandlerManifest manifest, CancellationToken ct)

@@ -8,16 +8,15 @@ using Microsoft.VisualStudio.ConnectedServices;
 using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Services.Client.AccountManagement;
 using Microsoft.VisualStudio.WindowsAzure.Authentication;
-//using Microsoft.VisualStudio.Shell;
 using System.Threading;
 
 namespace AzureIoTHubConnectedService
 {
     [Export(typeof(IAzureIoTHubAccountManager))]
     [PartCreationPolicy(CreationPolicy.Shared)]
-    public sealed class AzureStorageAccountManager : IAzureIoTHubAccountManager
+    public sealed class AzureIoTHubAccountManager : IAzureIoTHubAccountManager
     {
-        public AzureStorageAccountManager()
+        public AzureIoTHubAccountManager()
         {
         }
 

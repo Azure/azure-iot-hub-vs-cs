@@ -67,11 +67,7 @@ namespace AzureIoTHubConnectedService
                     }
                     catch (Exception)
                     {
-                        //if (ErrorUtilities.IsCriticalException(e))
-                        {
-                            throw;
-                        }
-                        // Else - User cancelled out of the login prompt, etc. - ignore exception and return no subscriptions
+                        // User cancelled out of the login prompt, etc. - ignore exception and return no subscriptions
                     }
                 }
             }
@@ -142,17 +138,17 @@ namespace AzureIoTHubConnectedService
             return subscriptions;
         }
 
-        public async Task<IEnumerable<IAzureIoTHub>> GetStorageAccounts(IAzureIoTHubAccountManager accountManager, CancellationToken cancellationToken)
+        public async Task<IEnumerable<IAzureIoTHub>> GetAzureIoTHubs(IAzureIoTHubAccountManager accountManager, CancellationToken cancellationToken)
         {
             IEnumerable<IAzureRMSubscription> subscriptions = await this.GetAzureRMSubscriptions().ConfigureAwait(false);
-            List<IAzureIoTHub> storageAccounts = new List<IAzureIoTHub>();
+            List<IAzureIoTHub> iotHubAccounts = new List<IAzureIoTHub>();
             foreach (IAzureRMSubscription subscription in subscriptions)
             {
                 IEnumerable<IAzureIoTHub> subscriptionAccounts = await accountManager.EnumerateIoTHubAccountsAsync(subscription, cancellationToken).ConfigureAwait(false);
-                storageAccounts.AddRange(subscriptionAccounts);
+                iotHubAccounts.AddRange(subscriptionAccounts);
             }
 
-            return storageAccounts;
+            return iotHubAccounts;
         }
 
         public async Task<IAzureIoTHub> CreateStorageAccount(

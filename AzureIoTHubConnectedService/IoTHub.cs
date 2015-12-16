@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace AzureIoTHubConnectedService
@@ -46,16 +48,16 @@ namespace AzureIoTHubConnectedService
         [DataMember(Name = "sku")]
         public Sku Sku { get; set; }
 
-        public StorageKeys StorageServiceKeys { get; set; }
+        public AuthorizationPolicies AuthorizationPolicies { get; set; }
 
         public string Tier()
         {
-            return string.Format("{0} {1}", this.Sku.Name, this.Sku.Tier);
+            return string.Format(CultureInfo.InvariantCulture, "{0} {1}", this.Sku.Name, this.Sku.Tier);
         }
 
         public string GetPrimaryKey()
         {
-            return this.StorageServiceKeys.Key1;
+            return this.AuthorizationPolicies.Policies.First((_) => _.KeyName == "iothubowner").PrimaryKey;
         }
     }
 }

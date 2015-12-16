@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace AzureIoTHubConnectedService
 {
@@ -12,19 +13,19 @@ namespace AzureIoTHubConnectedService
         private readonly IoTHub _storageAccount;
         private readonly IReadOnlyDictionary<string, string> _properties;
 
-        public IoTHubResource(IAzureRMSubscription subscription, IoTHub storageAccount)
+        public IoTHubResource(IAzureRMSubscription subscription, IoTHub iotHubAccount)
         {
             _subscription = Arguments.ValidateNotNull(subscription, nameof(subscription));
-            _storageAccount = Arguments.ValidateNotNull(storageAccount, nameof(storageAccount));
+            _storageAccount = Arguments.ValidateNotNull(iotHubAccount, nameof(iotHubAccount));
 
             _properties = new Dictionary<string, string>()
             {
-                { "IoTHubName", storageAccount.Name },
-                { "Region", storageAccount.Location },
+                { "IoTHubName", iotHubAccount.Name },
+                { "Region", iotHubAccount.Location },
                 { "SubscriptionName", subscription.SubscriptionName },
-                { "ResourceGroup", storageAccount.ResourceGroup },
-                { "Tier", storageAccount.Tier() },
-                { "iotHubUri", storageAccount.Properties.HostName },
+                { "ResourceGroup", iotHubAccount.ResourceGroup },
+                { "Tier", iotHubAccount.Tier() },
+                { "iotHubUri", iotHubAccount.Properties.HostName },
             };
         }
 
@@ -43,7 +44,7 @@ namespace AzureIoTHubConnectedService
             var builder = new ServiceManagementHttpClientBuilder(_subscription);
             var client = await builder.CreateAsync().ConfigureAwait(false);
 
-            var detailedAccount = await client.GetStorageAccountDetailsAsync(_storageAccount, cancellationToken);
+            var detailedAccount = await client.GetIoTHubDetailsAsync(_storageAccount, cancellationToken);
             return detailedAccount.GetPrimaryKey();
         }
     }

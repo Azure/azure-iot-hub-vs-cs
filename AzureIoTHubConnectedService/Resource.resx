@@ -120,6 +120,9 @@
   <data name="CreateServiceInstanceText" xml:space="preserve">
     <value>Create New IoT Hub</value>
   </data>
+  <data name="DeviceCreationFailure" xml:space="preserve">
+    <value>Unable to create device '{0}'. IoT Hub returned error '{1}'</value>
+  </data>
   <data name="GridHeaderText" xml:space="preserve">
     <value>Select an existing IoT Hub or create a new one by clicking the link below.</value>
   </data>

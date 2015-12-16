@@ -13,12 +13,12 @@ namespace AzureIoTHubConnectedService
     internal sealed class AzureIoTHubAccountProviderGrid : ConnectedServiceGrid
     {
         private IServiceProvider serviceProvider;
-        private IAzureIoTHubAccountManager storageAccountManager;
+        private IAzureIoTHubAccountManager iotHubAccountManager;
         private Authenticator authenticator;
 
         public AzureIoTHubAccountProviderGrid(IAzureIoTHubAccountManager storageAccountManager, IServiceProvider serviceProvider)
         {
-            this.storageAccountManager = storageAccountManager;
+            this.iotHubAccountManager = storageAccountManager;
             this.serviceProvider = serviceProvider;
 
             this.Description = Resource.IoTHubProvdierDescription;
@@ -64,22 +64,25 @@ namespace AzureIoTHubConnectedService
 
         public override async Task<IEnumerable<ConnectedServiceInstance>> EnumerateServiceInstancesAsync(CancellationToken ct)
         {
-            IEnumerable<IAzureIoTHub> storageAccounts = await this.Authenticator.GetStorageAccounts(this.storageAccountManager, ct).ConfigureAwait(false);
+            IEnumerable<IAzureIoTHub> storageAccounts = await this.Authenticator.GetAzureIoTHubs(this.iotHubAccountManager, ct).ConfigureAwait(false);
             ct.ThrowIfCancellationRequested();
             return storageAccounts.Select(p => AzureIoTHubAccountProviderGrid.CreateServiceInstance(p)).ToList();
         }
 
-        private static ConnectedServiceInstance CreateServiceInstance(IAzureIoTHub storageAccount)
+        private static ConnectedServiceInstance CreateServiceInstance(IAzureIoTHub iotHubAccount)
         {
             ConnectedServiceInstance instance = new ConnectedServiceInstance();
 
-            instance.InstanceId = storageAccount.Id;
-            instance.Name = storageAccount.Properties["IoTHubName"];
+            instance.InstanceId = iotHubAccount.Id;
+            instance.Name = iotHubAccount.Properties["IoTHubName"];
 
-            foreach (var property in storageAccount.Properties)
+            foreach (var property in iotHubAccount.Properties)
             {
                 instance.Metadata.Add(property.Key, property.Value);
             }
+
+            instance.Metadata.Add("IoTHubAccount", iotHubAccount);
+
 /*
             instance.Metadata.Add("iotHubUri", "val");
             instance.Metadata.Add("deviceId",  "val");
@@ -91,7 +94,7 @@ namespace AzureIoTHubConnectedService
         public override async Task<ConnectedServiceInstance> CreateServiceInstanceAsync(CancellationToken ct)
         {
             ConnectedServiceInstance result = null;
-            IAzureIoTHub createdAccount = await this.Authenticator.CreateStorageAccount(this.storageAccountManager, ct).ConfigureAwait(false);
+            IAzureIoTHub createdAccount = await this.Authenticator.CreateStorageAccount(this.iotHubAccountManager, ct).ConfigureAwait(false);
             if (createdAccount != null)
             {
                 result = AzureIoTHubAccountProviderGrid.CreateServiceInstance(createdAccount);

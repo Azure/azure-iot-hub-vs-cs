@@ -129,6 +129,9 @@
   <data name="IoTHubProvdierDescription" xml:space="preserve">
     <value>Communicate between your devices and Azure IoT Hub.</value>
   </data>
+  <data name="LoadingDevices" xml:space="preserve">
+    <value>Loading Devices...</value>
+  </data>
   <data name="LogMessage_AddingNuGetPackage" xml:space="preserve">
     <value>Installing NuGet package '{0}' version {1}.</value>
   </data>

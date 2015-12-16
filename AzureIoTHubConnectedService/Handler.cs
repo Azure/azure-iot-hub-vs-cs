@@ -43,7 +43,7 @@ namespace AzureIoTHubConnectedService
             var primaryKey = await iotHubAccount.GetPrimaryKeyAsync(ct);
             var ioTHubUri = context.ServiceInstance.Metadata["iotHubUri"] as string;
             tokenDict.Add("iotHubUri", ioTHubUri);
-            var device = await GetSelectedDevice(context, ioTHubUri, primaryKey);
+            var device = GetSelectedDevice(context, ioTHubUri, primaryKey);
             if (device == null)
             {
                 // Use empty device ID that the user will later fill in with real data
@@ -70,19 +70,21 @@ namespace AzureIoTHubConnectedService
             return result;
         }
 
-        private async Task CreateNewDevice(ConnectedServiceHandlerContext context, RegistryManager registryManager, string deviceId)
+        private async Task<Device> CreateNewDevice(ConnectedServiceHandlerContext context, RegistryManager registryManager, string deviceId)
         {
             try
             {
                 var device = await registryManager.AddDeviceAsync(new Device(deviceId));
+                return device;
             }
             catch (Exception ex)
             {
                 await context.Logger.WriteMessageAsync(LoggerMessageCategory.Error, Resource.DeviceCreationFailure, deviceId, ex.ToString());
             }
+            return null;
         }
 
-        private async Task<SelectedDevice> GetSelectedDevice(ConnectedServiceHandlerContext context, string ioTHubUri, string primaryKey)
+        private SelectedDevice GetSelectedDevice(ConnectedServiceHandlerContext context, string ioTHubUri, string primaryKey)
         {
             var connectionString = string.Format(CultureInfo.InvariantCulture,
                 "HostName={0};SharedAccessKeyName=iothubowner;SharedAccessKey={1}",
@@ -93,15 +95,15 @@ namespace AzureIoTHubConnectedService
 
             SelectedDevice deviceId = null;
 
-            Func<string, Task> newDeviceCreator = (string deviceId2) => CreateNewDevice(context, registryManager, deviceId2);
+            Func<string, Task<Device>> newDeviceCreator = (string deviceId2) => CreateNewDevice(context, registryManager, deviceId2);
 
             using (var dlg = new DeviceSelectionDialog(devicesTask, newDeviceCreator))
             {
-                var dlgResult = dlg.ShowDialog();
+                var dlgResult = dlg.ShowModal();
                 if (dlgResult.HasValue && dlgResult.Value)
                 {
-                    var id = dlg.SelectedDevice;
-                    var key = (await devicesTask).First(_ => _.Id == id).Authentication.SymmetricKey;
+                    var id = dlg.SelectedDeviceID;
+                    var key = dlg.Devices.First(_ => _.Id == id).Authentication.SymmetricKey;
                     deviceId = new SelectedDevice { Id = id, Key = key.PrimaryKey };
                 }
             }
@@ -126,7 +128,9 @@ namespace AzureIoTHubConnectedService
             HandlerManifest manifest = new HandlerManifest();
 
             manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "6.0.8"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Amqp", "1.0.0-preview-003"));
+            //
+            // Microsoft.Azure.Amqp is added implicitly (TODO: remove the embedded package in VSIX?)
+            // manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Amqp", "1.0.0-preview-003"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.0-preview-007"));
 
             manifest.Files.Add(new FileToAdd("CSharp/SendDataToAzureIoTHub.cs", @"path\path"));

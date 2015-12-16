@@ -20,42 +20,62 @@ namespace AzureIoTHubConnectedService
     /// </summary>
     internal partial class DeviceSelectionDialog : DialogWindow, IDisposable
     {
-        Func<string, Task> newDeviceCreator;
+        Func<string, Task<Device>> createNewDevice;
 
-        public DeviceSelectionDialog(Task<IEnumerable<Device>> devices, Func<string, Task> newDeviceCreator)
+        public DeviceSelectionDialog(Task<IEnumerable<Device>> devices, Func<string, Task<Device>> newDeviceCreator)
         {
-            this.newDeviceCreator = newDeviceCreator;
+            this.createNewDevice = newDeviceCreator;
+            this.Devices = new List<Device>();
             InitializeComponent();
 #pragma warning disable CS4014
+            this.listBox.Items.Add(Resource.LoadingDevices);
             PopulateDialog(devices);
         }
 
         private async Task PopulateDialog(Task<IEnumerable<Device>> devices)
         {
-            foreach (var device in await devices)
+            this.Devices = (await devices).ToList();
+            this.listBox.Items.Clear();
+            foreach (var device in this.Devices)
             {
                 this.listBox.Items.Add(device.Id);
             }
+
+            if (this.listBox.Items.Count == 0)
+            {
+                this.okButton.IsEnabled = false;
+            }
+            else {
+                this.okButton.IsEnabled = true;
+                this.listBox.SelectedIndex = 0;
+            }
         }
 
-        public string SelectedDevice { get; set; }
+        public string SelectedDeviceID { get; set; }
+
+        public List<Device> Devices { get; set; }
 
         private void okButton_Click(object sender, RoutedEventArgs e)
         {
-            this.SelectedDevice = this.listBox.SelectedItem.ToString();
+            this.SelectedDeviceID = this.listBox.SelectedItem.ToString();
             this.DialogResult = true;
             this.Close();
         }
         private async void newButton_Click(object sender, RoutedEventArgs e)
         {
             var newDeviceDlg = new NewDevice();
-            var action = newDeviceDlg.ShowDialog();
+            var action = newDeviceDlg.ShowModal();
             if (action.HasValue && action.Value)
             {
                 // Create a new device and add it to the list
                 var deviceId = newDeviceDlg.textBox.Text;
-                this.listBox.Items.Add(deviceId);
-                await this.newDeviceCreator(deviceId);
+                var newDevice = await this.createNewDevice(deviceId);
+                if (newDevice != null)
+                {
+                    this.listBox.Items.Add(deviceId);
+                    this.okButton.IsEnabled = true;
+                    this.Devices.Add(newDevice);
+                }
             }
         }
 

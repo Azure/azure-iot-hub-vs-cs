@@ -97,6 +97,15 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading Devices....
+        /// </summary>
+        internal static string LoadingDevices {
+            get {
+                return ResourceManager.GetString("LoadingDevices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Installing NuGet package &apos;{0}&apos; version {1}..
         /// </summary>
         internal static string LogMessage_AddingNuGetPackage {

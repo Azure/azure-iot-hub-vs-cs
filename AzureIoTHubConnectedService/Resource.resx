@@ -160,7 +160,7 @@
     <value>Resource Group</value>
   </data>
   <data name="ServiceInstanceNameLabelText" xml:space="preserve">
-    <value>Service Name</value>
+    <value>IoT Hub Name</value>
   </data>
   <data name="Subscription" xml:space="preserve">
     <value>Subscription</value>

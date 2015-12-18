@@ -1,5 +1,4 @@
-﻿//using Microsoft.VisualStudio.Azure.ResourceManagement.Storage;
-using Microsoft.VisualStudio.Services.Client.AccountManagement;
+﻿using Microsoft.VisualStudio.Services.Client.AccountManagement;
 using Microsoft.VisualStudio.WindowsAzure.Authentication;
 using System;
 using System.Collections.Generic;
@@ -151,13 +150,13 @@ namespace AzureIoTHubConnectedService
             return iotHubAccounts;
         }
 
-        public async Task<IAzureIoTHub> CreateStorageAccount(
+        public async Task<IAzureIoTHub> CreateIoTHub(
             IAzureIoTHubAccountManager accountManager, CancellationToken cancellationToken)
         {
             Account account = await this.GetAccountAsync();
             Debug.Assert(account != null && !account.NeedsReauthentication);
 
-            return await accountManager.CreateStorageAccountAsync(this.serviceProvider, account, cancellationToken);
+            return await accountManager.CreateIoTHubAsync(this.serviceProvider, account, cancellationToken);
         }
     }
 }

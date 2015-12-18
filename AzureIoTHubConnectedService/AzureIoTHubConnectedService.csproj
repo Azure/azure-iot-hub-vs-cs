@@ -70,8 +70,6 @@
     <Compile Include="DeviceIdentity.cs" />
     <Compile Include="DialogWindows.cs" />
     <Compile Include="IoTHubResource.cs" />
-    <Compile Include="CreateStorageAccountInput.cs" />
-    <Compile Include="CreateStorageAccountProperties.cs" />
     <Compile Include="GetMicrosoftResourcesResponse.cs" />
     <Compile Include="GetResourceGroupsResponse.cs" />
     <Compile Include="GetResourceLocationsResponse.cs" />
@@ -85,9 +83,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="ResourceGroup.cs" />
-    <Compile Include="ResourceGroupCreationSettings.cs" />
     <Compile Include="ResourceLocation.cs" />
-    <Compile Include="ResourceProvider.cs" />
     <Compile Include="ResourceTypeInfo.cs" />
     <Resource Include="Resources\CSharp\SendDataToAzureIoTHub.cs" />
     <Compile Include="ServiceManagementHttpClient.cs" />
@@ -174,10 +170,6 @@
     </Reference>
     <Reference Include="Microsoft.Azure.Devices, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Azure.Devices.1.0.0-preview-005\lib\net451\Microsoft.Azure.Devices.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Devices.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Azure.Devices.Client.1.0.0-preview-007\lib\net45\Microsoft.Azure.Devices.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Internal.VisualStudio.Shell.Interop.14.0.DesignTime">

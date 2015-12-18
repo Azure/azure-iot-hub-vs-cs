@@ -23,6 +23,6 @@ namespace AzureIoTHubConnectedService
     {
         Task<IEnumerable<IAzureIoTHub>> EnumerateIoTHubAccountsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken);
 
-        Task<IAzureIoTHub> CreateStorageAccountAsync(IServiceProvider serviceProvider, Account userAccount, CancellationToken cancellationToken);
+        Task<IAzureIoTHub> CreateIoTHubAsync(IServiceProvider serviceProvider, Account userAccount, CancellationToken cancellationToken);
     }
 }

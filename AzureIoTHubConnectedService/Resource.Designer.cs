@@ -187,7 +187,7 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Service Name.
+        ///   Looks up a localized string similar to IoT Hub Name.
         /// </summary>
         internal static string ServiceInstanceNameLabelText {
             get {

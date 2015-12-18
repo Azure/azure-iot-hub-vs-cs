@@ -31,39 +31,9 @@ namespace AzureIoTHubConnectedService
             return response.Accounts.Select(p => new IoTHubResource(subscription, p)).ToList();
         }
 
-        public async Task<IAzureIoTHub> CreateStorageAccountAsync(IServiceProvider serviceProvider, Account userAccount, CancellationToken cancellationToken)
+        public Task<IAzureIoTHub> CreateIoTHubAsync(IServiceProvider serviceProvider, Account userAccount, CancellationToken cancellationToken)
         {
-            IAzureIoTHub result = null;
-            try
-            {
-                await Microsoft.VisualStudio.Shell.ThreadHelper.Generic.InvokeAsync(() =>
-                {
-                    throw new NotImplementedException();
-                    /*
-                    using (CreateServiceViewModel viewModel = new CreateServiceViewModel(serviceProvider, userAccount))
-                    {
-                        using (CreateServiceDialog dialog = new CreateServiceDialog(viewModel))
-                        {
-                            dialog.ShowModal();
-
-                            StorageAccount createdAccount = viewModel.CreatedStorageAccount;
-                            if (createdAccount != null)
-                            {
-                                result = new AzureStorageAccount(viewModel.SubscriptionsViewModel.SelectedSubscription.UnderlyingSubscription, createdAccount);
-                            }
-                        }
-                    }
-                    */
-
-                }).ConfigureAwait(false);
-
-                return result;
-            }
-            catch (Exception /*ex*/)
-            {
-                // await ShellUtilities.ShowErrorMessageAsync("Error occurred during creation: " + ex.Message).ConfigureAwait(false);
-                throw;
-            }
+            throw new NotImplementedException();
         }
 
     }

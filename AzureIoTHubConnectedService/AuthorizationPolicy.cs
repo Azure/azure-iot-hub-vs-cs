@@ -8,7 +8,6 @@ namespace AzureIoTHubConnectedService
         [DataMember(Name = "keyName")]
         public string KeyName { get; set; }
 
-        // Microsoft.ClassicStorage keys
         [DataMember(Name = "primaryKey")]
         public string PrimaryKey { get; set; }
 

@@ -17,23 +17,12 @@
                 <Setter x:Uid="Setter_3" Property="Padding" Value="10,0,10,0" />
                 <Setter x:Uid="Setter_4" Property="Margin" Value="0,0,0,0" />
             </Style>
-
             <Style x:Uid="Style_2" TargetType="Button" BasedOn="{StaticResource StandardButtonStyle}" />
-
-            <BooleanToVisibilityConverter x:Uid="BooleanToVisibilityConverter_1" x:Key="BooleanToVisibilityConverter"/>
-
-            <Style x:Uid="Style_3" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-                <Setter x:Uid="Setter_5" Property="Padding" Value="0" />
-                <Setter x:Uid="Setter_6" Property="Margin" Value="0,8,0,5" />
-            </Style>
-
-            <Style x:Uid="Style_4" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-                <Setter x:Uid="Setter_7" Property="Padding" Value="2"/>
-            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
     <Grid x:Uid="Grid_1" Margin="12" Width="330">
+
         <Grid Margin="0,0,0,0" Grid.Column="0" Grid.Row="0" Width="330">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200" />
@@ -42,8 +31,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBox" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="330" Height="200" IsSynchronizedWithCurrentItem="True" Grid.ColumnSpan="3">
-            </ListBox>
+            <ListBox Grid.Column="0" Grid.Row="0" x:Name="listBox" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="330" Height="200" IsSynchronizedWithCurrentItem="True" Grid.ColumnSpan="3" />
         </Grid>
 
         <Grid Margin="0,200,0,0" Grid.Column="0" Grid.Row="0" Width="330" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -57,7 +45,7 @@
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" x:Name="newButton" Click="newButton_Click" Content="New Device" />
+            <Button Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" x:Name="newButton" Click="newButton_Click" Content="New Device"/>
             <Button Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" x:Name="okButton" Click="okButton_Click" IsDefault="True" Content="OK" />
             <Button Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right" x:Name="cancelButton" IsCancel="True" Content="Cancel" Margin="0,0,0,0"/>
         </Grid>

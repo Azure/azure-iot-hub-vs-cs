@@ -16,9 +16,9 @@ namespace AzureIoTHubConnectedService
         private IAzureIoTHubAccountManager iotHubAccountManager;
         private Authenticator authenticator;
 
-        public AzureIoTHubAccountProviderGrid(IAzureIoTHubAccountManager storageAccountManager, IServiceProvider serviceProvider)
+        public AzureIoTHubAccountProviderGrid(IAzureIoTHubAccountManager accountManager, IServiceProvider serviceProvider)
         {
-            this.iotHubAccountManager = storageAccountManager;
+            this.iotHubAccountManager = accountManager;
             this.serviceProvider = serviceProvider;
 
             this.Description = Resource.IoTHubProvdierDescription;
@@ -26,6 +26,7 @@ namespace AzureIoTHubConnectedService
             this.ServiceInstanceNameLabelText = Resource.ServiceInstanceNameLabelText;
             this.NoServiceInstancesText = Resource.NoServiceInstancesText;
             this.CreateServiceInstanceText = Resource.CreateServiceInstanceText;
+            this.ConfigureServiceInstanceText = "Select Devices";
         }
 
         private Authenticator Authenticator
@@ -57,6 +58,11 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        public override Task<bool> ConfigureServiceInstanceAsync(ConnectedServiceInstance instance, CancellationToken ct)
+        {
+            return base.ConfigureServiceInstanceAsync(instance, ct);
+        }
+
         public override Task<ConnectedServiceAuthenticator> CreateAuthenticatorAsync()
         {
             return Task.FromResult<ConnectedServiceAuthenticator>(this.Authenticator);
@@ -64,9 +70,9 @@ namespace AzureIoTHubConnectedService
 
         public override async Task<IEnumerable<ConnectedServiceInstance>> EnumerateServiceInstancesAsync(CancellationToken ct)
         {
-            IEnumerable<IAzureIoTHub> storageAccounts = await this.Authenticator.GetAzureIoTHubs(this.iotHubAccountManager, ct).ConfigureAwait(false);
+            IEnumerable<IAzureIoTHub> hubs = await this.Authenticator.GetAzureIoTHubs(this.iotHubAccountManager, ct).ConfigureAwait(false);
             ct.ThrowIfCancellationRequested();
-            return storageAccounts.Select(p => AzureIoTHubAccountProviderGrid.CreateServiceInstance(p)).ToList();
+            return hubs.Select(p => AzureIoTHubAccountProviderGrid.CreateServiceInstance(p)).ToList();
         }
 
         private static ConnectedServiceInstance CreateServiceInstance(IAzureIoTHub iotHubAccount)
@@ -83,23 +89,17 @@ namespace AzureIoTHubConnectedService
 
             instance.Metadata.Add("IoTHubAccount", iotHubAccount);
 
-/*
-            instance.Metadata.Add("iotHubUri", "val");
-            instance.Metadata.Add("deviceId",  "val");
-            instance.Metadata.Add("deviceKey", "val");
-*/
             return instance;
         }
 
         public override async Task<ConnectedServiceInstance> CreateServiceInstanceAsync(CancellationToken ct)
         {
             ConnectedServiceInstance result = null;
-            IAzureIoTHub createdAccount = await this.Authenticator.CreateStorageAccount(this.iotHubAccountManager, ct).ConfigureAwait(false);
+            IAzureIoTHub createdAccount = await this.Authenticator.CreateIoTHub(this.iotHubAccountManager, ct).ConfigureAwait(false);
             if (createdAccount != null)
             {
                 result = AzureIoTHubAccountProviderGrid.CreateServiceInstance(createdAccount);
             }
-
             return result;
         }
 

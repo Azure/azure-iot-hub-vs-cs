@@ -1,1 +1,0 @@
-copy /y AzureIoTHubConnectedService\ProjectResources\*.nupkg AzureIoTHubConnectedService\Packages

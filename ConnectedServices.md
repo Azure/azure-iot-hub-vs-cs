@@ -22,7 +22,7 @@ Inspired by http://azure.microsoft.com/en-us/documentation/articles/vs-storage-a
 
 ##Overview
 
-This article describes how to get started using Azure IoT Hub in Visual Studio after you have created or referenced an Azure IoT Hub in a Universal Windows Project by using the Visual Studio Add Connected Services dialog.
+This article describes how to get started using Azure IoT Hub in Visual Studio after you have created or referenced an Azure IoT Hub in a Universal Windows Project by using the Visual Studio Add Connected Services.
 The article shows you how to send messages from a device to an IoT Hub and how to send messages from an IoT Hub to a device. The samples are written in C#.
 
 > __Note__

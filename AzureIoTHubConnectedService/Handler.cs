@@ -34,20 +34,19 @@ namespace AzureIoTHubConnectedService
 
         public override async Task<AddServiceInstanceResult> AddServiceInstanceAsync(ConnectedServiceHandlerContext context, CancellationToken ct)
         {
-            HandlerManifest configuration = await this.BuildHandlerManifest(context);
-
-            await this.AddSdkReferenceAsync(context, configuration, ct);
-            var tokenDict = new Dictionary<string, string>();
-
             IAzureIoTHub iotHubAccount = context.ServiceInstance.Metadata["IoTHubAccount"] as IAzureIoTHub;
             var primaryKey = await iotHubAccount.GetPrimaryKeyAsync(ct);
+
             var ioTHubUri = context.ServiceInstance.Metadata["iotHubUri"] as string;
+
+            var tokenDict = new Dictionary<string, string>();
             tokenDict.Add("iotHubUri", ioTHubUri);
+
             var device = GetSelectedDevice(context, ioTHubUri, primaryKey);
             if (device == null)
             {
                 // Use empty device ID that the user will later fill in with real data
-                tokenDict.Add("deviceId",  "<replace with real device ID>");
+                tokenDict.Add("deviceId", "<replace with real device ID>");
                 tokenDict.Add("deviceKey", "<replace with real device Key>");
             }
             else
@@ -55,6 +54,9 @@ namespace AzureIoTHubConnectedService
                 tokenDict.Add("deviceId", device.Id);
                 tokenDict.Add("deviceKey", device.Key);
             }
+
+            HandlerManifest configuration = await this.BuildHandlerManifest(context);
+            await this.AddSdkReferenceAsync(context, configuration, ct);
 
             foreach (var fileToAdd in configuration.Files)
             {

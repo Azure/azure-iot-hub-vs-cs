@@ -45,9 +45,7 @@ namespace AzureIoTHubConnectedService
             var device = GetSelectedDevice(context, ioTHubUri, primaryKey);
             if (device == null)
             {
-                // Use empty device ID that the user will later fill in with real data
-                tokenDict.Add("deviceId", "<replace with real device ID>");
-                tokenDict.Add("deviceKey", "<replace with real device Key>");
+                throw new OperationCanceledException();
             }
             else
             {

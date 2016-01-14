@@ -108,7 +108,16 @@ namespace AzureIoTHubConnectedService
             ConnectedServiceLogger logger,
             IVsPackageInstallerServices packageInstallerServices)
         {
-            IEnumerable<IVsPackageMetadata> installedPackages = packageInstallerServices.GetInstalledPackages(targetProject);
+            IEnumerable<IVsPackageMetadata> installedPackages;
+            try
+            {
+                installedPackages = packageInstallerServices.GetInstalledPackages(targetProject);
+            }
+            catch (ArgumentException)
+            {
+                // This happens for C++ projects
+                installedPackages = new List<IVsPackageMetadata>();
+            }
 
             foreach (KeyValuePair<string, string> requiredPackage in packages)
             {

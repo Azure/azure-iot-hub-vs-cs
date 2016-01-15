@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio;
+﻿// This file will be completely removed once Connected Services fully supports C++ project type
+
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
@@ -429,7 +431,7 @@ namespace AzureIoTHubConnectedService
                                         parameters.First().ParameterType == typeof(string)
                                     select item).ToDictionary(mi => mi.Name, StringComparer.OrdinalIgnoreCase);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // Create empty list of methods.
                     Debug.Fail("Failed to find methods for token replacement.");
@@ -508,7 +510,7 @@ namespace AzureIoTHubConnectedService
             {
                 result = (string)methods[methodName].Invoke(this, new object[] { tokenValue });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Debug.Fail("Failed to evaluate method for token replacement.");
                 return false;
@@ -517,59 +519,9 @@ namespace AzureIoTHubConnectedService
             return true;
         }
 
-        /// <summary>
-        /// Given a value, ensure that only ascii A-Z and number 0-9 and '_' are part
-        /// of the token value. Any other values are replaced with '_'.
-        /// </summary>
-        /// <param name="tokenValue">
-        /// The token value to normalize.
-        /// </param>
-        /// <returns>
-        /// Returns a safe string version of the token value.
-        /// </returns>
-        [TokenReplacementMethod]
-        private string MakeSafeIdentifierName(string tokenValue)
-        {
-            return TokenReplacementBuilder.MakeSafeIdentifier(tokenValue);
-        }
-
         public static string MakeSafeIdentifier(string tokenValue)
         {
             return Regex.Replace(tokenValue, "[^a-zA-Z0-9_]", "_");
-        }
-
-        /// <summary>
-        /// Given a value, ensure that only valid filename characters are part
-        /// of the token value. Any other values are replaced with '_'.
-        /// </summary>
-        /// <param name="tokenValue">
-        /// The token value to normalize.
-        /// </param>
-        /// <returns>
-        /// Returns a safe string version of the token value.
-        /// </returns>
-        [TokenReplacementMethod]
-        private string MakeSafeFileName(string tokenValue)
-        {
-            tokenValue = tokenValue ?? string.Empty;
-            return string.Join("_", tokenValue.Split(Path.GetInvalidFileNameChars()));
-        }
-
-        /// <summary>
-        /// Given a value, ensure that only valid directory name characters are part
-        /// of the token value. Any other values are replaced with '_'.
-        /// </summary>
-        /// <param name="tokenValue">
-        /// The token value to normalize.
-        /// </param>
-        /// <returns>
-        /// Returns a safe string version of the token value.
-        /// </returns>
-        [TokenReplacementMethod]
-        private string MakeSafeDirectoryName(string tokenValue)
-        {
-            tokenValue = tokenValue ?? string.Empty;
-            return string.Join("_", tokenValue.Split(Path.GetInvalidPathChars()));
         }
     }
 
@@ -644,23 +596,6 @@ namespace AzureIoTHubConnectedService
             }
 
             return null;
-        }
-
-        public static object GetProjectPropertyValue(this IVsHierarchy hierarchy, string propertyName)
-        {
-            Project project = hierarchy.GetDteProject();
-            Property prop = null;
-            // Properties has no .Contains or similar, so just catch the exception if the project
-            // doesn't have this property.  (E.g. Web Site projects have no OutputType)
-            try
-            {
-                prop = project.Properties.Item(propertyName);
-            }
-            catch (ArgumentException)
-            {
-                // Pass, leave property as null if it doesn't exist.
-            }
-            return prop != null ? prop.Value : null;
         }
 
         public static TInterface GetService<TInterface, TService>(this IServiceProvider serviceProvider)
@@ -754,62 +689,6 @@ namespace AzureIoTHubConnectedService
 
             return platformVersion;
         }
-/*
-        internal static string GetOutputType(this IVsHierarchy project)
-        {
-            string outputTypeString = null;
-
-            object outputTypeObj = project.GetProjectPropertyValue("OutputType");
-            if (outputTypeObj != null)
-            {
-                if (outputTypeObj is string)
-                {
-                    outputTypeString = (string)outputTypeObj;
-                }
-                else
-                {
-                    prjOutputType outputType;
-                    if (Enum.TryParse(outputTypeObj.ToString(), out outputType))
-                    {
-                        outputTypeString = Enum.GetName(typeof(prjOutputType), outputType);
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(outputTypeString))
-                {
-                    // strip off the starting "prjOutputType", so extensions just need to say "WinExe", "Exe", etc.
-                    outputTypeString = outputTypeString.TrimPrefix("prjOutputType");
-                }
-            }
-
-            return outputTypeString;
-        }
-*/
-        /// <summary>
-        /// Writes the specified message to the general output pane.
-        /// </summary>
-        public static void WriteLineToOutputWindow(string format, params object[] args)
-        {
-            IVsOutputWindowPane outputPane = ServiceProvider.GlobalProvider.GetService(typeof(SVsGeneralOutputWindowPane)) as IVsOutputWindowPane;
-            if (outputPane != null)
-            {
-                // Write out the message. If it fails, we do nothing.
-                outputPane.Activate();
-                outputPane.OutputStringThreadSafe(format.FormatCurrentCulture(args) + Environment.NewLine);
-            }
-        }
-
-        /// <summary>
-        /// Clears the general output pane.
-        /// </summary>
-        public static void ClearOutputPane()
-        {
-            IVsOutputWindowPane outputPane = ServiceProvider.GlobalProvider.GetService(typeof(SVsGeneralOutputWindowPane)) as IVsOutputWindowPane;
-            if (outputPane != null)
-            {
-                outputPane.Clear();
-            }
-        }
     }
 
     internal class AzureIoTHubConnectedServiceHandlerHelper : Microsoft.VisualStudio.ConnectedServices.ConnectedServiceHandlerHelper
@@ -852,17 +731,6 @@ namespace AzureIoTHubConnectedService
                 }
                 return handlerContext;
             }
-        }
-
-        /// <summary>
-        /// Initializes the HandlerHelper so it can be used properly.
-        /// This needs to be called before any other method.
-        /// </summary>
-        public void Initialize(ConnectedServiceContext context)
-        {
-            Debug.Assert(this.context == null, "HandlerHelper instances should only be used for a single ConnectedServiceContext object.  Ensure the HandlerHelper has CreationPolicy.NonShared on it.");
-
-            this.context = context;
         }
 
         /// <summary>
@@ -972,35 +840,7 @@ namespace AzureIoTHubConnectedService
         {
             throw new NotImplementedException();
         }
-/*
-        private static string GetWcfMetadataTagValue(MSBuild.Project project)
-        {
-            MSBuild.ProjectItem metadataItem = project.Items.FirstOrDefault(m => m.ItemType == "WCFMetadata");
-            // remove trailing end slash in "Service References\"
-            return metadataItem?.EvaluatedInclude.TrimEnd('\\');
-        }
 
-        private MSBuild.Project GetMSBuildProjectForHierarchy(IVsHierarchy hierarchy)
-        {
-            Guid projectGuid;
-            hierarchy.GetGuidProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_ProjectIDGuid, out projectGuid);
-            foreach (var proj in MSBuild.ProjectCollection.GlobalProjectCollection.LoadedProjects)
-            {
-                var guidProp = proj.Properties.SingleOrDefault(prop => prop.Name == "ProjectGuid");
-                // .user projects don't have a GUID but we shouldn't throw on them
-                if (guidProp != null)
-                {
-                    if (Guid.Parse(guidProp.EvaluatedValue) == projectGuid)
-                    {
-                        return proj;
-                    }
-                }
-            }
-
-            // no MSBuild project exists
-            return null;
-        }
-*/
         /// <summary>
         /// Given an input, replace any tokens found in the specified dictionary with the specified values.
         /// </summary>
@@ -1020,7 +860,6 @@ namespace AzureIoTHubConnectedService
             TokenReplacementBuilder tokenReplacement = BuildTokenReplacement(additionalReplacementValues);
             return tokenReplacement.Build(input);
         }
-
 
         private void PerformTokenReplacement(ProjectItem item, IDictionary<string, string> additionalReplacementValues = null)
         {
@@ -1047,19 +886,6 @@ namespace AzureIoTHubConnectedService
             return tokenReplacement;
         }
 
-        static Property FindProperty(Properties properties, string name)
-        {
-            foreach (var prop in properties)
-            {
-                var item = prop as Property;
-                if (item != null && item.Name == name)
-                {
-                    return item;
-                }
-            }
-            return null;
-        }
-
         /// <summary>
         /// Get the built-in set of tokens supported by the handler helper.
         /// </summary>
@@ -1084,7 +910,7 @@ namespace AzureIoTHubConnectedService
             }
 
             Project project = ConnectedServicesUtilities.GetDteProject(this.context.ProjectHierarchy);
-            Property assemblyNameProperty = FindProperty(project.Properties, "AssemblyName");
+            Property assemblyNameProperty = project.Properties.OfType<Property>().FirstOrDefault(p => string.Equals(p.Name, "AssemblyName", StringComparison.OrdinalIgnoreCase));
             if (assemblyNameProperty != null)
             {
                 string assemblyName = assemblyNameProperty.Value as string;
@@ -1109,38 +935,6 @@ namespace AzureIoTHubConnectedService
             }
 
             return extended;
-        }
-
-        /// <summary>
-        /// Sets the state of the specified virtual folders to be either collapsed or expanded.
-        /// </summary>
-        /// <param name="projectHierarchy">
-        /// The project containing the virtual folders.
-        /// </param>
-        /// <param name="provider">
-        /// An IServiceProvider for the project.
-        /// </param>
-        /// <param name="virtualFolders">
-        /// A dictionary mapping the itemIds of virtual folders in the project to a bool indicating whether the virtual folder 
-        /// should be expanded.
-        /// </param>
-        private static void SetVirtualFoldersExpanded(IVsHierarchy projectHierarchy, IServiceProvider provider, Dictionary<uint, bool> virtualFolders)
-        {
-            Debug.Assert(projectHierarchy != null, "projectHierarchy cannot be null");
-            Debug.Assert(provider != null, "provider cannot be null");
-            Debug.Assert(virtualFolders != null, "virtualFolders can't be null");
-            if (virtualFolders == null || projectHierarchy == null || provider == null)
-            {
-                return;
-            }
-
-            IVsUIHierarchyWindow window = VsShellUtilities.GetUIHierarchyWindow(provider, new Guid(EnvDTE.Constants.vsWindowKindSolutionExplorer));
-
-            foreach (KeyValuePair<uint, bool> keyValue in virtualFolders)
-            {
-                EXPANDFLAGS action = keyValue.Value ? EXPANDFLAGS.EXPF_ExpandFolder : EXPANDFLAGS.EXPF_CollapseFolder;
-                window.ExpandItem((IVsUIHierarchy)projectHierarchy, keyValue.Key, action);
-            }
         }
 
         /// <summary>
@@ -1283,7 +1077,7 @@ namespace AzureIoTHubConnectedService
             ProjectItem parentItem = items.Parent as ProjectItem;
             if (parentItem != null)
             {
-                Property folderDefaultNamespaceProperty = parentItem.Properties.Item("DefaultNamespace");
+                Property folderDefaultNamespaceProperty = parentItem.Properties.OfType<Property>().FirstOrDefault(p => string.Equals(p.Name, "DefaultNamespace", StringComparison.OrdinalIgnoreCase));
                 folderDefaultNamespace = folderDefaultNamespaceProperty?.Value as string;
                 if (!string.IsNullOrEmpty(folderDefaultNamespace))
                 {
@@ -1356,8 +1150,7 @@ namespace AzureIoTHubConnectedService
         {
             // Prompt for overwriting.
             IVsUIShell uiShell = ServiceProvider.GlobalProvider.GetService(typeof(SVsUIShell)) as IVsUIShell;
-            string prompt = "blah blah?"; // Resources.VsProjectItemOverwriteExistingFile.FormatCurrentCulture(targetFileName);
-
+            string prompt = string.Format("A file with the name '{0}' already exists. Do you want to replace it?", targetFileName);
             bool overwrite = VsShellUtilities.PromptYesNo(prompt, null, OLEMSGICON.OLEMSGICON_QUERY, uiShell);
             return overwrite;
         }

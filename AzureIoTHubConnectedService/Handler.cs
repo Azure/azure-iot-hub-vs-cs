@@ -36,6 +36,19 @@ namespace AzureIoTHubConnectedService
 
             return Task.FromResult(manifest);
         }
+
+        protected override AddServiceInstanceResult CreateAddServiceInstanceResult(ConnectedServiceHandlerContext context)
+        {
+            return new AddServiceInstanceResult(
+                context.ServiceInstance.Name,
+                new Uri("https://azure.microsoft.com/en-us/documentation/articles/iot-hub-csharp-csharp-getstarted/")
+                );
+        }
+
+        protected override ConnectedServiceHandlerHelper GetConnectedServiceHandlerHelper(ConnectedServiceHandlerContext context)
+        {
+            return context.HandlerHelper;
+        }
     }
 
     [ConnectedServiceHandlerExport("Microsoft.AzureIoTHubService",
@@ -49,10 +62,24 @@ namespace AzureIoTHubConnectedService
             manifest.PackageReferences.Add(new NuGetReference("Apache.QPID.Proton.AzureIot", "0.9.0.1-preview-003"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.AmqpTransport", "1.0.0-preview-010"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.IoTHubClient", "1.0.0-preview-010"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.C.SharedUtility", "1.0.0-preview-003"));
 
             manifest.Files.Add(new FileToAdd("CPP/SendDataToAzureIoTHub.cpp", @"path\path"));
 
             return Task.FromResult(manifest);
+        }
+
+        protected override AddServiceInstanceResult CreateAddServiceInstanceResult(ConnectedServiceHandlerContext context)
+        {
+            return new AddServiceInstanceResult(
+                "",
+                null
+                );
+        }
+
+        protected override ConnectedServiceHandlerHelper GetConnectedServiceHandlerHelper(ConnectedServiceHandlerContext context)
+        {
+            return new AzureIoTHubConnectedServiceHandlerHelper(context);
         }
     }
 
@@ -72,8 +99,8 @@ namespace AzureIoTHubConnectedService
 
             var ioTHubUri = context.ServiceInstance.Metadata["iotHubUri"] as string;
 
-            // var handlerHelper = context.HandlerHelper;
-            var handlerHelper = new AzureIoTHubConnectedServiceHandlerHelper(context);
+            // Once C++ is officially supported, we can switch this to context.HandlerHelper, removing AzureIoTHubConnectedServiceHandlerHelper
+            var handlerHelper = GetConnectedServiceHandlerHelper(context);
 
             handlerHelper.TokenReplacementValues.Add("iotHubUri", ioTHubUri);
 
@@ -88,8 +115,6 @@ namespace AzureIoTHubConnectedService
                 handlerHelper.TokenReplacementValues.Add("deviceKey", device.Key);
             }
 
-            await context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "Device selection completed");
-
             HandlerManifest configuration = await this.BuildHandlerManifest(context);
             await this.AddSdkReferenceAsync(context, configuration, ct);
 
@@ -98,18 +123,18 @@ namespace AzureIoTHubConnectedService
                 var file = this.CopyResourceToTemporaryPath(fileToAdd.Path, handlerHelper);
                 string targetPath = Path.GetFileName(fileToAdd.Path); // Use the same name
                 string addedFile = await handlerHelper.AddFileAsync(file, targetPath);
-                await context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "File {0} added", targetPath);
             }
 
-            AddServiceInstanceResult result = new AddServiceInstanceResult(
-                "", // context.ServiceInstance.Name,
-                null //new Uri("https://azure.microsoft.com/en-us/documentation/articles/iot-hub-csharp-csharp-getstarted/")
-                );
+            AddServiceInstanceResult result = this.CreateAddServiceInstanceResult(context);
 
             await context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "New service instance {0} created", context.ServiceInstance.Name);
 
             return result;
         }
+
+        protected abstract AddServiceInstanceResult CreateAddServiceInstanceResult(ConnectedServiceHandlerContext context);
+
+        protected abstract ConnectedServiceHandlerHelper GetConnectedServiceHandlerHelper(ConnectedServiceHandlerContext context);
 
         private async Task<Device> CreateNewDevice(ConnectedServiceHandlerContext context, RegistryManager registryManager, string deviceId)
         {
@@ -156,10 +181,10 @@ namespace AzureIoTHubConnectedService
             var uriPrefix = "pack://application:,,/" + Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
             using (var reader = new StreamReader(Application.GetResourceStream(new Uri(uriPrefix + resource)).Stream))
             {
-                var path = Path.GetTempFileName();
                 var text = reader.ReadToEnd();
-                //                var replaced = helper.PerformTokenReplacement(text);
-                var replaced = text;
+                var replaced = helper.PerformTokenReplacement(text);
+
+                var path = Path.GetTempFileName();
                 File.WriteAllText(path, replaced);
                 return path;
             }

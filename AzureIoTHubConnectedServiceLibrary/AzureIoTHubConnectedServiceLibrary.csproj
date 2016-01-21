@@ -97,8 +97,8 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NuGet.VisualStudio, Version=2.8.60717.93, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86">
-      <HintPath>..\packages\NuGet.VisualStudio.2.8.6\lib\net45\NuGet.VisualStudio.dll</HintPath>
+    <Reference Include="NuGet.VisualStudio, Version=3.3.0.167, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\NuGet.VisualStudio.3.3.0\lib\net45\NuGet.VisualStudio.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -196,7 +196,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Resource Include="AzureIoTHubProviderIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -211,6 +210,7 @@
     </Content>
     <Content Include="index.html" />
     <Content Include="stylesheet.css" />
+    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="Packages\microsoft.azure.devices.client.1.0.0-preview-007.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -236,9 +236,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-
   </ItemGroup>
-
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

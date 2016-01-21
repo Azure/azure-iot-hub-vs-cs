@@ -30,4 +30,7 @@
     <StartArguments>/rootsuffix Exp</StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>
+  <PropertyGroup>
+    <ProjectView>ProjectFiles</ProjectView>
+  </PropertyGroup>
 </Project>

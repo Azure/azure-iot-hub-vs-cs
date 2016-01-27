@@ -82,7 +82,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <FilesToSign Include="$(OutDir)\$(AzureIoTHubConnectedService).vsix">
+    <FilesToSign Include="$(OutDir)\$(AssemblyName).vsix">
       <Authenticode>vsix</Authenticode>
     </FilesToSign>
   </ItemGroup>

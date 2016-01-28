@@ -1150,7 +1150,7 @@ namespace AzureIoTHubConnectedService
         {
             // Prompt for overwriting.
             IVsUIShell uiShell = ServiceProvider.GlobalProvider.GetService(typeof(SVsUIShell)) as IVsUIShell;
-            string prompt = string.Format(CultureInfo.InvariantCulture, "A file with the name '{0}' already exists. Do you want to replace it?", targetFileName);
+            string prompt = string.Format(CultureInfo.InvariantCulture, Resource.FileAlreadyExists, targetFileName);
             bool overwrite = VsShellUtilities.PromptYesNo(prompt, null, OLEMSGICON.OLEMSGICON_QUERY, uiShell);
             return overwrite;
         }

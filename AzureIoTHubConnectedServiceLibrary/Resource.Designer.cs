@@ -79,6 +79,15 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A file with the name &apos;{0}&apos; already exists. Do you want to replace it?.
+        /// </summary>
+        internal static string FileAlreadyExists {
+            get {
+                return ResourceManager.GetString("FileAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select an existing IoT Hub or create a new one by clicking the link below..
         /// </summary>
         internal static string GridHeaderText {

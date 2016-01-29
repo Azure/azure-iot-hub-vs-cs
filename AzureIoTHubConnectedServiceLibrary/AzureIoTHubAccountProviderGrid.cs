@@ -135,8 +135,11 @@ namespace AzureIoTHubConnectedService
             }
         }
 
-        private async void CalculateCanCreateServiceInstance()
+        private void CalculateCanCreateServiceInstance()
         {
+            this.CanCreateServiceInstance = false;
+// New IoT Hub instance creation is not yet supported, so disable the link unconditionally
+#if false
             string noServicesText = Resource.NoServiceInstancesText;
             this.CanCreateServiceInstance = this.Authenticator.IsAuthenticated;
             if (this.CanCreateServiceInstance)
@@ -148,6 +151,7 @@ namespace AzureIoTHubConnectedService
                 }
             }
             this.NoServiceInstancesText = noServicesText;
+#endif
         }
     }
 }

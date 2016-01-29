@@ -169,7 +169,7 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No accounts were found.  Choose another user or create a new account to continue..
+        ///   Looks up a localized string similar to No IoT Hub instances were found.  Choose another user or create a new IoT Hub instance from Azure Portal..
         /// </summary>
         internal static string NoServiceInstancesText {
             get {

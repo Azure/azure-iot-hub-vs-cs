@@ -154,7 +154,7 @@
     <value>To view your IoT Hubs, add a user account or reenter your credentials.</value>
   </data>
   <data name="NoServiceInstancesText" xml:space="preserve">
-    <value>No accounts were found.  Choose another user or create a new account to continue.</value>
+    <value>No IoT Hub instances were found.  Choose another user or create a new IoT Hub instance from Azure Portal.</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Region</value>

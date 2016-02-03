@@ -160,7 +160,7 @@
     <Compile Include="ResourceGroup.cs" />
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="ResourceTypeInfo.cs" />
-    <Resource Include="Resources\CSharp\SendDataToAzureIoTHub.cs" />
+    <Resource Include="Resources\CSharp\AzureIoTHub.cs" />
     <Resource Include="Resources\CPP\SendDataToAzureIoTHub.cpp" />
     <Compile Include="ServiceManagementHttpClient.cs" />
     <Compile Include="ServiceManagementHttpClientBuilder.cs" />

@@ -32,7 +32,7 @@ namespace AzureIoTHubConnectedService
             manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "6.0.8"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.0-preview-007"));
 
-            manifest.Files.Add(new FileToAdd("CSharp/SendDataToAzureIoTHub.cs", @"path\path"));
+            manifest.Files.Add(new FileToAdd("CSharp/AzureIoTHub.cs", @"path\path"));
 
             return Task.FromResult(manifest);
         }

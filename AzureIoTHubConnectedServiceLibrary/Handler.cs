@@ -64,7 +64,8 @@ namespace AzureIoTHubConnectedService
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.IoTHubClient", "1.0.0-preview-010"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.C.SharedUtility", "1.0.0-preview-003"));
 
-            manifest.Files.Add(new FileToAdd("CPP/SendDataToAzureIoTHub.cpp", @"path\path"));
+            manifest.Files.Add(new FileToAdd("CPP/azure_iot_hub.cpp", @"path\path"));
+            manifest.Files.Add(new FileToAdd("CPP/azure_iot_hub.h", @"path\path"));
 
             return Task.FromResult(manifest);
         }

@@ -7,12 +7,12 @@
 #include "iothub_client.h"
 #include "iothubtransportamqp.h"
 
-// Insert call to this function in your code:
-void send_device_to_cloud_message();
-
 //
 // String containing Hostname, Device Id & Device Key in the format:
 // "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"
+//
+// Note: this connection string is specific to the device "$deviceId$". To configure other devices,
+// see information on iothub-explorer at http://aka.ms/iothubgetstartedVSCS
 //
 static const char* connection_string = "HostName=$iotHubUri$;DeviceId=$deviceId$;SharedAccessKey=$deviceKey$";
 

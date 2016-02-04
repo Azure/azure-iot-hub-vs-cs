@@ -161,7 +161,8 @@
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="ResourceTypeInfo.cs" />
     <Resource Include="Resources\CSharp\AzureIoTHub.cs" />
-    <Resource Include="Resources\CPP\SendDataToAzureIoTHub.cpp" />
+    <Resource Include="Resources\CPP\azure_iot_hub.cpp" />
+    <Resource Include="Resources\CPP\azure_iot_hub.h" />
     <Compile Include="ServiceManagementHttpClient.cs" />
     <Compile Include="ServiceManagementHttpClientBuilder.cs" />
     <Compile Include="ServiceManagementHttpClientExtensions.cs" />

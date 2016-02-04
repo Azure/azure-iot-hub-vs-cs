@@ -226,7 +226,7 @@
     <None Include="app.config" />
     <None Include="FinalPublicKey.snk" />
     <None Include="packages.config" />
-    <Content Include="Packages\microsoft.azure.devices.client.1.0.0-preview-007.nupkg">
+    <Content Include="Packages\microsoft.azure.devices.client.1.0.0-preview-010.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

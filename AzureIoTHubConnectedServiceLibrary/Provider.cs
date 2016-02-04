@@ -30,7 +30,7 @@ namespace AzureIoTHubConnectedService
             this.Icon = new BitmapImage(new Uri("pack://application:,,/" + this.GetType().Assembly.ToString() + ";component/AzureIoTHubProviderIcon.png"));
             this.CreatedBy = "Microsoft";
             this.Version = new Version(1, 0, 0);
-            this.MoreInfoUri = new Uri("https://aka.ms/ConnectedServicesSDK");
+            this.MoreInfoUri = new Uri("http://aka.ms/iothubgetstartedVSCS");
         }
         public override Task<ConnectedServiceConfigurator> CreateConfiguratorAsync(ConnectedServiceProviderContext context)
         {

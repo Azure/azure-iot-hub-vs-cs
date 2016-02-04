@@ -5,6 +5,10 @@ using Microsoft.Azure.Devices.Client;
 
 static class AzureIoTHub
 {
+    //
+    // Note: this connection string is specific to the device "$deviceId$". To configure other devices,
+    // see information on iothub-explorer at http://aka.ms/iothubgetstartedVSCS
+    //
     const string deviceConnectionString = "HostName=$iotHubUri$;DeviceId=$deviceId$;SharedAccessKey=$deviceKey$";
     public static async Task SendDeviceToCloudMessageAsync()
     {

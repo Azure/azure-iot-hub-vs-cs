@@ -55,9 +55,14 @@ namespace AzureIoTHubConnectedService
             return string.Format(CultureInfo.InvariantCulture, "{0} {1}", this.Sku.Name, this.Sku.Tier);
         }
 
-        public string GetPrimaryKey()
+        public string GetIoTHubOwnerPrimaryKey()
         {
             return this.AuthorizationPolicies.Policies.First((_) => _.KeyName == "iothubowner").PrimaryKey;
+        }
+
+        public string GetServicePrimaryKey()
+        {
+            return this.AuthorizationPolicies.Policies.First((_) => _.KeyName == "service").PrimaryKey;
         }
     }
 }

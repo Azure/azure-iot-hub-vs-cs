@@ -16,6 +16,11 @@
 //
 static const char* connection_string = "HostName=$iotHubUri$;DeviceId=$deviceId$;SharedAccessKey=$deviceKey$";
 
+//
+// To monitor messages sent to device "$deviceId$" use iothub-explorer as follows:
+//    iothub-explorer HostName=$iotHubUri$;SharedAccessKeyName=service;SharedAccessKey=$servicePrimaryKey$ monitor-events "$deviceId$"
+//
+
 struct callback_parameter
 {
     std::string &message;

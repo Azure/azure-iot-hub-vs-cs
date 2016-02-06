@@ -39,13 +39,19 @@ namespace AzureIoTHubConnectedService
             get { return _properties; }
         }
 
-        public async Task<string> GetPrimaryKeyAsync(CancellationToken cancellationToken)
+        public async Task<PrimaryKeys> GetPrimaryKeysAsync(CancellationToken cancellationToken)
         {
             var builder = new ServiceManagementHttpClientBuilder(_subscription);
             var client = await builder.CreateAsync().ConfigureAwait(false);
 
             var detailedAccount = await client.GetIoTHubDetailsAsync(_iotHub, cancellationToken);
-            return detailedAccount.GetPrimaryKey();
+
+            var keys = new PrimaryKeys {
+                IoTHubOwner = detailedAccount.GetIoTHubOwnerPrimaryKey(),
+                Service = detailedAccount.GetServicePrimaryKey()
+            };
+
+            return keys;
         }
     }
 }

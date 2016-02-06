@@ -14,9 +14,15 @@ namespace AzureIoTHubConnectedService
         IReadOnlyDictionary<string, string> Properties { get; }
     }
 
+    public struct PrimaryKeys
+    {
+        public string IoTHubOwner;
+        public string Service;
+    }
+
     public interface IAzureIoTHub : IAzureResource
     {
-        Task<string> GetPrimaryKeyAsync(CancellationToken cancellationToken);
+        Task<PrimaryKeys> GetPrimaryKeysAsync(CancellationToken cancellationToken);
     }
 
     public interface IAzureIoTHubAccountManager

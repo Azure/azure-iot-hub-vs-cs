@@ -21,69 +21,6 @@ namespace AzureIoTHubConnectedService
         public string Key;
     }
 
-    [ConnectedServiceHandlerExport("Microsoft.AzureIoTHubService",
-    AppliesTo = "CSharp")]
-    internal class CSharpHandler : GenericAzureIoTHubServiceHandler
-    {
-        protected override Task<HandlerManifest> BuildHandlerManifest(ConnectedServiceHandlerContext context)
-        {
-            HandlerManifest manifest = new HandlerManifest();
-
-            manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "6.0.8"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.0-preview-010"));
-
-            manifest.Files.Add(new FileToAdd("CSharp/AzureIoTHub.cs", @"path\path"));
-
-            return Task.FromResult(manifest);
-        }
-
-        protected override AddServiceInstanceResult CreateAddServiceInstanceResult(ConnectedServiceHandlerContext context)
-        {
-            return new AddServiceInstanceResult(
-                context.ServiceInstance.Name,
-                new Uri("https://azure.microsoft.com/en-us/documentation/articles/iot-hub-csharp-csharp-getstarted/")
-                );
-        }
-
-        protected override ConnectedServiceHandlerHelper GetConnectedServiceHandlerHelper(ConnectedServiceHandlerContext context)
-        {
-            return context.HandlerHelper;
-        }
-    }
-
-    [ConnectedServiceHandlerExport("Microsoft.AzureIoTHubService",
-    AppliesTo = "VisualC")]
-    internal class CppHandler : GenericAzureIoTHubServiceHandler
-    {
-        protected override Task<HandlerManifest> BuildHandlerManifest(ConnectedServiceHandlerContext context)
-        {
-            HandlerManifest manifest = new HandlerManifest();
-
-            manifest.PackageReferences.Add(new NuGetReference("Apache.QPID.Proton.AzureIot", "0.9.0.1-preview-003"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.AmqpTransport", "1.0.0-preview-010"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.IoTHubClient", "1.0.0-preview-010"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.C.SharedUtility", "1.0.0-preview-003"));
-
-            manifest.Files.Add(new FileToAdd("CPP/azure_iot_hub.cpp", @"path\path"));
-            manifest.Files.Add(new FileToAdd("CPP/azure_iot_hub.h", @"path\path"));
-
-            return Task.FromResult(manifest);
-        }
-
-        protected override AddServiceInstanceResult CreateAddServiceInstanceResult(ConnectedServiceHandlerContext context)
-        {
-            return new AddServiceInstanceResult(
-                "",
-                null
-                );
-        }
-
-        protected override ConnectedServiceHandlerHelper GetConnectedServiceHandlerHelper(ConnectedServiceHandlerContext context)
-        {
-            return new AzureIoTHubConnectedServiceHandlerHelper(context);
-        }
-    }
-
     internal abstract class GenericAzureIoTHubServiceHandler : ConnectedServiceHandler
     {
 
@@ -96,7 +33,7 @@ namespace AzureIoTHubConnectedService
         public override async Task<AddServiceInstanceResult> AddServiceInstanceAsync(ConnectedServiceHandlerContext context, CancellationToken ct)
         {
             IAzureIoTHub iotHubAccount = context.ServiceInstance.Metadata["IoTHubAccount"] as IAzureIoTHub;
-            var primaryKey = await iotHubAccount.GetPrimaryKeyAsync(ct);
+            var primaryKeys = await iotHubAccount.GetPrimaryKeysAsync(ct);
 
             var ioTHubUri = context.ServiceInstance.Metadata["iotHubUri"] as string;
 
@@ -105,7 +42,7 @@ namespace AzureIoTHubConnectedService
 
             handlerHelper.TokenReplacementValues.Add("iotHubUri", ioTHubUri);
 
-            var device = GetSelectedDevice(context, ioTHubUri, primaryKey);
+            var device = GetSelectedDevice(context, ioTHubUri, primaryKeys.IoTHubOwner);
             if (device == null)
             {
                 throw new OperationCanceledException();
@@ -114,9 +51,11 @@ namespace AzureIoTHubConnectedService
             {
                 handlerHelper.TokenReplacementValues.Add("deviceId", device.Id);
                 handlerHelper.TokenReplacementValues.Add("deviceKey", device.Key);
+                handlerHelper.TokenReplacementValues.Add("iotHubOwnerPrimaryKey", primaryKeys.IoTHubOwner);
+                handlerHelper.TokenReplacementValues.Add("servicePrimaryKey", primaryKeys.Service);
             }
 
-            HandlerManifest configuration = await this.BuildHandlerManifest(context);
+            HandlerManifest configuration = this.BuildHandlerManifest(context);
             await this.AddSdkReferenceAsync(context, configuration, ct);
 
             foreach (var fileToAdd in configuration.Files)
@@ -191,7 +130,7 @@ namespace AzureIoTHubConnectedService
             }
         }
 
-        protected abstract Task<HandlerManifest> BuildHandlerManifest(ConnectedServiceHandlerContext context);
+        protected abstract HandlerManifest BuildHandlerManifest(ConnectedServiceHandlerContext context);
 
         private async Task AddSdkReferenceAsync(ConnectedServiceHandlerContext context, HandlerManifest manifest, CancellationToken ct)
         {
@@ -270,19 +209,10 @@ namespace AzureIoTHubConnectedService
     /// </summary>
     internal class FileToAdd : ContentItem
     {
-        public FileToAdd(string resourcePath, string targetFilename)
+        public FileToAdd(string resourcePath)
         {
             this.Path = resourcePath;
-            this.TargetFilename = targetFilename;
         }
-
-        /// <summary>
-        /// Gets or sets the filename to use for the newly added file.
-        /// </summary>
-        /// <remarks>
-        /// This is the filename only and cannot be a path.
-        /// </remarks>
-        public string TargetFilename { get; set; }
     }
 
     internal class SnippetToInsert : ContentItem

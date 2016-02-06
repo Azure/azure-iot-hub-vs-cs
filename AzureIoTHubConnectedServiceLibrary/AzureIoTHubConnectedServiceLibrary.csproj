@@ -43,6 +43,30 @@
     <AssemblyOriginatorKeyFile>..\FinalPublicKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetty.Buffers, Version=0.2.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Buffers-signed.0.2.2\lib\net45\DotNetty.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetty.Codecs, Version=0.2.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Codecs-signed.0.2.2\lib\net45\DotNetty.Codecs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetty.Codecs.Mqtt, Version=0.2.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Codecs.Mqtt-signed.0.2.2\lib\net45\DotNetty.Codecs.Mqtt.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetty.Common, Version=0.2.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Common-signed.0.2.2\lib\net45\DotNetty.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetty.Handlers, Version=0.2.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Handlers-signed.0.2.2\lib\net45\DotNetty.Handlers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetty.Transport, Version=0.2.2.0, Culture=neutral, PublicKeyToken=e7a0210a354f294a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Transport-signed.0.2.2\lib\net45\DotNetty.Transport.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -50,11 +74,15 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.Azure.Amqp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.Amqp.1.0.0-preview-003\lib\net451\Microsoft.Azure.Amqp.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Azure.Amqp.1.0.0\lib\net451\Microsoft.Azure.Amqp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.Devices, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.Devices.1.0.0-preview-005\lib\net451\Microsoft.Azure.Devices.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Azure.Devices.1.0.0\lib\net451\Microsoft.Azure.Devices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Devices.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.Devices.Client.1.0.1\lib\net45\Microsoft.Azure.Devices.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Internal.VisualStudio.Shell.Interop.14.0.DesignTime">
@@ -161,8 +189,10 @@
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="ResourceTypeInfo.cs" />
     <Resource Include="Resources\CSharp\AzureIoTHub.cs" />
-    <Resource Include="Resources\CPP\azure_iot_hub.cpp" />
-    <Resource Include="Resources\CPP\azure_iot_hub.h" />
+    <Resource Include="Resources\CPP\NonWAC\azure_iot_hub.cpp" />
+    <Resource Include="Resources\CPP\NonWAC\azure_iot_hub.h" />
+    <Resource Include="Resources\CPP\WAC\azure_iot_hub.cpp" />
+    <Resource Include="Resources\CPP\WAC\azure_iot_hub.h" />
     <Compile Include="ServiceManagementHttpClient.cs" />
     <Compile Include="ServiceManagementHttpClientBuilder.cs" />
     <Compile Include="ServiceManagementHttpClientExtensions.cs" />
@@ -197,6 +227,10 @@
     <Compile Include="AzureIoTHubAccountProviderGrid.cs" />
     <Compile Include="AzureIoTHubAccountManager.cs" />
     <Compile Include="Handler.cs" />
+    <Compile Include="Handler.VisualC.WAC.cs" />
+    <Compile Include="Handler.VisualC.NonWAC.cs" />
+    <Compile Include="Handler.CSharp.WAC.cs" />
+    <Compile Include="Handler.CSharp.NonWAC.cs" />
     <Compile Include="Provider.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -226,7 +260,39 @@
     <None Include="app.config" />
     <None Include="FinalPublicKey.snk" />
     <None Include="packages.config" />
-    <Content Include="Packages\microsoft.azure.devices.client.1.0.0-preview-010.nupkg">
+    <Content Include="Packages\Microsoft.Azure.Devices.Client.1.0.1.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\DotNetty.Buffers-signed.0.2.2.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\DotNetty.Codecs-signed.0.2.2.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\DotNetty.Codecs.Mqtt-signed.0.2.2.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\DotNetty.Common-signed.0.2.2.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\DotNetty.Handlers-signed.0.2.2.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\DotNetty.Transport-signed.0.2.2.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\Microsoft.Azure.Amqp.1.0.0.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\System.Net.Http.Formatting.Extension.5.2.3.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

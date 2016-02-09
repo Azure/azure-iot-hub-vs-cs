@@ -3,6 +3,8 @@
 #include <ppltasks.h>
 #include <stdio.h>
 
+using namespace concurrency;
+
 //
 // String containing Hostname, Device Id & Device Key in the format:
 // "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"
@@ -18,7 +20,13 @@ static const char* connection_string = "HostName=$iotHubUri$;DeviceId=$deviceId$
 //
 
 
-void send_device_to_cloud_message()
+task<void> send_device_to_cloud_message()
 {
-    // NYI
+    auto deviceClient = DeviceClient::CreateFromConnectionString(L"<replace>", TransportType::Http1);
+    byte dataBuffer[] = { 'H', 'e', 'l', 'l', 'o' };
+    auto pbuffer = ref new Platform::Array<byte>(&dataBuffer[0], _countof(dataBuffer));
+    auto eventMessage = ref new Message(pbuffer);
+    return create_task(deviceClient->SendEventAsync(eventMessage)).then([] {
+        OutputDebugString(L"message sent successfully\n");
+    });
 }

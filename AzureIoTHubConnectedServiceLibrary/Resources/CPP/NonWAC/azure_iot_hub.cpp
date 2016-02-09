@@ -74,3 +74,23 @@ void send_device_to_cloud_message()
     IoTHubClient_Destroy(iothub_client_handle);
 }
 
+void receive_cloud_to_device()
+{
+    IOTHUB_CLIENT_HANDLE iothub_client_handle = IoTHubClient_CreateFromConnectionString(connection_string, AMQP_Protocol);
+    if (iothub_client_handle == nullptr)
+    {
+        printf("Failed on IoTHubClient_Create\r\n");
+    }
+    else
+    {
+        std::promise<void> completion;
+        if (IoTHubClient_SetMessageCallback(iothub_client_handle, IoTHubMessage, &completion) != IOTHUB_CLIENT_OK)
+        {
+            printf("unable to IoTHubClient_SetMessageCallback\r\n");
+        }
+
+        completion.get_future().wait();
+        IoTHubClient_Destroy(iothub_client_handle);
+    }
+}
+

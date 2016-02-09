@@ -33,6 +33,7 @@ task<void> send_device_to_cloud_message()
     });
 }
 
+#ifdef _RESUMABLE_FUNCTIONS_SUPPORTED
 task<std::string> receive_cloud_to_device_message()
 {
     auto deviceClient = DeviceClient::CreateFromConnectionString(ref new Platform::String(connection_string), TransportType::Http1);
@@ -65,3 +66,4 @@ task<std::string> receive_cloud_to_device_message()
         await create_task([] { std::this_thread::sleep_for(std::chrono::seconds(10)); });
     }
 }
+#endif

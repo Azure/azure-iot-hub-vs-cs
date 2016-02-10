@@ -21,6 +21,8 @@ static const char* connection_string = "HostName=$iotHubUri$;DeviceId=$deviceId$
 //    iothub-explorer HostName=$iotHubUri$;SharedAccessKeyName=service;SharedAccessKey=$servicePrimaryKey$ monitor-events "$deviceId$"
 //
 
+// Refer to http://aka.ms/azure-iothub-connected-service-cpp for more information on Azure IoT Hub Connected Service
+
 struct callback_parameter
 {
     std::string &message;
@@ -74,7 +76,34 @@ void send_device_to_cloud_message()
     IoTHubClient_Destroy(iothub_client_handle);
 }
 
-void receive_cloud_to_device()
+static IOTHUBMESSAGE_DISPOSITION_RESULT receive_callback(IOTHUB_MESSAGE_HANDLE message, void* context)
+{
+    auto completion = (std::promise<void>*)context;
+
+    const unsigned char* buffer;
+    size_t size;
+    if (IoTHubMessage_GetByteArray(message, &buffer, &size) != IOTHUB_MESSAGE_OK)
+    {
+        printf("unable to IoTHubMessage_GetByteArray\r\n");
+    }
+    else
+    {
+        /*buffer is not zero terminated*/
+        std::string str_msg;
+        str_msg.resize(size + 1);
+
+        memcpy((void*)str_msg.data(), buffer, size);
+        str_msg[size] = '\0';
+
+        printf("Received message '%s' from IoT Hub\n", str_msg.c_str());
+    }
+
+    completion->set_value();
+
+    return IOTHUBMESSAGE_ACCEPTED;
+}
+
+void receive_cloud_to_device_message()
 {
     IOTHUB_CLIENT_HANDLE iothub_client_handle = IoTHubClient_CreateFromConnectionString(connection_string, AMQP_Protocol);
     if (iothub_client_handle == nullptr)
@@ -84,7 +113,7 @@ void receive_cloud_to_device()
     else
     {
         std::promise<void> completion;
-        if (IoTHubClient_SetMessageCallback(iothub_client_handle, IoTHubMessage, &completion) != IOTHUB_CLIENT_OK)
+        if (IoTHubClient_SetMessageCallback(iothub_client_handle, receive_callback, &completion) != IOTHUB_CLIENT_OK)
         {
             printf("unable to IoTHubClient_SetMessageCallback\r\n");
         }

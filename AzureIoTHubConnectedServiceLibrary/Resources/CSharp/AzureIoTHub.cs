@@ -16,6 +16,8 @@ static class AzureIoTHub
     //    iothub-explorer HostName=$iotHubUri$;SharedAccessKeyName=service;SharedAccessKey=$servicePrimaryKey$ monitor-events "$deviceId$"
     //
 
+    // Refer to http://aka.ms/azure-iothub-connected-service-cs for more information on Azure IoT Hub Connected Service
+
     public static async Task SendDeviceToCloudMessageAsync()
     {
         var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Http1);

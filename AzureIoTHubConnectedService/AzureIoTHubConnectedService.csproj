@@ -92,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <FilesToSign Include="$(OutDir)\$(AssemblyName).vsix">
-      <Authenticode>vsix</Authenticode>
+      <Authenticode>VsixSHA2</Authenticode>
     </FilesToSign>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -20,7 +20,7 @@ static const wchar_t* connection_string = L"HostName=$iotHubUri$;DeviceId=$devic
 //    iothub-explorer HostName=$iotHubUri$;SharedAccessKeyName=service;SharedAccessKey=$servicePrimaryKey$ monitor-events "$deviceId$"
 //
 
-// Refer to http://aka.ms/azure-iothub-connected-service-cpp for more information on Azure IoT Hub Connected Service
+// Refer to http://aka.ms/azure-iot-connected-service-cpp for more information on Microsoft Azure IoT Connected Service
 
 task<void> send_device_to_cloud_message()
 {

@@ -21,7 +21,7 @@ namespace AzureIoTHubConnectedService
         {
             return new AddServiceInstanceResult(
                 context.ServiceInstance.Name,
-                new Uri("http://aka.ms/azure-iothub-connected-service-cs")
+                new Uri("http://aka.ms/azure-iot-connected-service-cs")
                 );
         }
 

@@ -1,6 +1,4 @@
-﻿using Microsoft.Internal.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Services.Client.AccountManagement;
-//using Microsoft.VisualStudio.Services.Account;
+﻿using Microsoft.VisualStudio.Services.Client.AccountManagement;
 using Microsoft.VisualStudio.WindowsAzure.Authentication;
 using System;
 using System.ComponentModel;
@@ -8,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace AzureIoTHubConnectedService
 {

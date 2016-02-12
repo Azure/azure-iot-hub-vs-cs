@@ -77,12 +77,6 @@
       <HintPath>..\packages\Microsoft.VisualStudio.ConnectedServices.2.0.0\lib\net45\Microsoft.VisualStudio.ConnectedServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <!--
-    <Reference Include="Microsoft.VisualStudio.Services.Client, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\dev14\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.VisualStudio.Services.Client.dll</HintPath>
-    </Reference>
--->
     <Reference Include="Microsoft.VisualStudio.Services.Client, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.VisualStudio.Services.InteractiveClient.14.89.0\lib\net45\Microsoft.VisualStudio.Services.Client.dll</HintPath>
       <Private>True</Private>
@@ -266,19 +260,18 @@
     <None Include="app.config" />
     <None Include="FinalPublicKey.snk" />
     <None Include="packages.config" />
-    <Content Include="Packages\Microsoft.Azure.Devices.Client.1.0.1.nupkg">
-      <IncludeInVSIX>true</IncludeInVSIX>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+
+    <!-- C# packages: -->
+
     <Content Include="Packages\DotNetty.Buffers-signed.0.2.2.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Codecs-signed.0.2.2.nupkg">
+    <Content Include="Packages\DotNetty.Codecs.Mqtt-signed.0.2.2.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Codecs.Mqtt-signed.0.2.2.nupkg">
+    <Content Include="Packages\DotNetty.Codecs-signed.0.2.2.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -294,11 +287,15 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Packages\Microsoft.AspNet.WebApi.Client.5.2.3.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Packages\Microsoft.Azure.Amqp.1.0.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\System.Net.Http.Formatting.Extension.5.2.3.0.nupkg">
+    <Content Include="Packages\Microsoft.Azure.Devices.Client.1.0.1.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -306,22 +303,26 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Apache.QPID.Proton.AzureIot.0.9.0.1-preview-003.nupkg">
+
+    <!-- C++ packages: -->
+
+    <Content Include="Packages\Microsoft.Azure.C.SharedUtility.1.0.1.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Azure.IoTHub.AmqpTransport.1.0.0-preview-010.nupkg">
+    <Content Include="Packages\Microsoft.Azure.IoTHub.AmqpTransport.1.0.1.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Azure.IoTHub.IoTHubClient.1.0.0-preview-010.nupkg">
+    <Content Include="Packages\Microsoft.Azure.IoTHub.IoTHubClient.1.0.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Azure.C.SharedUtility.1.0.0-preview-003.nupkg">
+    <Content Include="Packages\Microsoft.Azure.uamqp.1.0.1.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
   </ItemGroup>
   <ItemGroup>
     <FilesToSign Include="$(OutDir)\$(AssemblyName).dll">

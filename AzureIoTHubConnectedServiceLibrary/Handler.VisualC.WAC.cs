@@ -2,8 +2,10 @@
 
 namespace AzureIoTHubConnectedService
 {
+#if false // Disabled to a bug: https://github.com/Azure/azure-iot-sdks/issues/289
     [ConnectedServiceHandlerExport("Microsoft.AzureIoTHubService",
     AppliesTo = "VisualC+WindowsAppContainer")]
+#endif
     internal class CppHandlerWAC : GenericAzureIoTHubServiceHandler
     {
         protected override HandlerManifest BuildHandlerManifest(ConnectedServiceHandlerContext context)

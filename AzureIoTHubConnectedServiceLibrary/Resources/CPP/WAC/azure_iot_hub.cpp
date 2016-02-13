@@ -26,7 +26,7 @@ task<void> send_device_to_cloud_message()
 {
     auto deviceClient = DeviceClient::CreateFromConnectionString(ref new Platform::String(connection_string), TransportType::Http1);
 
-    std::string message = "Hello from C++!";
+    std::string message = "Hello Cloud from C++ UWP App!";
 
     auto pbuffer = ref new Platform::Array<byte>((unsigned char*)message.data(), message.length());
     auto eventMessage = ref new Message(pbuffer);

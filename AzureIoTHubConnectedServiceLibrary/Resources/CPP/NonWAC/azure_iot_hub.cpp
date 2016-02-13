@@ -4,6 +4,7 @@
 #include <future>
 #include <stdio.h>
 
+#include "platform.h"
 #include "iothub_client.h"
 #include "iothubtransportamqp.h"
 
@@ -40,6 +41,12 @@ void send_callback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void* context)
 
 void send_device_to_cloud_message()
 {
+    if (platform_init() != 0)
+    {
+        printf("Failed initializing platform.\r\n");
+        return;
+    }
+
     // Setup IoTHub client configuration
     IOTHUB_CLIENT_HANDLE iothub_client_handle = IoTHubClient_CreateFromConnectionString(connection_string, AMQP_Protocol);
     if (iothub_client_handle == nullptr)
@@ -48,7 +55,7 @@ void send_device_to_cloud_message()
     }
     else
     {
-        std::string message = "Hello, Cloud!";
+        std::string message = "Hello, Cloud from C++!";
 
         IOTHUB_MESSAGE_HANDLE message_handle = IoTHubMessage_CreateFromByteArray((const unsigned char*)message.data(), message.size());
         if (message_handle == nullptr)
@@ -74,6 +81,8 @@ void send_device_to_cloud_message()
         printf("Done!\n");
     }
     IoTHubClient_Destroy(iothub_client_handle);
+
+    platform_deinit();
 }
 
 static IOTHUBMESSAGE_DISPOSITION_RESULT receive_callback(IOTHUB_MESSAGE_HANDLE message, void* context)
@@ -105,6 +114,12 @@ static IOTHUBMESSAGE_DISPOSITION_RESULT receive_callback(IOTHUB_MESSAGE_HANDLE m
 
 void receive_cloud_to_device_message()
 {
+    if (platform_init() != 0)
+    {
+        printf("Failed initializing platform.\r\n");
+        return;
+    }
+
     IOTHUB_CLIENT_HANDLE iothub_client_handle = IoTHubClient_CreateFromConnectionString(connection_string, AMQP_Protocol);
     if (iothub_client_handle == nullptr)
     {
@@ -121,5 +136,7 @@ void receive_cloud_to_device_message()
         completion.get_future().wait();
         IoTHubClient_Destroy(iothub_client_handle);
     }
+
+    platform_deinit();
 }
 

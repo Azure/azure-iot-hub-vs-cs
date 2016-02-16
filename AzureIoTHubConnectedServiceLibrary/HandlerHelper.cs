@@ -1,4 +1,7 @@
-﻿// This file will be completely removed once Connected Services fully supports C++ project type
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See license.txt file in the project root for full license information.
+
+// This file will be completely removed once Connected Services fully supports C++ project type
 
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;

@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See license.txt file in the project root for full license information.
+
 using EnvDTE;
 using Microsoft.VisualStudio.ConnectedServices;
 using Microsoft.Win32;

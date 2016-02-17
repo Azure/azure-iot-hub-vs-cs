@@ -28,7 +28,7 @@ namespace AzureIoTHubConnectedService
         {
 
             this.Category = "Microsoft";
-            this.Name = "Azure IoT";
+            this.Name = "Azure IoT Hub";
             this.Description = "Communicate between IoT devices and the cloud.";
             this.Icon = new BitmapImage(new Uri("pack://application:,,/" + this.GetType().Assembly.ToString() + ";component/AzureIoTHubProviderIcon.png"));
             this.CreatedBy = "Microsoft";

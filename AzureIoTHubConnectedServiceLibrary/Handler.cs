@@ -144,7 +144,7 @@ namespace AzureIoTHubConnectedService
 
             await NuGetUtilities.InstallPackagesAsync(
                 packages,
-                "AzureIoTConnectedService.MSFT.5750a17f-a0c1-455d-ab31-82004e56e0b0",
+                "ConnectedServiceForAzureIoTHub.9e26cafb-e929-4d85-a8af-42c42f72f771",
                 context.Logger,
                 ProjectUtilities.GetDteProject(context.ProjectHierarchy),
                 this.PackageInstallerServices,

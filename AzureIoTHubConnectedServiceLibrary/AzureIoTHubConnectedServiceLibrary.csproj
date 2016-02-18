@@ -263,27 +263,27 @@
 
     <!-- C# packages: -->
 
-    <Content Include="Packages\DotNetty.Buffers-signed.0.2.2.nupkg">
+    <Content Include="Packages\DotNetty.Buffers-signed.0.2.3.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Codecs.Mqtt-signed.0.2.2.nupkg">
+    <Content Include="Packages\DotNetty.Codecs.Mqtt-signed.0.2.3.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Codecs-signed.0.2.2.nupkg">
+    <Content Include="Packages\DotNetty.Codecs-signed.0.2.3.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Common-signed.0.2.2.nupkg">
+    <Content Include="Packages\DotNetty.Common-signed.0.2.3.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Handlers-signed.0.2.2.nupkg">
+    <Content Include="Packages\DotNetty.Handlers-signed.0.2.3.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Transport-signed.0.2.2.nupkg">
+    <Content Include="Packages\DotNetty.Transport-signed.0.2.3.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -295,7 +295,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Azure.Devices.Client.1.0.1.nupkg">
+    <Content Include="Packages\Microsoft.Azure.Devices.Client.1.0.2.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

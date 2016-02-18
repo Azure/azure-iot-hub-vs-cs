@@ -1,6 +1,6 @@
 # Welcome!
 
-*Connected Service for Azure IoT Hub* is a Visual Studio extension that allows you to quickly connect and start interacting with Azure IoT Hub.
+**Connected Service for Azure IoT Hub** is a Visual Studio extension that allows you to quickly connect and start interacting with Azure IoT Hub.
 
 ## How to build and debug
 
@@ -11,9 +11,13 @@ To build the project, you need
 - Visual Studio 2015 
 - Visual Studio SDK. For more information, see [Visual Studio SDK](https://msdn.microsoft.com/en-us/library/bb166441.aspx).
 
-## Build the solution
+### Build the solution
 
-To build the project, open `AzureIoTHubConnectedService.sln` in Visual Studio. 
+To build the project, open `AzureIoTHubConnectedService.sln` in Visual Studio and build it.
+
+### Debugging
+
+The best way to debug it is by using Visual Studio experimental hive. Under project options, open the Debug tab and make sure the command line arguments are set to `/rootsuffix Exp`.
 
 ## Contribute!
 

@@ -15,7 +15,7 @@ namespace AzureIoTHubConnectedService
             HandlerManifest manifest = new HandlerManifest();
 
             manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "6.0.8"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.1"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.2"));
             manifest.Files.Add(new FileToAdd("CSharp/AzureIoTHub.cs"));
             return manifest;
         }

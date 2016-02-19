@@ -88,7 +88,7 @@ namespace AzureIoTHubConnectedService
             }
             catch (Exception ex)
             {
-                await context.Logger.WriteMessageAsync(LoggerMessageCategory.Error, Resource.DeviceCreationFailure, deviceId, ex.ToString());
+                await context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, Resource.DeviceCreationFailure, deviceId);
             }
             return null;
         }

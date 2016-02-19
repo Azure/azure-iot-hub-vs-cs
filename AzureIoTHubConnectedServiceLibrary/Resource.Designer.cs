@@ -70,7 +70,7 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to create device &apos;{0}&apos;. IoT Hub returned error &apos;{1}&apos;.
+        ///   Looks up a localized string similar to Unable to create device &apos;{0}&apos;. IoT Hub returned an error..
         /// </summary>
         internal static string DeviceCreationFailure {
             get {

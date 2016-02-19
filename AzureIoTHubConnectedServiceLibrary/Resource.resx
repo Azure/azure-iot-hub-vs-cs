@@ -121,7 +121,7 @@
     <value>Create New IoT Hub</value>
   </data>
   <data name="DeviceCreationFailure" xml:space="preserve">
-    <value>Unable to create device '{0}'. IoT Hub returned error '{1}'</value>
+    <value>Unable to create device '{0}'. IoT Hub returned an error.</value>
   </data>
   <data name="FileAlreadyExists" xml:space="preserve">
     <value>A file with the name '{0}' already exists. Do you want to replace it?</value>

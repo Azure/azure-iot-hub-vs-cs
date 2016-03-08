@@ -35,12 +35,15 @@ namespace AzureIoTHubConnectedService
         }
 
         public async Task<T> GetAsync<T>(string relativeUri, CancellationToken cancellationToken)
+            where T : new()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, relativeUri);
 
             request.Headers.Accept.Add(_formatter.Accept);
 
             var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest) return new T();
 
             response.EnsureSuccessStatusCode();
 

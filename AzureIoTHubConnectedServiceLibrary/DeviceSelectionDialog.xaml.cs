@@ -57,8 +57,15 @@ namespace AzureIoTHubConnectedService
 
         private void okButton_Click(object sender, RoutedEventArgs e)
         {
-            this.SelectedDeviceID = this.listBox.SelectedItem.ToString();
-            this.DialogResult = true;
+            if (listBox.SelectedItem != null)
+            {
+                this.SelectedDeviceID = this.listBox.SelectedItem.ToString();
+                this.DialogResult = true;
+            }
+            else
+            {
+                this.DialogResult = false;
+            }
             this.Close();
         }
         private async void newButton_Click(object sender, RoutedEventArgs e)

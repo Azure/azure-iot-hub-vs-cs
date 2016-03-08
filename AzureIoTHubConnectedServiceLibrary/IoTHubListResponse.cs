@@ -11,5 +11,10 @@ namespace AzureIoTHubConnectedService
     {
         [DataMember(Name = "value")]
         public IList<IoTHub> Accounts { get; set; }
+
+        public IoTHubListResponse()
+        {
+            Accounts = new List<IoTHub>();
+        }
     }
 }

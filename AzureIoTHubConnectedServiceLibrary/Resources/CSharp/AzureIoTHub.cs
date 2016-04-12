@@ -22,7 +22,11 @@ static class AzureIoTHub
     {
         var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Amqp);
 
-        var str = "Hello, Cloud!";
+#if WINDOWS_UWP
+        var str = "Hello, Cloud from a UWP C# app!";
+#else
+        var str = "Hello, Cloud from a C# app!";
+#endif
         var message = new Message(Encoding.ASCII.GetBytes(str));
 
         await deviceClient.SendEventAsync(message);

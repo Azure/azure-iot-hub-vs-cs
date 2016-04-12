@@ -13,10 +13,10 @@ namespace AzureIoTHubConnectedService
         {
             HandlerManifest manifest = new HandlerManifest();
 
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.C.SharedUtility", "1.0.1"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.AmqpTransport", "1.0.1"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.IoTHubClient", "1.0.0"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.uamqp", "1.0.1"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.C.SharedUtility", "1.0.5"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.AmqpTransport", "1.0.5"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.IoTHubClient", "1.0.5"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.uamqp", "1.0.5"));
 
             manifest.Files.Add(new FileToAdd("CPP/NonWAC/azure_iot_hub.cpp"));
             manifest.Files.Add(new FileToAdd("CPP/NonWAC/azure_iot_hub.h"));

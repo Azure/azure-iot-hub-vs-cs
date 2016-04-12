@@ -4,7 +4,7 @@
 #include <future>
 #include <stdio.h>
 
-#include "platform.h"
+#include "azure_c_shared_utility/platform.h"
 #include "iothub_client.h"
 #include "iothubtransportamqp.h"
 

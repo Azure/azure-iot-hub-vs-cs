@@ -318,6 +318,32 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
+    <Content Include="Packages\PCLCrypto.2.0.147.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\PInvoke.BCrypt.0.3.2.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\PInvoke.Kernel32.0.3.2.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\PInvoke.NCrypt.0.3.2.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\PInvoke.Windows.Core.0.3.2.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\Validation.2.2.8.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+
   </ItemGroup>
   <ItemGroup>
     <FilesToSign Include="$(OutDir)\$(AssemblyName).dll">

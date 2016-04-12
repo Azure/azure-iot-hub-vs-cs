@@ -24,7 +24,7 @@ static const wchar_t* connection_string = L"HostName=$iotHubUri$;DeviceId=$devic
 
 task<void> send_device_to_cloud_message()
 {
-    auto deviceClient = DeviceClient::CreateFromConnectionString(ref new Platform::String(connection_string), TransportType::Http1);
+    auto deviceClient = DeviceClient::CreateFromConnectionString(ref new Platform::String(connection_string), TransportType::Amqp);
 
     std::string message = "Hello Cloud from C++ UWP App!";
 
@@ -38,7 +38,7 @@ task<void> send_device_to_cloud_message()
 #ifdef _RESUMABLE_FUNCTIONS_SUPPORTED
 task<std::string> receive_cloud_to_device_message()
 {
-    auto deviceClient = DeviceClient::CreateFromConnectionString(ref new Platform::String(connection_string), TransportType::Http1);
+    auto deviceClient = DeviceClient::CreateFromConnectionString(ref new Platform::String(connection_string), TransportType::Amqp);
 
     while (true)
     {
@@ -57,15 +57,7 @@ task<std::string> receive_cloud_to_device_message()
             return str;
         }
 
-        //  Note: In this sample, the polling interval is set to 
-        //  10 seconds to enable you to see messages as they are sent.
-        //  To enable an IoT solution to scale, you should extend this 
-        //  interval. For example, to scale to 1 million devices, set 
-        //  the polling interval to 25 minutes.
-        //  For further information, see
-        //  https://azure.microsoft.com/documentation/articles/iot-hub-devguide/#messaging
-
-        await create_task([] { std::this_thread::sleep_for(std::chrono::seconds(10)); });
+        await create_task([] { std::this_thread::sleep_for(std::chrono::seconds(1)); });
     }
 }
 #endif

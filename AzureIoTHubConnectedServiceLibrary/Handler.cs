@@ -35,30 +35,45 @@ namespace AzureIoTHubConnectedService
 
         public override async Task<AddServiceInstanceResult> AddServiceInstanceAsync(ConnectedServiceHandlerContext context, CancellationToken ct)
         {
-            IAzureIoTHub iotHubAccount = context.ServiceInstance.Metadata["IoTHubAccount"] as IAzureIoTHub;
-            var primaryKeys = await iotHubAccount.GetPrimaryKeysAsync(ct);
-
-            var ioTHubUri = context.ServiceInstance.Metadata["iotHubUri"] as string;
+            var cancel = context.ServiceInstance.Metadata["Cancel"];
+            if (cancel != null)
+            {
+                if ((bool)cancel)
+                {
+                    // Cancellation
+                    throw new OperationCanceledException();
+                }
+            }
 
             // Once C++ is officially supported, we can switch this to context.HandlerHelper, removing AzureIoTHubConnectedServiceHandlerHelper
             var handlerHelper = GetConnectedServiceHandlerHelper(context);
 
-            handlerHelper.TokenReplacementValues.Add("iotHubUri", ioTHubUri);
-
-            var device = GetSelectedDevice(context, ioTHubUri, primaryKeys.IoTHubOwner);
-            if (device == null)
+            bool bUseTPM = (bool)context.ServiceInstance.Metadata["TPM"];
+            if (!bUseTPM)
             {
-                throw new OperationCanceledException();
-            }
-            else
-            {
-                handlerHelper.TokenReplacementValues.Add("deviceId", device.Id);
-                handlerHelper.TokenReplacementValues.Add("deviceKey", device.Key);
-                handlerHelper.TokenReplacementValues.Add("iotHubOwnerPrimaryKey", primaryKeys.IoTHubOwner);
-                handlerHelper.TokenReplacementValues.Add("servicePrimaryKey", primaryKeys.Service);
+
+                IAzureIoTHub iotHubAccount = context.ServiceInstance.Metadata["IoTHubAccount"] as IAzureIoTHub;
+                var primaryKeys = await iotHubAccount.GetPrimaryKeysAsync(ct);
+
+                var ioTHubUri = context.ServiceInstance.Metadata["iotHubUri"] as string;
+
+                handlerHelper.TokenReplacementValues.Add("iotHubUri", ioTHubUri);
+
+                var device = GetSelectedDevice(context, ioTHubUri, primaryKeys.IoTHubOwner);
+                if (device == null)
+                {
+                    throw new OperationCanceledException();
+                }
+                else
+                {
+                    handlerHelper.TokenReplacementValues.Add("deviceId", device.Id);
+                    handlerHelper.TokenReplacementValues.Add("deviceKey", device.Key);
+                    handlerHelper.TokenReplacementValues.Add("iotHubOwnerPrimaryKey", primaryKeys.IoTHubOwner);
+                    handlerHelper.TokenReplacementValues.Add("servicePrimaryKey", primaryKeys.Service);
+                }
             }
 
-            HandlerManifest configuration = this.BuildHandlerManifest(context);
+            HandlerManifest configuration = this.BuildHandlerManifest(bUseTPM);
             await this.AddSdkReferenceAsync(context, configuration, ct);
 
             foreach (var fileToAdd in configuration.Files)
@@ -133,7 +148,7 @@ namespace AzureIoTHubConnectedService
             }
         }
 
-        protected abstract HandlerManifest BuildHandlerManifest(ConnectedServiceHandlerContext context);
+        protected abstract HandlerManifest BuildHandlerManifest(bool useTPM);
 
         private async Task AddSdkReferenceAsync(ConnectedServiceHandlerContext context, HandlerManifest manifest, CancellationToken ct)
         {

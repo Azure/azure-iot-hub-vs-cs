@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See license.txt file in the project root for full license information.
 
+using System;
 using Microsoft.VisualStudio.ConnectedServices;
 
 namespace AzureIoTHubConnectedService
@@ -11,8 +12,13 @@ namespace AzureIoTHubConnectedService
 #endif
     internal class CppHandlerWAC : GenericAzureIoTHubServiceHandler
     {
-        protected override HandlerManifest BuildHandlerManifest(ConnectedServiceHandlerContext context)
+        protected override HandlerManifest BuildHandlerManifest(bool useTPM)
         {
+            if (useTPM)
+            {
+                throw new NotSupportedException("TPM support for this project type is not yet supported");
+            }
+
             HandlerManifest manifest = new HandlerManifest();
 
             manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "6.0.8"));

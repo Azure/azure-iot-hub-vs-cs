@@ -92,6 +92,8 @@ namespace AzureIoTHubConnectedService
 
             instance.Metadata.Add("IoTHubAccount", iotHubAccount);
 
+            instance.Metadata.Add("TPM", false);
+
             return instance;
         }
 

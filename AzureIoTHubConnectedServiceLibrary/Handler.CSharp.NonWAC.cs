@@ -10,8 +10,13 @@ namespace AzureIoTHubConnectedService
     AppliesTo = "CSharp+!WindowsAppContainer")]
     internal class CSharpHandlerNonWAC : GenericAzureIoTHubServiceHandler
     {
-        protected override HandlerManifest BuildHandlerManifest(ConnectedServiceHandlerContext context)
+        protected override HandlerManifest BuildHandlerManifest(bool useTPM)
         {
+            if (useTPM)
+            {
+                throw new NotSupportedException("TPM support for this project type is not yet supported");
+            }
+
             HandlerManifest manifest = new HandlerManifest();
             manifest.PackageReferences.Add(new NuGetReference("DotNetty.Buffers-signed", "0.2.4"));
             manifest.PackageReferences.Add(new NuGetReference("DotNetty.Codecs.Mqtt-signed", "0.2.4"));

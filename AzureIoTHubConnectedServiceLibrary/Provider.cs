@@ -35,10 +35,51 @@ namespace AzureIoTHubConnectedService
             this.Version = new Version(1, 2, 0);
             this.MoreInfoUri = new Uri("http://aka.ms/iothubgetstartedVSCS");
         }
+
         public override Task<ConnectedServiceConfigurator> CreateConfiguratorAsync(ConnectedServiceProviderContext context)
         {
-            ConnectedServiceConfigurator configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
+            ConnectedServiceConfigurator configurator;
+
+            var securityMode = new TPMSelector();
+            var dlgResult = securityMode.ShowModal();
+            if (dlgResult.HasValue && dlgResult.Value)
+            {
+                var useTPM = securityMode.rbUseTPM.IsChecked;
+                if (useTPM.HasValue && useTPM.Value)
+                {
+                    // The user has chosen to use TPM
+                    configurator = new ConnectedServiceSansUI(false);
+                }
+                else
+                {
+                    // No TPM
+                    configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
+                }
+            }
+            else
+            {
+                // User cancelled
+                configurator = new ConnectedServiceSansUI(true);
+            }
+
             return Task.FromResult(configurator);
+        }
+    }
+
+    class ConnectedServiceSansUI : ConnectedServiceUILess
+    {
+        ConnectedServiceInstance instance;
+
+        public ConnectedServiceSansUI(bool cancel)
+        {
+            instance = new ConnectedServiceInstance();
+            instance.Metadata.Add("Cancel", cancel);
+            instance.Metadata.Add("TPM", true);
+        }
+
+        public override Task<ConnectedServiceInstance> GetFinishedServiceInstanceAsync()
+        {
+            return Task.FromResult(instance);
         }
     }
 }

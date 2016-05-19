@@ -215,11 +215,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TPMSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Compile Include="DeviceSelectionDialog.xaml.cs">
       <DependentUpon>DeviceSelectionDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewDevice.xaml.cs">
       <DependentUpon>NewDevice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TPMSelector.xaml.cs">
+      <DependentUpon>TPMSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="AccountManager.cs" />
     <Compile Include="AccountPickerViewModel.cs" />

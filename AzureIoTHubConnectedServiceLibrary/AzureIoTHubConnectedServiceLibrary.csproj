@@ -272,27 +272,27 @@
     <None Include="FinalPublicKey.snk" />
     <None Include="packages.config" />
     <!-- C# packages: -->
-    <Content Include="Packages\DotNetty.Buffers-signed.0.2.4.nupkg">
+    <Content Include="Packages\DotNetty.Buffers-signed.0.3.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Codecs.Mqtt-signed.0.2.4.nupkg">
+    <Content Include="Packages\DotNetty.Codecs.Mqtt-signed.0.3.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Codecs-signed.0.2.4.nupkg">
+    <Content Include="Packages\DotNetty.Codecs-signed.0.3.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Common-signed.0.2.4.nupkg">
+    <Content Include="Packages\DotNetty.Common-signed.0.3.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Handlers-signed.0.2.4.nupkg">
+    <Content Include="Packages\DotNetty.Handlers-signed.0.3.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\DotNetty.Transport-signed.0.2.4.nupkg">
+    <Content Include="Packages\DotNetty.Transport-signed.0.3.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -300,32 +300,32 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Azure.Amqp.1.1.1.nupkg">
+    <Content Include="Packages\Microsoft.Azure.Amqp.1.1.5.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Azure.Devices.Client.1.0.5.nupkg">
+    <Content Include="Packages\Microsoft.Azure.Devices.Client.1.0.8.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\newtonsoft.json.6.0.8.nupkg">
+    <Content Include="Packages\newtonsoft.json.8.0.3.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <!-- C++ packages: -->
-    <Content Include="Packages\Microsoft.Azure.C.SharedUtility.1.0.5.nupkg">
+    <Content Include="Packages\Microsoft.Azure.C.SharedUtility.1.0.8.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Azure.IoTHub.AmqpTransport.1.0.5.nupkg">
+    <Content Include="Packages\Microsoft.Azure.IoTHub.AmqpTransport.1.0.8.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Azure.IoTHub.IoTHubClient.1.0.5.nupkg">
+    <Content Include="Packages\Microsoft.Azure.IoTHub.IoTHubClient.1.0.8.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Azure.uamqp.1.0.5.nupkg">
+    <Content Include="Packages\Microsoft.Azure.uamqp.1.0.8.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

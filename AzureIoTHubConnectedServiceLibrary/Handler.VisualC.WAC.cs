@@ -15,9 +15,9 @@ namespace AzureIoTHubConnectedService
         {
             HandlerManifest manifest = new HandlerManifest();
 
-            manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "6.0.8"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Amqp", "1.1.1"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.5"));
+            manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "8.0.3"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Amqp", "1.1.6"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.8"));
 
             manifest.Files.Add(new FileToAdd("CPP/WAC/azure_iot_hub.cpp"));
             manifest.Files.Add(new FileToAdd("CPP/WAC/azure_iot_hub.h"));

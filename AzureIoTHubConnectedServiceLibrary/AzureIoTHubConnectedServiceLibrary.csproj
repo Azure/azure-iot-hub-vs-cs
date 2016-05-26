@@ -304,7 +304,11 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Packages\Microsoft.Azure.Devices.Client.1.0.8.nupkg">
+    <Content Include="Packages\Microsoft.Azure.Devices.Client.1.0.9.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

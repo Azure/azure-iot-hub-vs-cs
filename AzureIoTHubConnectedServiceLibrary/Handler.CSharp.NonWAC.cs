@@ -18,16 +18,17 @@ namespace AzureIoTHubConnectedService
             }
 
             HandlerManifest manifest = new HandlerManifest();
-            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Buffers-signed", "0.2.4"));
-            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Codecs.Mqtt-signed", "0.2.4"));
-            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Codecs-signed", "0.2.4"));
-            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Common-signed", "0.2.4"));
-            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Handlers-signed", "0.2.4"));
-            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Transport-signed", "0.2.4"));
+            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Buffers-signed", "0.3.0"));
+            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Codecs.Mqtt-signed", "0.3.0"));
+            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Codecs-signed", "0.3.0"));
+            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Common-signed", "0.3.0"));
+            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Handlers-signed", "0.3.0"));
+            manifest.PackageReferences.Add(new NuGetReference("DotNetty.Transport-signed", "0.3.0"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.AspNet.WebApi.Client", "5.2.3"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Amqp", "1.1.1"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.5"));
-            manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "6.0.8"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Amqp", "1.1.5"));
+            manifest.PackageReferences.Add(new NuGetReference("EnterpriseLibrary.TransientFaultHandling", "6.0.1304.0"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.9"));
+            manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "8.0.3"));
 
             manifest.PackageReferences.Add(new NuGetReference("PCLCrypto", "2.0.147"));
             manifest.PackageReferences.Add(new NuGetReference("PInvoke.BCrypt", "0.3.2"));

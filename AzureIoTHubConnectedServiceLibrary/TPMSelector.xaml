@@ -43,11 +43,27 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0">
-                <RadioButton x:Name="rbUseTPM" Content="(Recommended) Use Azure device credentials stored in the TPM." HorizontalAlignment="Left" Margin="0,0,0,0"/>
-                <TextBlock Margin="20,0,0,0" HorizontalAlignment="Left" TextWrapping="Wrap" Width="320" Text="Requires device provisioning using IoT Dashboard."/>
-                <TextBlock Margin="20,0,0,0" HorizontalAlignment="Left" Width="320"> <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://aka.ms/tpmiothubcs">Click here for more detail</Hyperlink></TextBlock>
-                <RadioButton x:Name="rbDoNotTPM" Content="Hardcode shared access key in application's code." HorizontalAlignment="Left" Margin="0,0,0,0" />
-                <TextBlock Margin="20,0,0,0" HorizontalAlignment="Left" TextWrapping="Wrap" Width="320" Text="The device-specific shared access key is retrieved from your Azure subscription and embedded in the source code."/>
+
+                <StackPanel.Resources>
+                    <Style TargetType="RadioButton">
+                        <Setter Property="Margin" Value="0,0,0,0"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Width" Value="320"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                    </Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="20,0,0,0"/>
+                        <Setter Property="Padding" Value="2"/>
+                        <Setter Property="Width" Value="320"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                    </Style>
+                </StackPanel.Resources>
+
+                <RadioButton x:Name="rbUseTPM" Content="(Recommended) Use Azure device credentials stored in the TPM." />
+                <TextBlock TextWrapping="Wrap" Text="Requires device provisioning using IoT Dashboard."/>
+                <TextBlock ><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://aka.ms/tpmiothubcs">Click here for more detail</Hyperlink></TextBlock>
+                <RadioButton x:Name="rbDoNotTPM" Content="Hardcode shared access key in application's code." />
+                <TextBlock TextWrapping="Wrap" Text="The device-specific shared access key is retrieved from your Azure subscription and embedded in the source code."/>
             </StackPanel>
 
             <Grid Grid.Column="0" Grid.Row="1">

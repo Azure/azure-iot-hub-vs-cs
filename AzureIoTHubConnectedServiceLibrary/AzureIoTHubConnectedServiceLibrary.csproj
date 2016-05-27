@@ -200,6 +200,7 @@
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="ResourceTypeInfo.cs" />
     <Resource Include="Resources\CSharp\AzureIoTHub.cs" />
+    <Resource Include="Resources\CSharp\Tpm\AzureIoTHub.cs" />
     <Resource Include="Resources\CPP\NonWAC\azure_iot_hub.cpp" />
     <Resource Include="Resources\CPP\NonWAC\azure_iot_hub.h" />
     <Resource Include="Resources\CPP\WAC\azure_iot_hub.cpp" />
@@ -361,6 +362,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Packages\Validation.2.2.8.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\Microsoft.Devices.Tpm.1.0.0.nupkg">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Packages\Microsoft.TSS.1.0.3.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

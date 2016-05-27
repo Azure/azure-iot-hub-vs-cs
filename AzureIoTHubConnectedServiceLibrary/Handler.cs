@@ -49,7 +49,11 @@ namespace AzureIoTHubConnectedService
             var handlerHelper = GetConnectedServiceHandlerHelper(context);
 
             bool bUseTPM = (bool)context.ServiceInstance.Metadata["TPM"];
-            if (!bUseTPM)
+            if (bUseTPM)
+            {
+                handlerHelper.TokenReplacementValues.Add("TPMSlot", "0");
+            }
+            else
             {
 
                 IAzureIoTHub iotHubAccount = context.ServiceInstance.Metadata["IoTHubAccount"] as IAzureIoTHub;

@@ -36,30 +36,58 @@ namespace AzureIoTHubConnectedService
             this.MoreInfoUri = new Uri("http://aka.ms/iothubgetstartedVSCS");
         }
 
+        EnvDTE.Project GetActiveProject()
+        {
+            var dte = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE80.DTE2;
+
+            EnvDTE.Project activeProject = null;
+
+            Array activeSolutionProjects = dte.ActiveSolutionProjects as Array;
+            if (activeSolutionProjects != null && activeSolutionProjects.Length > 0)
+            {
+                activeProject = activeSolutionProjects.GetValue(0) as EnvDTE.Project;
+            }
+
+            return activeProject;
+        }
+
+        static readonly Guid CsProjectType = new Guid("FAE04EC0-301F-11D3-BF4B-00C04F79EFBC");
+
         public override Task<ConnectedServiceConfigurator> CreateConfiguratorAsync(ConnectedServiceProviderContext context)
         {
             ConnectedServiceConfigurator configurator;
 
-            var securityMode = new TPMSelector();
-            var dlgResult = securityMode.ShowModal();
-            if (dlgResult.HasValue && dlgResult.Value)
+            var project = GetActiveProject();
+            var projectKind = new Guid(project.Kind);
+
+            if (projectKind != CsProjectType)
             {
-                var useTPM = securityMode.rbUseTPM.IsChecked;
-                if (useTPM.HasValue && useTPM.Value)
-                {
-                    // The user has chosen to use TPM
-                    configurator = new ConnectedServiceSansUI(false);
-                }
-                else
-                {
-                    // No TPM
-                    configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
-                }
+                // For now, only C# projects support TPM.
+                configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
             }
             else
             {
-                // User cancelled
-                configurator = new ConnectedServiceSansUI(true);
+                var securityMode = new TPMSelector();
+                var dlgResult = securityMode.ShowModal();
+                if (dlgResult.HasValue && dlgResult.Value)
+                {
+                    var useTPM = securityMode.rbUseTPM.IsChecked;
+                    if (useTPM.HasValue && useTPM.Value)
+                    {
+                        // The user has chosen to use TPM
+                        configurator = new ConnectedServiceSansUI(false);
+                    }
+                    else
+                    {
+                        // No TPM
+                        configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
+                    }
+                }
+                else
+                {
+                    // User cancelled
+                    configurator = new ConnectedServiceSansUI(true);
+                }
             }
 
             return Task.FromResult(configurator);
@@ -73,6 +101,7 @@ namespace AzureIoTHubConnectedService
         public ConnectedServiceSansUI(bool cancel)
         {
             instance = new ConnectedServiceInstance();
+            instance.Name = "Azure IoT Hub";
             instance.Metadata.Add("Cancel", cancel);
             instance.Metadata.Add("TPM", true);
         }

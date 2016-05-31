@@ -91,7 +91,7 @@ namespace AzureIoTHubConnectedService
             }
 
             instance.Metadata.Add("IoTHubAccount", iotHubAccount);
-
+            instance.Metadata.Add("Cancel", false);
             instance.Metadata.Add("TPM", false);
 
             return instance;

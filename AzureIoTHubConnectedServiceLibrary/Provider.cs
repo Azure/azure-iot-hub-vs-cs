@@ -32,7 +32,7 @@ namespace AzureIoTHubConnectedService
             this.Description = "Communicate between IoT devices and the cloud.";
             this.Icon = new BitmapImage(new Uri("pack://application:,,/" + this.GetType().Assembly.ToString() + ";component/AzureIoTHubProviderIcon.png"));
             this.CreatedBy = "Microsoft";
-            this.Version = new Version(1, 3, 0);
+            this.Version = new Version(1, 4, 0);
             this.MoreInfoUri = new Uri("http://aka.ms/iothubgetstartedVSCS");
         }
 

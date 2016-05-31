@@ -27,24 +27,26 @@ ls -r *.nupkg | % {$_.FullName} | % {
     {
         $existing = $map.Get_Item($pkg)
         ($dummy, $existing_ver) = SplitNameToPkgAndVersion($existing)
-        if($existing_ver -lt $version)
+        if( (New-Object System.Version($existing_ver)) -lt (New-Object System.Version($version)))
         {
-            # Write-Host "Updating $pkg version from $existing_ver to $version"
+            Write-Host "Updating $pkg version from $existing_ver to $version" -foregroundcolor "magenta"
             $map.Set_Item($pkg, $_)
         }
     }
     else {
-        # Write-Host "Adding $pkg version $version"
+        Write-Host "Adding $pkg version $version"
         $map.Add($pkg, $_)
     }
 }
 
 $target_folder = "new"
 
-if(!(Test-Path $target_folder))
+if(Test-Path $target_folder)
 {
-    mkdir $target_folder
+    Remove-Item $target_folder -recurse
 }
+
+mkdir $target_folder
 
 $map.Values | % {
     cp $_ $target_folder

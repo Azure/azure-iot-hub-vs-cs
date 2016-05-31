@@ -22,8 +22,8 @@ namespace AzureIoTHubConnectedService
         internal TPMSelector()
         {
             InitializeComponent();
-            this.rbUseTPM.IsChecked = true;
-            this.rbDoNotTPM.IsChecked = false;
+            this.rbUseTPM.IsChecked = false;
+            this.rbDoNotTPM.IsChecked = true;
         }
 
         private void okButton_Click(object sender, RoutedEventArgs e)

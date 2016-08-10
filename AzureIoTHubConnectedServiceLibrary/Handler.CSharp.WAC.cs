@@ -14,15 +14,15 @@ namespace AzureIoTHubConnectedService
         {
             HandlerManifest manifest = new HandlerManifest();
 
-            manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "8.0.3"));
+            manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "9.0.1"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Amqp", "1.1.5"));
-            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.11"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.0.16"));
             manifest.PackageReferences.Add(new NuGetReference("PCLCrypto", "2.0.147"));
-            manifest.PackageReferences.Add(new NuGetReference("PInvoke.BCrypt", "0.3.2"));
-            manifest.PackageReferences.Add(new NuGetReference("PInvoke.Kernel32", "0.3.2"));
-            manifest.PackageReferences.Add(new NuGetReference("PInvoke.NCrypt", "0.3.2"));
-            manifest.PackageReferences.Add(new NuGetReference("PInvoke.Windows.Core", "0.3.2"));
-            manifest.PackageReferences.Add(new NuGetReference("Validation", "2.2.8"));
+            manifest.PackageReferences.Add(new NuGetReference("PInvoke.BCrypt", "0.3.90"));
+            manifest.PackageReferences.Add(new NuGetReference("PInvoke.Kernel32", "0.3.90"));
+            manifest.PackageReferences.Add(new NuGetReference("PInvoke.NCrypt", "0.3.90"));
+            manifest.PackageReferences.Add(new NuGetReference("PInvoke.Windows.Core", "0.3.90"));
+            manifest.PackageReferences.Add(new NuGetReference("Validation", "2.3.5"));
 
             if (useTPM)
             {

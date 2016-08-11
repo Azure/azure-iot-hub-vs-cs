@@ -158,16 +158,28 @@ namespace AzureIoTHubConnectedService
         {
             ct.ThrowIfCancellationRequested();
 
-            Dictionary<string, string> packages = new Dictionary<string, string>();
-            manifest.PackageReferences.ForEach(nuget => packages.Add(nuget.Id, nuget.Version));
+            foreach (var nuget in manifest.PackageReferences)
+            {
+                Dictionary<string, string> packages = new Dictionary<string, string>();
 
-            await NuGetUtilities.InstallPackagesAsync(
-                packages,
-                "ConnectedServiceForAzureIoTHub.9e26cafb-e929-4d85-a8af-42c42f72f771",
-                context.Logger,
-                ProjectUtilities.GetDteProject(context.ProjectHierarchy),
-                this.PackageInstallerServices,
-                this.PackageInstaller);
+                packages.Add(nuget.Id, nuget.Version);
+
+                try
+                {
+                    await NuGetUtilities.InstallPackagesAsync(
+                        packages,
+                        "ConnectedServiceForAzureIoTHub.9e26cafb-e929-4d85-a8af-42c42f72f771",
+                        context.Logger,
+                        ProjectUtilities.GetDteProject(context.ProjectHierarchy),
+                        this.PackageInstallerServices,
+                        this.PackageInstaller);
+                }
+                catch(Exception ex)
+                {
+                    var status = string.Format("Package {0} installation failed. Exception: '{1}'. WARNING: The project might not compile!", nuget.Id, ex.Message);
+                    await context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, status);
+                }
+            }
         }
     }
 

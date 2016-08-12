@@ -218,6 +218,7 @@
     <Compile Include="AzureResource.cs" />
     <Compile Include="DeviceIdentity.cs" />
     <Compile Include="DialogWindows.cs" />
+    <Compile Include="Handler.VisualC.Linux.cs" />
     <Compile Include="HandlerHelper.cs" />
     <Compile Include="IoTHubResource.cs" />
     <Compile Include="GetMicrosoftResourcesResponse.cs" />

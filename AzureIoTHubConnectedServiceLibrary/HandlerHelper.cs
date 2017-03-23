@@ -66,10 +66,10 @@ namespace AzureIoTHubConnectedService
                 int hr = buffer.GetLineData(i, lineData, null);
 
                 // Skip the line if there is an error.
-                if (ErrorHandler.Failed(hr))
-                {
-                    continue;
-                }
+                //if (ErrorHandler.Failed(hr))
+               // {
+               //     continue;
+               // }
 
                 string line;
                 try
@@ -127,43 +127,43 @@ namespace AzureIoTHubConnectedService
         /// </param>
         private static void UsingProjectItemBuffer(ProjectItem projectItem, bool ensureWritable, Action<IVsTextLines> action)
         {
-            var invisibleEditorManager = (IVsInvisibleEditorManager)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SVsInvisibleEditorManager));
+            //var invisibleEditorManager = (IVsInvisibleEditorManager)Microsoft.VisualStudio.Shell.ServiceProvider.GlobalProvider.GetService(typeof(SVsInvisibleEditorManager));
 
             // Register a invisible editor, then the specific document will be loaded into the RDT.
-            IVsInvisibleEditor invisibleEditor;
-            int hr = invisibleEditorManager.RegisterInvisibleEditor(projectItem.FileNames[1], null, (uint)_EDITORREGFLAGS.RIEF_ENABLECACHING, null, out invisibleEditor);
+            //IVsInvisibleEditor invisibleEditor;
+            //int hr = invisibleEditorManager.RegisterInvisibleEditor(projectItem.FileNames[1], null, (uint)_EDITORREGFLAGS.RIEF_ENABLECACHING, null, out invisibleEditor);
 
-            if (ErrorHandler.Failed(hr) ||
-                invisibleEditor == null)
-            {
-                return;
-            }
+            //if (ErrorHandler.Failed(hr) ||
+            //    invisibleEditor == null)
+            //{
+            //    return;
+            //}
 
             IntPtr docData;
             Guid textLinesGuid = typeof(IVsTextLines).GUID;
-            hr = invisibleEditor.GetDocData(fEnsureWritable: Convert.ToInt32(ensureWritable), riid: ref textLinesGuid, ppDocData: out docData);
+            //hr = invisibleEditor.GetDocData(fEnsureWritable: Convert.ToInt32(ensureWritable), riid: ref textLinesGuid, ppDocData: out docData);
 
-            if (ErrorHandler.Failed(hr) ||
-                docData == IntPtr.Zero)
-            {
-                return;
-            }
+            //if (ErrorHandler.Failed(hr) ||
+            //    docData == IntPtr.Zero)
+            //{
+            //    return;
+            //}
 
             try
             {
-                IVsTextLines buffer = Marshal.GetObjectForIUnknown(docData) as IVsTextLines;
+            //    IVsTextLines buffer = Marshal.GetObjectForIUnknown(docData) as IVsTextLines;
 
-                if (buffer == null)
-                {
-                    return;
-                }
+                //if (buffer == null)
+                //{
+                //    return;
+                //}
 
-                action(buffer);
+                //action(buffer);
             }
             finally
             {
-                Marshal.Release(docData);
-                docData = IntPtr.Zero;
+                //Marshal.Release(docData);
+                //docData = IntPtr.Zero;
             }
         }
 
@@ -228,13 +228,13 @@ namespace AzureIoTHubConnectedService
                     processItemContent(editPoint, endPoint);
 
                     // Ensure the file is saved.
-                    var persistDocData = buffer as IVsPersistDocData;
-                    if (persistDocData != null)
-                    {
-                        string newDocumentMoniker;
-                        int saveCanceled;
-                        persistDocData.SaveDocData(VSSAVEFLAGS.VSSAVE_SilentSave, out newDocumentMoniker, out saveCanceled);
-                    }
+                    //var persistDocData = buffer as IVsPersistDocData;
+                    //if (persistDocData != null)
+                    //{
+                    //    string newDocumentMoniker;
+                    //    int saveCanceled;
+                    //    persistDocData.SaveDocData(VSSAVEFLAGS.VSSAVE_SilentSave, out newDocumentMoniker, out saveCanceled);
+                    //}
                 });
         }
 
@@ -530,24 +530,24 @@ namespace AzureIoTHubConnectedService
 
     internal static class ConnectedServicesUtilities
     {
-        public static Project GetDteProject(this IVsHierarchy projectHierarchy)
-        {
-            object pvar;
-            int hr = projectHierarchy.GetProperty((uint)VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out pvar);
-            ErrorHandler.ThrowOnFailure(hr);
+        //public static Project GetDteProject(this IVsHierarchy projectHierarchy)
+        //{
+        //    object pvar;
+        //    int hr = projectHierarchy.GetProperty((uint)VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out pvar);
+        //    ErrorHandler.ThrowOnFailure(hr);
 
-            return (Project)pvar;
-        }
+        //    return (Project)pvar;
+        //}
 
         /// <summary>
         /// Get an absolute path of the directory in which the project is contained.
         /// </summary>
         /// <param name="projectHierarchy"> The parent project hierarchy object. </param>
         /// <returns> Returns an absolute path of the project's directory. </returns>
-        public static string GetProjectDirectoryPath(IVsHierarchy projectHierarchy)
-        {
-            return Path.GetDirectoryName(GetDteProject(projectHierarchy).FullName);
-        }
+        //public static string GetProjectDirectoryPath(IVsHierarchy projectHierarchy)
+        //{
+        //    return Path.GetDirectoryName(GetDteProject(projectHierarchy).FullName);
+        //}
 
         /// <summary>
         /// Get an absolute path for a file that is in the project structure.
@@ -555,51 +555,51 @@ namespace AzureIoTHubConnectedService
         /// <param name="projectHierarchy"> The parent project hierarchy object. </param>
         /// <param name="fileName"> The file name to convert to an absolute path. </param>
         /// <returns> Returns an absolute path for a file that is in the project structure. </returns>
-        public static string GetProjectFullPath(IVsHierarchy projectHierarchy, string fileName)
-        {
-            return Path.Combine(GetProjectDirectoryPath(projectHierarchy), fileName);
-        }
+        //public static string GetProjectFullPath(IVsHierarchy projectHierarchy, string fileName)
+        //{
+        //    return Path.Combine(GetProjectDirectoryPath(projectHierarchy), fileName);
+        //}
 
-        public static string GetDefaultNamespace(this IVsHierarchy projectHierarchy)
-        {
-            object defaultNamespace;
-            projectHierarchy.GetProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_DefaultNamespace, out defaultNamespace);
-            return defaultNamespace?.ToString();
-        }
+        //public static string GetDefaultNamespace(this IVsHierarchy projectHierarchy)
+        //{
+        //    object defaultNamespace;
+        //    projectHierarchy.GetProperty((uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_DefaultNamespace, out defaultNamespace);
+        //    return defaultNamespace?.ToString();
+        //}
 
-        public static string GetProjectProperty(IVsHierarchy hierarchy, __VSHPROPID propertyId)
-        {
-            return GetProjectProperty(hierarchy, (int)propertyId);
-        }
+        //public static string GetProjectProperty(IVsHierarchy hierarchy, __VSHPROPID propertyId)
+        //{
+        //    return GetProjectProperty(hierarchy, (int)propertyId);
+        //}
 
-        public static string GetProjectProperty(IVsHierarchy hierarchy, __VSHPROPID4 propertyId)
-        {
-            return GetProjectProperty(hierarchy, (int)propertyId);
-        }
+        //public static string GetProjectProperty(IVsHierarchy hierarchy, __VSHPROPID4 propertyId)
+        //{
+        //    return GetProjectProperty(hierarchy, (int)propertyId);
+        //}
 
-        public static string GetProjectProperty(IVsHierarchy hierarchy, __VSHPROPID5 propertyId)
-        {
-            return GetProjectProperty(hierarchy, (int)propertyId);
-        }
+        //public static string GetProjectProperty(IVsHierarchy hierarchy, __VSHPROPID5 propertyId)
+        //{
+        //    return GetProjectProperty(hierarchy, (int)propertyId);
+        //}
 
-        public static string GetProjectProperty(IVsHierarchy hierarchy, int propertyId)
-        {
-            object obj;
+        //public static string GetProjectProperty(IVsHierarchy hierarchy, int propertyId)
+        //{
+        //    object obj;
 
-            var hr = hierarchy.GetProperty(
-                (uint)VSConstants.VSITEMID.Root,
-                propertyId,
-                out obj);
+        //    var hr = hierarchy.GetProperty(
+        //        (uint)VSConstants.VSITEMID.Root,
+        //        propertyId,
+        //        out obj);
 
             // We *allow* failure, because the property might not exist...
             // we just treat this as a null return value.
-            if (ErrorHandler.Succeeded(hr))
-            {
-                return obj as string;
-            }
+        //    if (ErrorHandler.Succeeded(hr))
+        //    {
+        //        return obj as string;
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         public static TInterface GetService<TInterface, TService>(this IServiceProvider serviceProvider)
             where TInterface : class
@@ -627,71 +627,71 @@ namespace AzureIoTHubConnectedService
             return value;
         }
 
-        internal static string GetCapabilities(this IVsHierarchy project)
-        {
-            string capabilities = null;
+        //internal static string GetCapabilities(this IVsHierarchy project)
+        //{
+        //    string capabilities = null;
 
-            object capabilitiesObj;
-            if (ErrorHandler.Succeeded(project.GetProperty(
-                    (uint)VSConstants.VSITEMID.Root,
-                    (int)__VSHPROPID5.VSHPROPID_ProjectCapabilities,
-                    out capabilitiesObj)))
-            {
-                capabilities = capabilitiesObj as string;
-            }
+        //    object capabilitiesObj;
+        //    if (ErrorHandler.Succeeded(project.GetProperty(
+        //            (uint)VSConstants.VSITEMID.Root,
+        //            (int)__VSHPROPID5.VSHPROPID_ProjectCapabilities,
+        //            out capabilitiesObj)))
+        //    {
+        //        capabilities = capabilitiesObj as string;
+        //    }
 
-            return capabilities;
-        }
+        //    return capabilities;
+        //}
 
-        internal static string GetTargetPlatformIdentifier(this IVsHierarchy project)
-        {
-            string targetPlatformIdentifier = ConnectedServicesUtilities.GetProjectProperty(project, __VSHPROPID5.VSHPROPID_TargetPlatformIdentifier);
-            if (!string.IsNullOrEmpty(targetPlatformIdentifier))
-            {
-                targetPlatformIdentifier = targetPlatformIdentifier.CleanForCapabilitiesComponent();
-            }
-            return targetPlatformIdentifier;
-        }
+        //internal static string GetTargetPlatformIdentifier(this IVsHierarchy project)
+        //{
+        //    string targetPlatformIdentifier = ConnectedServicesUtilities.GetProjectProperty(project, __VSHPROPID5.VSHPROPID_TargetPlatformIdentifier);
+        //    if (!string.IsNullOrEmpty(targetPlatformIdentifier))
+        //    {
+        //        targetPlatformIdentifier = targetPlatformIdentifier.CleanForCapabilitiesComponent();
+        //    }
+        //    return targetPlatformIdentifier;
+        //}
 
-        private static string CleanForCapabilitiesComponent(this string value)
-        {
-            Debug.Assert(!string.IsNullOrEmpty(value));
+        //private static string CleanForCapabilitiesComponent(this string value)
+        //{
+        //    Debug.Assert(!string.IsNullOrEmpty(value));
 
             // We only allow letters, digits, periods, and underscores.
             // All other characters (especially whitespace and commas!)
             // are removed.
-            return new string(value.Where(c => char.IsLetterOrDigit(c) || c == '.' || c == '_').ToArray());
-        }
+        //    return new string(value.Where(c => char.IsLetterOrDigit(c) || c == '.' || c == '_').ToArray());
+        //}
 
-        internal static string GetProjectTypesString(this IVsHierarchy project)
-        {
-            string projectTypeGuids = string.Empty;
+        //internal static string GetProjectTypesString(this IVsHierarchy project)
+        //{
+        //    string projectTypeGuids = string.Empty;
 
-            IVsAggregatableProject aggregatableProject = project as IVsAggregatableProject;
-            if (aggregatableProject != null)
-            {
-                ErrorHandler.ThrowOnFailure(aggregatableProject.GetAggregateProjectTypeGuids(out projectTypeGuids));
-            }
+        //    IVsAggregatableProject aggregatableProject = project as IVsAggregatableProject;
+        //    if (aggregatableProject != null)
+        //    {
+        //        ErrorHandler.ThrowOnFailure(aggregatableProject.GetAggregateProjectTypeGuids(out projectTypeGuids));
+        //    }
 
-            return string.Join(" ",
-                projectTypeGuids
-                    .Split(';')
-                    .Select(s => !String.IsNullOrEmpty(s) ? new Guid(s) : Guid.Empty)
-                    .Select(g => g.ToString("N")));
-        }
+        //    return string.Join(" ",
+        //        projectTypeGuids
+        //            .Split(';')
+        //            .Select(s => !String.IsNullOrEmpty(s) ? new Guid(s) : Guid.Empty)
+        //            .Select(g => g.ToString("N")));
+        //}
 
-        internal static Version GetTargetPlatformVersion(this IVsHierarchy project)
-        {
-            Version platformVersion = null;
+        //internal static Version GetTargetPlatformVersion(this IVsHierarchy project)
+        //{
+        //    Version platformVersion = null;
 
-            string targetPlatformVersion = ConnectedServicesUtilities.GetProjectProperty(project, __VSHPROPID5.VSHPROPID_TargetPlatformVersion);
-            if (!string.IsNullOrEmpty(targetPlatformVersion))
-            {
-                Version.TryParse(targetPlatformVersion, out platformVersion);
-            }
+        //    string targetPlatformVersion = ConnectedServicesUtilities.GetProjectProperty(project, __VSHPROPID5.VSHPROPID_TargetPlatformVersion);
+        //    if (!string.IsNullOrEmpty(targetPlatformVersion))
+        //    {
+        //        Version.TryParse(targetPlatformVersion, out platformVersion);
+        //    }
 
-            return platformVersion;
-        }
+        //    return platformVersion;
+        //}
     }
 
     internal class AzureIoTHubConnectedServiceHandlerHelper : Microsoft.VisualStudio.ConnectedServices.ConnectedServiceHandlerHelper
@@ -717,7 +717,7 @@ namespace AzureIoTHubConnectedService
             {
                 if (this.tokenReplacementValues == null)
                 {
-                    this.tokenReplacementValues = this.CreateTokenReplacementValues();
+                    //this.tokenReplacementValues = this.CreateTokenReplacementValues();
                 }
                 return this.tokenReplacementValues;
             }
@@ -774,7 +774,7 @@ namespace AzureIoTHubConnectedService
                 addFileOptions = new AddFileOptions();
             }
 
-            await this.AddFileToProjectInFolder(this.context.ProjectHierarchy, fileName, targetPath, addFileOptions);
+            //await this.AddFileToProjectInFolder(this.context.ProjectHierarchy, fileName, targetPath, addFileOptions);
 
             return targetPath;
         }
@@ -895,7 +895,7 @@ namespace AzureIoTHubConnectedService
         /// <returns>
         /// Returns a new dictionary with built-in tokens and their values.
         /// </returns>
-        private IDictionary<string, string> CreateTokenReplacementValues()
+        /*private IDictionary<string, string> CreateTokenReplacementValues()
         {
             Dictionary<string, string> extended = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
@@ -938,7 +938,7 @@ namespace AzureIoTHubConnectedService
             }
 
             return extended;
-        }
+        }*/
 
         /// <summary>
         /// Copy a file to a project relative path.
@@ -955,85 +955,85 @@ namespace AzureIoTHubConnectedService
         /// <param name="addFileOptions">
         /// The options to use while coping the file.
         /// </param>
-        private async Task AddFileToProjectInFolder(IVsHierarchy projectHierarchy, string fileName, string targetPath, AddFileOptions addFileOptions)
-        {
-            targetPath = AzureIoTHubConnectedServiceHandlerHelper.GetProjectRelativePath(projectHierarchy, targetPath);
-            Project project = ConnectedServicesUtilities.GetDteProject(projectHierarchy);
-            ProjectItems items = project.ProjectItems;
+        //private async Task AddFileToProjectInFolder(IVsHierarchy projectHierarchy, string fileName, string targetPath, AddFileOptions addFileOptions)
+        //{
+        //    targetPath = AzureIoTHubConnectedServiceHandlerHelper.GetProjectRelativePath(projectHierarchy, targetPath);
+        //    Project project = ConnectedServicesUtilities.GetDteProject(projectHierarchy);
+        //    ProjectItems items = project.ProjectItems;
 
-            fileName = await this.CopyFileAsync(fileName, targetPath);
+        //    fileName = await this.CopyFileAsync(fileName, targetPath);
 
-            string fileToAdd = ConnectedServicesUtilities.GetProjectFullPath(projectHierarchy, targetPath);
-            string targetFileName = Path.GetFileName(fileToAdd);
+        //    string fileToAdd = ConnectedServicesUtilities.GetProjectFullPath(projectHierarchy, targetPath);
+        //    string targetFileName = Path.GetFileName(fileToAdd);
 
             // Build the directory structure if it doesn't already exist.
-            Directory.CreateDirectory(Path.GetDirectoryName(fileToAdd));
+        //    Directory.CreateDirectory(Path.GetDirectoryName(fileToAdd));
 
             // clone the AdditionalReplacementValues dictionary so we aren't modifying the original
-            Dictionary<string, string> replacementValues = new Dictionary<string, string>(addFileOptions.AdditionalReplacementValues);
+        //    Dictionary<string, string> replacementValues = new Dictionary<string, string>(addFileOptions.AdditionalReplacementValues);
 
-            ProjectItem item = AzureIoTHubConnectedServiceHandlerHelper.GetNestedProjectItem(items, targetPath);
-            bool existOnDisk = File.Exists(fileToAdd);
+        //    ProjectItem item = AzureIoTHubConnectedServiceHandlerHelper.GetNestedProjectItem(items, targetPath);
+        //    bool existOnDisk = File.Exists(fileToAdd);
 
-            if (item == null &&
-                existOnDisk)
-            {
+        //    if (item == null &&
+        //        existOnDisk)
+        //    {
                 // The file is not in the project. We should add the file.
                 // This is some arbitrary file, which we'll update in the same
                 // path as existing project files.
                 // This is 'fileToAdd' because we're not adding the final file here.
-                item = items.AddFromFile(fileToAdd);
-            }
+        //        item = items.AddFromFile(fileToAdd);
+        //    }
 
-            if (item != null)
-            {
+        //    if (item != null)
+        //    {
                 // Add the folder-specific RootNamespace replacement value so $RootNamespace$ has the folder structure in it for C# projects
-                this.AddRootNamespaceReplacementValue(replacementValues, item.Collection);
+        //        this.AddRootNamespaceReplacementValue(replacementValues, item.Collection);
 
-                bool filesEqual = this.AreFilesEqualWithReplacement(item, fileName, replacementValues);
+        //        bool filesEqual = this.AreFilesEqualWithReplacement(item, fileName, replacementValues);
 
-                if (!filesEqual)
-                {
-                    if (!addFileOptions.SuppressOverwritePrompt && !this.PromptOverwrite(targetFileName))
-                    {
+        //        if (!filesEqual)
+        //        {
+        //            if (!addFileOptions.SuppressOverwritePrompt && !this.PromptOverwrite(targetFileName))
+        //            {
                         // The user chose not to overwrite the file, so abort adding this file.
-                        return;
-                    }
+        //                return;
+        //            }
 
                     // Get the document and overwrite with file content.
-                    BufferUtilities.UpdateProjectItemFromFile(item, fileName);
-                }
-            }
-            else
-            {
-                File.Copy(fileName, fileToAdd);
-                item = items.AddFromFile(fileToAdd);
+        //            BufferUtilities.UpdateProjectItemFromFile(item, fileName);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        File.Copy(fileName, fileToAdd);
+        //        item = items.AddFromFile(fileToAdd);
 
                 // Add the folder-specific RootNamespace replacement value so $RootNamespace$ has the folder structure in it for C# projects
-                this.AddRootNamespaceReplacementValue(replacementValues, item.Collection);
-            }
+        //        this.AddRootNamespaceReplacementValue(replacementValues, item.Collection);
+        //    }
 
-            this.PerformTokenReplacement(item, replacementValues);
+       //     this.PerformTokenReplacement(item, replacementValues);
 
-            if (addFileOptions.OpenOnComplete && !item.IsOpen)
-            {
-                try
-                {
-                    var window = item.Open();
+         //   if (addFileOptions.OpenOnComplete && !item.IsOpen)
+         //   {
+         //       try
+         //       {
+         //           var window = item.Open();
 
                     // Ensure that the window is always shown regardless of "Preview"
                     // user settings.
-                    if (window != null &&
-                        !window.Visible)
-                    {
-                        window.Visible = true;
-                    }
-                }
-                catch (Exception)
-                {
-                }
-            }
-        }
+      //              if (window != null &&
+      //                  !window.Visible)
+      //              {
+      //                  window.Visible = true;
+      //              }
+      //          }
+      //          catch (Exception)
+      //          {
+      //          }
+      //      }
+      //  }
 
         private bool AreFilesEqualWithReplacement(ProjectItem item, string fileName, IDictionary<string, string> additionalReplacementValues)
         {
@@ -1085,12 +1085,12 @@ namespace AzureIoTHubConnectedService
                 if (!string.IsNullOrEmpty(folderDefaultNamespace))
                 {
                     // trim off the project's DefaultNamespace
-                    string projectDefaultNamespace = this.context.ProjectHierarchy.GetDefaultNamespace();
-                    folderDefaultNamespace = AzureIoTHubConnectedServiceHandlerHelper.TrimNamespacePrefix(folderDefaultNamespace, projectDefaultNamespace);
+        //            string projectDefaultNamespace = this.context.ProjectHierarchy.GetDefaultNamespace();
+        //            folderDefaultNamespace = AzureIoTHubConnectedServiceHandlerHelper.TrimNamespacePrefix(folderDefaultNamespace, projectDefaultNamespace);
 
                     // trim off the service artifacts root folder name
-                    string serviceRootArtifactNamespace = TokenReplacementBuilder.MakeSafeIdentifier(this.GetServiceArtifactsRootFolder());
-                    folderDefaultNamespace = AzureIoTHubConnectedServiceHandlerHelper.TrimNamespacePrefix(folderDefaultNamespace, serviceRootArtifactNamespace);
+         //           string serviceRootArtifactNamespace = TokenReplacementBuilder.MakeSafeIdentifier(this.GetServiceArtifactsRootFolder());
+         //           folderDefaultNamespace = AzureIoTHubConnectedServiceHandlerHelper.TrimNamespacePrefix(folderDefaultNamespace, serviceRootArtifactNamespace);
                 }
             }
 
@@ -1108,30 +1108,30 @@ namespace AzureIoTHubConnectedService
         /// <summary>
         /// Returns the targetPath as a relative path from the project's directory.
         /// </summary>
-        private static string GetProjectRelativePath(IVsHierarchy projectHierarchy, string targetPath)
-        {
-            if (Path.IsPathRooted(targetPath))
-            {
+        //private static string GetProjectRelativePath(IVsHierarchy projectHierarchy, string targetPath)
+        //{
+        //    if (Path.IsPathRooted(targetPath))
+        //    {
                 // if this is a rooted path, it must be a sub-directory of the project's directory
-                string projectDirectory = ConnectedServicesUtilities.GetProjectDirectoryPath(projectHierarchy);
-                Uri projectDirectoryUri = new Uri(projectDirectory, UriKind.Absolute);
-                Uri targetPathUri = new Uri(targetPath, UriKind.Absolute);
+        //        string projectDirectory = ConnectedServicesUtilities.GetProjectDirectoryPath(projectHierarchy);
+        //        Uri projectDirectoryUri = new Uri(projectDirectory, UriKind.Absolute);
+        //        Uri targetPathUri = new Uri(targetPath, UriKind.Absolute);
 
-                if (!projectDirectoryUri.IsBaseOf(targetPathUri))
-                {
-                    throw new ArgumentException(
-                        "If targetPath is an absolute path, then it must be in a subdirectory under the project's directory.\nProject Directory: {0}\nTargetPath: {1}"
-                            .FormatCurrentCulture(projectDirectory, targetPath),
-                        "targetPath");
-                }
+        //        if (!projectDirectoryUri.IsBaseOf(targetPathUri))
+        //        {
+        //            throw new ArgumentException(
+        //                "If targetPath is an absolute path, then it must be in a subdirectory under the project's directory.\nProject Directory: {0}\nTargetPath: {1}"
+        //                    .FormatCurrentCulture(projectDirectory, targetPath),
+        //                "targetPath");
+        //        }
 
                 // turn the full path into a path relative to the project directory
-                targetPath = targetPath.Substring(projectDirectory.Length);
-                targetPath = targetPath.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-            }
+        //        targetPath = targetPath.Substring(projectDirectory.Length);
+        //        targetPath = targetPath.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+        //    }
 
-            return targetPath;
-        }
+        //    return targetPath;
+        //}
 
         private static ProjectItem GetNestedProjectItem(ProjectItems items, string fileName)
         {
@@ -1152,10 +1152,12 @@ namespace AzureIoTHubConnectedService
         private bool PromptOverwrite(string targetFileName)
         {
             // Prompt for overwriting.
-            IVsUIShell uiShell = ServiceProvider.GlobalProvider.GetService(typeof(SVsUIShell)) as IVsUIShell;
-            string prompt = string.Format(CultureInfo.InvariantCulture, Resource.FileAlreadyExists, targetFileName);
-            bool overwrite = VsShellUtilities.PromptYesNo(prompt, null, OLEMSGICON.OLEMSGICON_QUERY, uiShell);
-            return overwrite;
+            //    IVsUIShell uiShell = ServiceProvider.GlobalProvider.GetService(typeof(SVsUIShell)) as IVsUIShell;
+            //    string prompt = string.Format(CultureInfo.InvariantCulture, Resource.FileAlreadyExists, targetFileName);
+            //    bool overwrite = VsShellUtilities.PromptYesNo(prompt, null, OLEMSGICON.OLEMSGICON_QUERY, uiShell);
+            //    return overwrite;
+
+            return false;
         }
 
         /// <summary>

@@ -60,30 +60,30 @@ namespace AzureIoTHubConnectedService
             if (listBox.SelectedItem != null)
             {
                 this.SelectedDeviceID = this.listBox.SelectedItem.ToString();
-                this.DialogResult = true;
+                //this.DialogResult = true;
             }
             else
             {
-                this.DialogResult = false;
+                //this.DialogResult = false;
             }
-            this.Close();
+            //this.Close();
         }
         private async void newButton_Click(object sender, RoutedEventArgs e)
         {
             var newDeviceDlg = new NewDevice();
-            var action = newDeviceDlg.ShowModal();
-            if (action.HasValue && action.Value)
-            {
-                // Create a new device and add it to the list
-                var deviceId = newDeviceDlg.textBox.Text;
-                var newDevice = await this.createNewDevice(deviceId);
-                if (newDevice != null)
-                {
-                    this.listBox.Items.Add(deviceId);
-                    this.okButton.IsEnabled = true;
-                    this.Devices.Add(newDevice);
-                }
-            }
+            //var action = newDeviceDlg.ShowModal();
+            //if (action.HasValue && action.Value)
+            //{
+            //    // Create a new device and add it to the list
+            //    var deviceId = newDeviceDlg.textBox.Text;
+            //    var newDevice = await this.createNewDevice(deviceId);
+            //    if (newDevice != null)
+            //    {
+            //        this.listBox.Items.Add(deviceId);
+            //        this.okButton.IsEnabled = true;
+            //        this.Devices.Add(newDevice);
+            //    }
+            //}
         }
 
         public void Dispose()

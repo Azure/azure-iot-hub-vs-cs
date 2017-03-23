@@ -13,14 +13,14 @@ namespace AzureIoTHubConnectedService
     /// </summary>
     internal static class ProjectUtilities
     {
-        public static Project GetDteProject(IVsHierarchy projectHierarchy)
-        {
-            object pvar;
-            int hr = projectHierarchy.GetProperty((uint)VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out pvar);
-            ErrorHandler.ThrowOnFailure(hr);
-
-            return (Project)pvar;
-        }
+        //public static Project GetDteProject(IVsHierarchy projectHierarchy)
+        //{
+        //    object pvar;
+        //    int hr = projectHierarchy.GetProperty((uint)VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out pvar);
+        //    ErrorHandler.ThrowOnFailure(hr);
+        //
+        //    return (Project)pvar;
+        //}
 
         /// <summary>
         /// Find the first project item with the given filename.

@@ -127,13 +127,13 @@ namespace AzureIoTHubConnectedService
 
             using (var dlg = new DeviceSelectionDialog(devicesTask, newDeviceCreator))
             {
-                var dlgResult = dlg.ShowModal();
-                if (dlgResult.HasValue && dlgResult.Value)
-                {
-                    var id = dlg.SelectedDeviceID;
-                    var key = dlg.Devices.First(_ => _.Id == id).Authentication.SymmetricKey;
-                    deviceId = new SelectedDevice { Id = id, Key = key.PrimaryKey };
-                }
+                //var dlgResult = dlg.ShowModal();
+                //if (dlgResult.HasValue && dlgResult.Value)
+                //{
+                //    var id = dlg.SelectedDeviceID;
+                //    var key = dlg.Devices.First(_ => _.Id == id).Authentication.SymmetricKey;
+                //    deviceId = new SelectedDevice { Id = id, Key = key.PrimaryKey };
+                //}
             }
             return deviceId;
         }
@@ -166,13 +166,13 @@ namespace AzureIoTHubConnectedService
 
                 try
                 {
-                    await NuGetUtilities.InstallPackagesAsync(
-                        packages,
-                        "ConnectedServiceForAzureIoTHub.9e26cafb-e929-4d85-a8af-42c42f72f771",
-                        context.Logger,
-                        ProjectUtilities.GetDteProject(context.ProjectHierarchy),
-                        this.PackageInstallerServices,
-                        this.PackageInstaller);
+                    //await NuGetUtilities.InstallPackagesAsync(
+                    //    packages,
+                    //    "ConnectedServiceForAzureIoTHub.9e26cafb-e929-4d85-a8af-42c42f72f771",
+                    //    context.Logger,
+                    //    ProjectUtilities.GetDteProject(context.ProjectHierarchy),
+                    //    this.PackageInstallerServices,
+                    //    this.PackageInstaller);
                 }
                 catch(Exception ex)
                 {

@@ -44,17 +44,17 @@ namespace AzureIoTHubConnectedService
         {
             if (this.picker == null)
             {
-                IVsAccountManagementService accountManagementService = Package.GetGlobalService(typeof(SVsAccountManagementService)) as IVsAccountManagementService;
-                if (accountManagementService == null)
-                {
-                    Debug.Fail("Could not retrieve an IVsAccountManagementService.");
-                    return;
-                }
+                //IVsAccountManagementService accountManagementService = Package.GetGlobalService(typeof(SVsAccountManagementService)) as IVsAccountManagementService;
+                //if (accountManagementService == null)
+                //{
+                //    Debug.Fail("Could not retrieve an IVsAccountManagementService.");
+                //    return;
+                //}
 
                 AccountPickerOptions accountPickerOptions = new AccountPickerOptions(
                     Window.GetWindow(this),
                     this.viewModel.HostId);
-                this.picker = await accountManagementService.CreateWpfAccountPickerAsync(accountPickerOptions);
+                //this.picker = await accountManagementService.CreateWpfAccountPickerAsync(accountPickerOptions);
                 this.picker.SelectedAccount = await this.viewModel.GetAccountAsync();
 
                 this.picker.PropertyChanged += this.Picker_PropertyChanged;
@@ -66,7 +66,7 @@ namespace AzureIoTHubConnectedService
         {
             // The property changed event can get raised on the non-UI thread.  This causes issues
             // from logic expecting the UI thread.
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            //await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
             if (e.PropertyName == nameof(IWpfAccountPicker.SelectedAccount))
             {

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureIoTHubConnectedService", "AzureIoTHubConnectedService\AzureIoTHubConnectedService.csproj", "{11DB582F-9A17-4481-A975-D7FAF2260672}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureIoTHubConnectedService", "AzureIoTHubConnectedService\AzureIoTHubConnectedService-2017.csproj", "{11DB582F-9A17-4481-A975-D7FAF2260672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureIoTHubConnectedServiceLibrary", "AzureIoTHubConnectedServiceLibrary\AzureIoTHubConnectedServiceLibrary.csproj", "{E3F516CA-E6B9-4585-BF00-C89A67159900}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureIoTHubConnectedServiceLibrary", "AzureIoTHubConnectedServiceLibrary\AzureIoTHubConnectedServiceLibrary-2017.csproj", "{E3F516CA-E6B9-4585-BF00-C89A67159900}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -38,15 +38,15 @@ namespace AzureIoTHubConnectedService
 
         EnvDTE.Project GetActiveProject()
         {
-            //var dte = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE80.DTE2;
+            var dte = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE80.DTE2;
 
             EnvDTE.Project activeProject = null;
 
-            //Array activeSolutionProjects = dte.ActiveSolutionProjects as Array;
-            //if (activeSolutionProjects != null && activeSolutionProjects.Length > 0)
-            //{
-            //    activeProject = activeSolutionProjects.GetValue(0) as EnvDTE.Project;
-            //}
+            Array activeSolutionProjects = dte.ActiveSolutionProjects as Array;
+            if (activeSolutionProjects != null && activeSolutionProjects.Length > 0)
+            {
+                activeProject = activeSolutionProjects.GetValue(0) as EnvDTE.Project;
+            }
 
             return activeProject;
         }
@@ -68,26 +68,27 @@ namespace AzureIoTHubConnectedService
             else
             {
                 var securityMode = new TPMSelector();
-                //var dlgResult = securityMode.ShowModal();
-                //if (dlgResult.HasValue && dlgResult.Value)
-                //{
-                //    var useTPM = securityMode.rbUseTPM.IsChecked;
-                //    if (useTPM.HasValue && useTPM.Value)
-                //    {
-                //        // The user has chosen to use TPM
-                //        configurator = new ConnectedServiceSansUI(false);
-                //    }
-                //    else
-                //    {
-                //        // No TPM
-                //        configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
-                //    }
-               // }
-               // else
-               // {
+                var dlgResult = securityMode.ShowDialog();// ShowModal();
+
+                if (dlgResult.HasValue && dlgResult.Value)
+                {
+                    var useTPM = securityMode.rbUseTPM.IsChecked;
+                    if (useTPM.HasValue && useTPM.Value)
+                    {
+                        // The user has chosen to use TPM
+                        configurator = new ConnectedServiceSansUI(false);
+                    }
+                    else
+                    {
+                        // No TPM
+                        configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
+                    }
+               }
+                else
+                {
                     // User cancelled
                     configurator = new ConnectedServiceSansUI(true);
-               // }
+                }
             }
 
             return Task.FromResult(configurator);

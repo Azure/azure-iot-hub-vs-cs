@@ -3,8 +3,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:ClassModifier="internal"
     xmlns:local="clr-namespace:AzureIoTHubConnectedService"
-    FocusManager.FocusedElement="{Binding ElementName=leftMarginTextBox}" >
+    Title="Pick Azure IoT Hub Device"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    WindowStartupLocation="CenterOwner" 
+    FocusManager.FocusedElement="{Binding ElementName=leftMarginTextBox}" SizeToContent="WidthAndHeight">
 
+    <Window.Resources>
+        <ResourceDictionary x:Uid="ResourceDictionary_1">
+            <Style x:Uid="Style_1" x:Key="StandardButtonStyle" TargetType="{x:Type Button}">
+                <Setter x:Uid="Setter_1" Property="MinWidth" Value="75" />
+                <Setter x:Uid="Setter_2" Property="MinHeight" Value="23" />
+                <Setter x:Uid="Setter_3" Property="Padding" Value="10,0,10,0" />
+                <Setter x:Uid="Setter_4" Property="Margin" Value="0,0,0,0" />
+            </Style>
+            <Style x:Uid="Style_2" TargetType="Button" BasedOn="{StaticResource StandardButtonStyle}" />
+        </ResourceDictionary>
+    </Window.Resources>
 
     <Grid x:Uid="Grid_1" Margin="12" Width="330">
 

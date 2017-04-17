@@ -19,5 +19,6 @@
   </Dependencies>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%Library" Path="|AzureIoTHubConnectedServiceLibrary|" />
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%Library" Path="|%CurrentProject%Library;PkgdefProjectOutputGroup|" />
   </Assets>
 </PackageManifest>

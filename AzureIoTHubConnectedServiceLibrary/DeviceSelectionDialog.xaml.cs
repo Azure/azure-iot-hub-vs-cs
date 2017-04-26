@@ -71,7 +71,7 @@ namespace AzureIoTHubConnectedService
         private async void newButton_Click(object sender, RoutedEventArgs e)
         {
             var newDeviceDlg = new NewDevice();
-            var action = newDeviceDlg.ShowDialog();
+            var action = newDeviceDlg.ShowModal();
             if (action.HasValue && action.Value)
             {
                 // Create a new device and add it to the list

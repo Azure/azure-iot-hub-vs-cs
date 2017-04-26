@@ -68,8 +68,7 @@ namespace AzureIoTHubConnectedService
             else
             {
                 var securityMode = new TPMSelector();
-                var dlgResult = securityMode.ShowDialog();// ShowModal();
-
+                var dlgResult = securityMode.ShowModal();
                 if (dlgResult.HasValue && dlgResult.Value)
                 {
                     var useTPM = securityMode.rbUseTPM.IsChecked;
@@ -83,7 +82,7 @@ namespace AzureIoTHubConnectedService
                         // No TPM
                         configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
                     }
-               }
+                }
                 else
                 {
                     // User cancelled

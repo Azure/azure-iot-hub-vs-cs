@@ -127,7 +127,7 @@ namespace AzureIoTHubConnectedService
 
             using (var dlg = new DeviceSelectionDialog(devicesTask, newDeviceCreator))
             {
-                var dlgResult = dlg.ShowModal();
+                var dlgResult = dlg.ShowDialog(); // ShowModal();
                 if (dlgResult.HasValue && dlgResult.Value)
                 {
                     var id = dlg.SelectedDeviceID;

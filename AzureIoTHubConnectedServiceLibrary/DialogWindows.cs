@@ -10,7 +10,8 @@ namespace AzureIoTHubConnectedService
     /// This is needed because we target both MS.VS.Shell.12.0 and MS.VS.Shell.14.0, and we can't
     /// have #if directives in .xaml files.
     /// </remarks>
-    internal class DialogWindow : Microsoft.VisualStudio.PlatformUI.DialogWindow
+    internal class DialogWindow : System.Windows.Window //System.Windows.Controls.ContentControl
     {
+        public DialogWindow() { }
     }
 }

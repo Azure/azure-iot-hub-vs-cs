@@ -20,7 +20,7 @@ static class AzureIoTHub
 
     public static async Task SendDeviceToCloudMessageAsync()
     {
-        var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Amqp);
+        var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Mqtt);
 
 #if WINDOWS_UWP
         var str = "Hello, Cloud from a UWP C# app!";
@@ -34,7 +34,7 @@ static class AzureIoTHub
 
     public static async Task<string> ReceiveCloudToDeviceMessageAsync()
     {
-        var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Amqp);
+        var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Mqtt);
 
         while (true)
         {

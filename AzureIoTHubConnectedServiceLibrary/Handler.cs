@@ -40,6 +40,7 @@ namespace AzureIoTHubConnectedService
             {
                 if ((bool)cancel)
                 {
+                    Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/Cancelled");
                     // Cancellation
                     throw new OperationCanceledException();
                 }
@@ -91,6 +92,8 @@ namespace AzureIoTHubConnectedService
 
             await context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "New service instance {0} created", context.ServiceInstance.Name);
 
+            Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/ServiceCreated");
+
             return result;
         }
 
@@ -103,11 +106,13 @@ namespace AzureIoTHubConnectedService
             try
             {
                 var device = await registryManager.AddDeviceAsync(new Device(deviceId));
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/DeviceCreated");
                 return device;
             }
             catch (Exception ex)
             {
                 await context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, Resource.DeviceCreationFailure, deviceId);
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailureDeviceCreation");
             }
             return null;
         }
@@ -135,6 +140,7 @@ namespace AzureIoTHubConnectedService
                     deviceId = new SelectedDevice { Id = id, Key = key.PrimaryKey };
                 }
             }
+            Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/DeviceSelected");
             return deviceId;
         }
 
@@ -178,6 +184,7 @@ namespace AzureIoTHubConnectedService
                 {
                     var status = string.Format("Package {0} installation failed. Exception: '{1}'. WARNING: The project might not compile!", nuget.Id, ex.Message);
                     await context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, status);
+                    Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailurePackageInstallation");
                 }
             }
         }

@@ -26,9 +26,9 @@ static class AzureIoTHub
                 CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Mqtt);
 
 #if WINDOWS_UWP
-        var str = "Hello, Cloud from a secure UWP C# app!";
+        var str = "{{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a secure C# app!\"}}";
 #else
-        var str = "Hello, Cloud from a secure C# app!";
+        var str = "{{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a secure UWP C# app!\"}}";
 #endif
         var message = new Message(Encoding.ASCII.GetBytes(str));
 

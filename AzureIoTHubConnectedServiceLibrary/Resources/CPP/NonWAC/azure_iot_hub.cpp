@@ -1,4 +1,4 @@
-#include "stdafx.h"
+$stdafx$
 
 #include <string>
 #include <future>

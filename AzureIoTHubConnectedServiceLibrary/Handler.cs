@@ -49,6 +49,9 @@ namespace AzureIoTHubConnectedService
             // Once C++ is officially supported, we can switch this to context.HandlerHelper, removing AzureIoTHubConnectedServiceHandlerHelper
             var handlerHelper = GetConnectedServiceHandlerHelper(context);
 
+
+            handlerHelper.TokenReplacementValues.Add("stdafx", this.m_isLinuxProject ? "" : "#include \"stdafx.h\"");
+
             bool bUseTPM = (bool)context.ServiceInstance.Metadata["TPM"];
             if (bUseTPM)
             {
@@ -188,6 +191,8 @@ namespace AzureIoTHubConnectedService
                 }
             }
         }
+
+        protected bool m_isLinuxProject = false;
     }
 
     internal class NuGetReference

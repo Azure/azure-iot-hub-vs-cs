@@ -22,12 +22,8 @@ namespace AzureIoTHubConnectedService
             manifest.PackageReferences.Add(new NuGetReference("EnterpriseLibrary.TransientFaultHandling", "6.0.1304.0"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.AspNet.WebApi.Client", "5.2.3"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Amqp", "2.0.5"));
-            //manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.C.SharedUtility", "1.0.33"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Client", "1.2.9"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.Devices.Shared", "1.0.10"));
-            //manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.AmqpTransport", "1.1.14"));
-            //manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.IoTHub.IoTHubClient", "1.1.14"));
-            //manifest.PackageReferences.Add(new NuGetReference("Microsoft.Azure.uamqp", "1.0.33"));
             manifest.PackageReferences.Add(new NuGetReference("Mono.Security", "3.2.3.0"));
             manifest.PackageReferences.Add(new NuGetReference("Newtonsoft.Json", "10.0.2"));
             manifest.PackageReferences.Add(new NuGetReference("PCLCrypto", "2.0.147"));

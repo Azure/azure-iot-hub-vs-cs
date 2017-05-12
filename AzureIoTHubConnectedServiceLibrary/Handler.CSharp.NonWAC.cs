@@ -36,6 +36,7 @@ namespace AzureIoTHubConnectedService
             manifest.PackageReferences.Add(new NuGetReference("PInvoke.NCrypt", "0.5.64"));
             manifest.PackageReferences.Add(new NuGetReference("PInvoke.Windows.Core", "0.5.64"));
             manifest.PackageReferences.Add(new NuGetReference("Validation", "2.4.15"));
+            manifest.PackageReferences.Add(new NuGetReference("Microsoft.Extensions.Logging", "1.1.1"));
             manifest.PackageReferences.Add(new NuGetReference("Microsoft.Extensions.Logging.Abstractions", "1.1.1"));
 
             if (useTPM)

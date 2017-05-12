@@ -23,12 +23,12 @@ static class AzureIoTHub
         var deviceClient = DeviceClient.Create(
             hubUri,
             AuthenticationMethodFactory.
-                CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Amqp);
+                CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Mqtt);
 
 #if WINDOWS_UWP
-        var str = "Hello, Cloud from a secure UWP C# app!";
+        var str = "{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a secure UWP C# app!\"}";
 #else
-        var str = "Hello, Cloud from a secure C# app!";
+        var str = "{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a secure C# app!\"}";
 #endif
         var message = new Message(Encoding.ASCII.GetBytes(str));
 
@@ -45,7 +45,7 @@ static class AzureIoTHub
         var deviceClient = DeviceClient.Create(
             hubUri,
             AuthenticationMethodFactory.
-                CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Amqp);
+                CreateAuthenticationWithToken(deviceId, sasToken), TransportType.Mqtt);
 
         while (true)
         {

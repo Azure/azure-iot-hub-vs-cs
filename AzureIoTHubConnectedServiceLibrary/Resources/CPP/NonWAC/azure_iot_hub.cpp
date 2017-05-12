@@ -1,4 +1,4 @@
-#include "stdafx.h"
+$stdafx$
 
 #include <string>
 #include <future>
@@ -55,7 +55,7 @@ void send_device_to_cloud_message()
     }
     else
     {
-        std::string message = "Hello, Cloud from C++!";
+		std::string message = "{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a C++ app!\"}";
 
         IOTHUB_MESSAGE_HANDLE message_handle = IoTHubMessage_CreateFromByteArray((const unsigned char*)message.data(), message.size());
         if (message_handle == nullptr)

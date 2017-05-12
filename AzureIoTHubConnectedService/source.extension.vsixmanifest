@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-    <Metadata>
-        <Identity Id="ConnectedServiceForAzureIoTHub.9e26cafb-e929-4d85-a8af-42c42f72f771" Version="1.5" Language="en-US" Publisher="Microsoft" />
-        <DisplayName>Connected Service for Azure IoT Hub</DisplayName>
-        <Description xml:space="preserve">Allows developers to create and connect to Azure IoT Hub easily and with step-by-step guidance.</Description>
-        <MoreInfo>http://aka.ms/iothubgetstartedVSCS</MoreInfo>
-        <License>License.rtf</License>
-        <Icon>AzureIoTHubProviderIconSmall.png</Icon>
-        <PreviewImage>AzureIoTHubProviderIconPreview.png</PreviewImage>
-        <Tags>IoT; ConnectedServices; Cloud; Azure; Services; Tools</Tags>
-    </Metadata>
-    <Installation>
-        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />
-    </Installation>
-    <Dependencies>
-        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
-        <Dependency d:Source="Installed" Id="ConnectedServices.B3144AF8-5B8F-491C-9ACA-996350E8FE95" DisplayName="Microsoft Connected Services" Version="[2.0,)" />
-    </Dependencies>
-    <Assets>
-        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%Library" Path="|AzureIoTHubConnectedServiceLibrary|" />
-    </Assets>
+  <Metadata>
+    <Identity Id="ConnectedServiceForAzureIoTHub.a8e3ec1c-7582-43ba-b8f6-d87ca58abcc4" Version="1.7" Language="en-US" Publisher="Microsoft" />
+    <DisplayName>Connected Service for Azure IoT Hub</DisplayName>
+    <Description xml:space="preserve">Allows developers to connect to Azure IoT Hub easily and with step-by-step guidance.</Description>
+    <MoreInfo>http://aka.ms/iothubgetstartedVSCS</MoreInfo>
+    <License>License.rtf</License>
+    <Icon>AzureIoTHubProviderIconSmall.png</Icon>
+    <PreviewImage>AzureIoTHubProviderIconPreview.png</PreviewImage>
+    <Tags>IoT; ConnectedServices; Cloud; Azure; Services; Tools</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Version="[15.0,16.0)" Id="Microsoft.VisualStudio.Community" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+    <Dependency d:Source="Installed" Version="[15.0.30111.36359,16.0)" Id="ConnectedServices.897486C9-63BD-48D3-8A33-CB770FBD0723" DisplayName="Microsoft Connected Services" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%Library" Path="|AzureIoTHubConnectedServiceLibrary|" />
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="File" Path="AzureIoTHubConnectedServiceLibrary.pkgdef" />
+  </Assets>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.Component.NetFX.Core.Runtime" Version="[15.0.26208.0,16.0)" DisplayName=".NET Core runtime" />
+  </Prerequisites>
 </PackageManifest>

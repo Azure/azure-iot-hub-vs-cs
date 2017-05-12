@@ -75,6 +75,8 @@ namespace AzureIoTHubConnectedService
         {
             IEnumerable<IAzureIoTHub> hubs = await this.Authenticator.GetAzureIoTHubs(this.iotHubAccountManager, ct).ConfigureAwait(false);
             ct.ThrowIfCancellationRequested();
+
+            Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/GotListOfHubs");
             return hubs.Select(p => AzureIoTHubAccountProviderGrid.CreateServiceInstance(p)).ToList();
         }
 

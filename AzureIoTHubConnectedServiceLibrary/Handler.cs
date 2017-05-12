@@ -40,6 +40,7 @@ namespace AzureIoTHubConnectedService
             {
                 if ((bool)cancel)
                 {
+                    Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/Cancelled");
                     // Cancellation
                     throw new OperationCanceledException();
                 }
@@ -47,6 +48,9 @@ namespace AzureIoTHubConnectedService
 
             // Once C++ is officially supported, we can switch this to context.HandlerHelper, removing AzureIoTHubConnectedServiceHandlerHelper
             var handlerHelper = GetConnectedServiceHandlerHelper(context);
+
+
+            handlerHelper.TokenReplacementValues.Add("stdafx", this.m_isLinuxProject ? "" : "#include \"stdafx.h\"");
 
             bool bUseTPM = (bool)context.ServiceInstance.Metadata["TPM"];
             if (bUseTPM)
@@ -91,6 +95,8 @@ namespace AzureIoTHubConnectedService
 
             await context.Logger.WriteMessageAsync(LoggerMessageCategory.Information, "New service instance {0} created", context.ServiceInstance.Name);
 
+            Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/ServiceCreated");
+
             return result;
         }
 
@@ -103,11 +109,13 @@ namespace AzureIoTHubConnectedService
             try
             {
                 var device = await registryManager.AddDeviceAsync(new Device(deviceId));
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/DeviceCreated");
                 return device;
             }
             catch (Exception ex)
             {
                 await context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, Resource.DeviceCreationFailure, deviceId);
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailureDeviceCreation");
             }
             return null;
         }
@@ -127,7 +135,7 @@ namespace AzureIoTHubConnectedService
 
             using (var dlg = new DeviceSelectionDialog(devicesTask, newDeviceCreator))
             {
-                var dlgResult = dlg.ShowModal();
+                var dlgResult = dlg.ShowDialog(); // ShowModal();
                 if (dlgResult.HasValue && dlgResult.Value)
                 {
                     var id = dlg.SelectedDeviceID;
@@ -135,6 +143,7 @@ namespace AzureIoTHubConnectedService
                     deviceId = new SelectedDevice { Id = id, Key = key.PrimaryKey };
                 }
             }
+            Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/DeviceSelected");
             return deviceId;
         }
 
@@ -168,7 +177,7 @@ namespace AzureIoTHubConnectedService
                 {
                     await NuGetUtilities.InstallPackagesAsync(
                         packages,
-                        "ConnectedServiceForAzureIoTHub.9e26cafb-e929-4d85-a8af-42c42f72f771",
+                        "ConnectedServiceForAzureIoTHub.a8e3ec1c-7582-43ba-b8f6-d87ca58abcc4",
                         context.Logger,
                         ProjectUtilities.GetDteProject(context.ProjectHierarchy),
                         this.PackageInstallerServices,
@@ -178,9 +187,12 @@ namespace AzureIoTHubConnectedService
                 {
                     var status = string.Format("Package {0} installation failed. Exception: '{1}'. WARNING: The project might not compile!", nuget.Id, ex.Message);
                     await context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, status);
+                    Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailurePackageInstallation");
                 }
             }
         }
+
+        protected bool m_isLinuxProject = false;
     }
 
     internal class NuGetReference

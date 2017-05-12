@@ -13,19 +13,19 @@ static class AzureIoTHub
 
     //
     // To monitor messages sent to device "$deviceId$" use iothub-explorer as follows:
-    //    iothub-explorer HostName=$iotHubUri$;SharedAccessKeyName=service;SharedAccessKey=$servicePrimaryKey$ monitor-events "$deviceId$"
+    //    iothub-explorer monitor-events --login HostName=$iotHubUri$;SharedAccessKeyName=service;SharedAccessKey=$servicePrimaryKey$ "$deviceId$"
     //
 
     // Refer to http://aka.ms/azure-iot-hub-vs-cs-wiki for more information on Connected Service for Azure IoT Hub
 
     public static async Task SendDeviceToCloudMessageAsync()
     {
-        var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Amqp);
+        var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Mqtt);
 
 #if WINDOWS_UWP
-        var str = "Hello, Cloud from a UWP C# app!";
+        var str = "{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a UWP C# app!\"}";
 #else
-        var str = "Hello, Cloud from a C# app!";
+        var str = "{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a C# app!\"}";
 #endif
         var message = new Message(Encoding.ASCII.GetBytes(str));
 
@@ -34,7 +34,7 @@ static class AzureIoTHub
 
     public static async Task<string> ReceiveCloudToDeviceMessageAsync()
     {
-        var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Amqp);
+        var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Mqtt);
 
         while (true)
         {

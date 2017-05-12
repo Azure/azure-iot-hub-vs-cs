@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.ConnectedServices;
 using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Services.Client.AccountManagement;
 using System.Threading;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace AzureIoTHubConnectedService
 {
@@ -55,6 +56,16 @@ namespace AzureIoTHubConnectedService
 
         public override Task<ConnectedServiceConfigurator> CreateConfiguratorAsync(ConnectedServiceProviderContext context)
         {
+            // Load our package here to trigger telemetry event. This is exactly when user chooses our extension.
+            IVsShell shell = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(SVsShell)) as IVsShell;
+            if (shell != null)
+            {
+                IVsPackage package = null;
+                Guid PackageToBeLoadedGuid =
+                    new Guid(AzureIoTHubConnectedServicePackage.PackageGuidString);
+                shell.LoadPackage(ref PackageToBeLoadedGuid, out package);
+            }
+
             ConnectedServiceConfigurator configurator;
 
             var project = GetActiveProject();
@@ -68,7 +79,8 @@ namespace AzureIoTHubConnectedService
             else
             {
                 var securityMode = new TPMSelector();
-                var dlgResult = securityMode.ShowModal();
+                var dlgResult = securityMode.ShowDialog();// ShowModal();
+
                 if (dlgResult.HasValue && dlgResult.Value)
                 {
                     var useTPM = securityMode.rbUseTPM.IsChecked;
@@ -82,7 +94,7 @@ namespace AzureIoTHubConnectedService
                         // No TPM
                         configurator = new AzureIoTHubAccountProviderGrid(this.IoTHubAccountManager, this.ServiceProvider);
                     }
-                }
+               }
                 else
                 {
                     // User cancelled

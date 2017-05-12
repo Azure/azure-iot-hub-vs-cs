@@ -23,9 +23,9 @@ static class AzureIoTHub
         var deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Mqtt);
 
 #if WINDOWS_UWP
-        var str = "{{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a C# app!\"}}";
+        var str = "{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a UWP C# app!\"}";
 #else
-        var str = "{{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a UWP C# app!\"}}";
+        var str = "{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a C# app!\"}";
 #endif
         var message = new Message(Encoding.ASCII.GetBytes(str));
 
